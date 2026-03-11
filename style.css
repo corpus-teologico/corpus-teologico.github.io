@@ -404,7 +404,7 @@ h2 {
     top: 20px; /* Posición inicial arriba */
     z-index: 1000;
     background-color: #151515;
-    color: #9b804e;
+    color: #fff;
     border: 1px solid #9b804e;
     padding: 10px 20px;
     font-family: 'Montserrat', sans-serif;
