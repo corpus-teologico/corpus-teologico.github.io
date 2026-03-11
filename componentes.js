@@ -1,16 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. EL MENÚ LATERAL ELEGANTE
+    // 1. EL MENÚ LATERAL (Se inyecta al principio del body)
     const menuHTML = `
         <div id="menu-lateral" class="menu-lateral">
             <button id="cerrar-menu" class="btn-cerrar">&times;</button>
             <div class="menu-contenido">
                 <h3>SISTEMA TEOLÓGICO</h3>
-                
                 <a href="/index.html" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
-                
                 <div class="separador-menu"></div>
-                
                 <a href="/estudios/01.html">I. ¿Cómo nos habla Dios?</a>
                 <a href="/estudios/02.html">II. Sólo la Biblia basta</a>
                 <a href="/estudios/03.html">III. La vida de Jesús</a>
@@ -34,17 +31,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 <a href="/estudios/21.html">XXI. La familia de Dios</a>
                 <a href="/estudios/22.html">XXII. Usar bien lo que Dios me da</a>
                 <a href="/estudios/23.html">XXIII. La guerra en mi interior</a>
-
                 <div class="separador-menu"></div>
-                
                 <a href="/bibliografia.html" style="color: #9b804e; font-style: italic;">Bibliografía Consultada</a>
             </div>
         </div>
-        
         <button id="abrir-menu" class="btn-abrir">&#9776; ÍNDICE</button>
     `;
 
-    // 2. CABECERA GLOBAL
+    // 2. CABECERA Y FOOTER
     const headerHTML = `
         <header style="background-color: #151515; padding: 70px 20px; text-align: center; border-bottom: 1px solid #9b804e; position: relative;">
             <h1 style="font-family: 'Cormorant Garamond', serif; color: #ffffff; font-size: 3rem; font-weight: 300; letter-spacing: 8px; margin: 0;">S T F</h1>
@@ -52,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
         </header>
     `;
     
-    // 3. PIE DE PÁGINA GLOBAL
     const footerHTML = `
         <footer style="text-align: center; padding: 50px 20px; margin-top: auto;">
             <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #777; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">Roberto Formigo</p>
@@ -60,19 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
         </footer>
     `;
 
-    // INYECTAR EN LA PÁGINA
+    // Inyectar todo
     document.body.insertAdjacentHTML('afterbegin', menuHTML);
-    const headerContainer = document.getElementById('header-global');
-    const footerContainer = document.getElementById('footer-global');
+    document.getElementById('header-global').innerHTML = headerHTML;
+    document.getElementById('footer-global').innerHTML = footerHTML;
 
-    if (headerContainer) headerContainer.innerHTML = headerHTML;
-    if (footerContainer) footerContainer.innerHTML = footerHTML;
-
-    // LÓGICA PARA ABRIR Y CERRAR EL MENÚ
-    document.getElementById('abrir-menu').addEventListener('click', function() {
-        document.getElementById('menu-lateral').style.right = '0';
-    });
-    document.getElementById('cerrar-menu').addEventListener('click', function() {
-        document.getElementById('menu-lateral').style.right = '-400px';
-    });
-});
+    // Lógica de apertura/cierre
+    document.getElementById('abrir-menu').onclick = () => document.getElementById
