@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <button id="abrir-menu" class="btn-abrir">&#9776; ÍNDICE</button>
     `;
 
-    // 2. CABECERA Y FOOTER
+    // 2. CABECERA GLOBAL
     const headerHTML = `
         <header style="background-color: #151515; padding: 70px 20px; text-align: center; border-bottom: 1px solid #9b804e; position: relative;">
             <h1 style="font-family: 'Cormorant Garamond', serif; color: #ffffff; font-size: 3rem; font-weight: 300; letter-spacing: 8px; margin: 0;">S T F</h1>
@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </header>
     `;
     
+    // 3. PIE DE PÁGINA GLOBAL
     const footerHTML = `
         <footer style="text-align: center; padding: 50px 20px; margin-top: auto;">
             <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #777; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">Roberto Formigo</p>
@@ -53,10 +54,28 @@ document.addEventListener("DOMContentLoaded", function() {
         </footer>
     `;
 
-    // Inyectar todo
+    // INYECTAR EN LA PÁGINA
     document.body.insertAdjacentHTML('afterbegin', menuHTML);
-    document.getElementById('header-global').innerHTML = headerHTML;
-    document.getElementById('footer-global').innerHTML = footerHTML;
+    const headerContainer = document.getElementById('header-global');
+    const footerContainer = document.getElementById('footer-global');
 
-    // Lógica de apertura/cierre
-    document.getElementById('abrir-menu').onclick = () => document.getElementById
+    if (headerContainer) headerContainer.innerHTML = headerHTML;
+    if (footerContainer) footerContainer.innerHTML = footerHTML;
+
+    // 4. LÓGICA DE FUNCIONAMIENTO (¡Esto es lo que faltaba!)
+    const btnAbrir = document.getElementById('abrir-menu');
+    const btnCerrar = document.getElementById('cerrar-menu');
+    const panelMenu = document.getElementById('menu-lateral');
+
+    if (btnAbrir && panelMenu) {
+        btnAbrir.addEventListener('click', function() {
+            panelMenu.style.right = '0';
+        });
+    }
+
+    if (btnCerrar && panelMenu) {
+        btnCerrar.addEventListener('click', function() {
+            panelMenu.style.right = '-400px';
+        });
+    }
+});
