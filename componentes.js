@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. EL MENÚ LATERAL
+    // 1. EL MENÚ LATERAL (Enlaces actualizados para SEO)
     const menuHTML = `
         <div id="menu-lateral" class="menu-lateral">
             <button id="cerrar-menu" class="btn-cerrar">&times;</button>
@@ -8,29 +8,29 @@ document.addEventListener("DOMContentLoaded", function() {
                 <h3>SISTEMA TEOLÓGICO</h3>
                 <a href="index.html" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
                 <div class="separador-menu"></div>
-                <a href="estudios/01.html">I. ¿Cómo nos habla Dios?</a>
-                <a href="estudios/02.html">II. Sólo la Biblia basta</a>
-                <a href="estudios/03.html">III. La vida de Jesús</a>
-                <a href="estudios/04.html">IV. Aprender a descansar</a>
-                <a href="estudios/05.html">V. Conocer para amar</a>
-                <a href="estudios/06.html">VI. ¿De dónde viene el mal?</a>
-                <a href="estudios/07.html">VII. Un mundo roto</a>
-                <a href="estudios/08.html">VIII. El problema del pecado</a>
-                <a href="estudios/09.html">IX. Nuestra oscuridad</a>
-                <a href="estudios/10.html">X. El Dios justo y amoroso</a>
-                <a href="estudios/11.html">XI. Volver a Dios</a>
-                <a href="estudios/12.html">XII. Ser de una sola pieza</a>
-                <a href="estudios/13.html">XIII. Mi amistad con Dios</a>
-                <a href="estudios/14.html">XIV. El matrimonio ideal</a>
-                <a href="estudios/15.html">XV. Libertad de las cadenas</a>
-                <a href="estudios/16.html">XVI. Defendiendo mi fe</a>
-                <a href="estudios/17.html">XVII. Ciencia y fe</a>
-                <a href="estudios/18.html">XVIII. Nuestro Dios Trino</a>
-                <a href="estudios/19.html">XIX. Lo que está por venir</a>
-                <a href="estudios/20.html">XX. El poder del Espíritu</a>
-                <a href="estudios/21.html">XXI. La familia de Dios</a>
-                <a href="estudios/22.html">XXII. Usar bien lo que Dios me da</a>
-                <a href="estudios/23.html">XXIII. La guerra en mi interior</a>
+                <a href="estudios/como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
+                <a href="estudios/solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
+                <a href="estudios/la-vida-de-jesus.html">III. La vida de Jesús</a>
+                <a href="estudios/aprender-a-descansar.html">IV. Aprender a descansar</a>
+                <a href="estudios/conocer-para-amar.html">V. Conocer para amar</a>
+                <a href="estudios/de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
+                <a href="estudios/un-mundo-roto.html">VII. Un mundo roto</a>
+                <a href="estudios/el-problema-del-pecado.html">VIII. El problema del pecado</a>
+                <a href="estudios/nuestra-oscuridad.html">IX. Nuestra oscuridad</a>
+                <a href="estudios/el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
+                <a href="estudios/volver-a-dios.html">XI. Volver a Dios</a>
+                <a href="estudios/ser-de-una-sola-pieza.html">XII. Ser de una sola pieza</a>
+                <a href="estudios/mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
+                <a href="estudios/el-matrimonio-ideal.html">XIV. El matrimonio ideal</a>
+                <a href="estudios/libertad-de-las-cadenas.html">XV. Libertad de las cadenas</a>
+                <a href="estudios/defendiendo-mi-fe.html">XVI. Defendiendo mi fe</a>
+                <a href="estudios/ciencia-y-fe.html">XVII. Ciencia y fe</a>
+                <a href="estudios/nuestro-dios-trino.html">XVIII. Nuestro Dios Trino</a>
+                <a href="estudios/lo-que-esta-por-venir.html">XIX. Lo que está por venir</a>
+                <a href="estudios/el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
+                <a href="estudios/la-familia-de-dios.html">XXI. La familia de Dios</a>
+                <a href="estudios/usar-bien-lo-que-dios-me-da.html">XXII. Usar bien lo que Dios me da</a>
+                <a href="estudios/la-guerra-en-mi-interior.html">XXIII. La guerra en mi interior</a>
                 <div class="separador-menu"></div>
                 <a href="bibliografia.html" style="color: #9b804e; font-style: italic;">Bibliografía Consultada</a>
             </div>
@@ -77,11 +77,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // LÓGICA PARA CAMBIAR EL COLOR DEL BOTÓN AL HACER SCROLL
-    window.onscroll = function() {
-        const btnMenu = document.getElementById('abrir-menu');
-        if (window.scrollY > 100) { // Si baja más de 100px
+window.onscroll = function() {
+    const btnMenu = document.getElementById('abrir-menu');
+    if (btnMenu) {
+        if (window.scrollY > 100) {
             btnMenu.classList.add('scrolled');
         } else {
             btnMenu.classList.remove('scrolled');
         }
-    };
+    }
+};
