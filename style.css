@@ -376,6 +376,8 @@ h2 {
 
 .glifo-v, .glifo-eje {
     color: #9b804e;
+       float: left;
+    margin-right: 6px;
 }
 
 .badge-status {
