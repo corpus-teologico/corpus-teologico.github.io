@@ -605,3 +605,76 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
         height: auto !important;
     }
 }
+/* =========================================================
+   REPARACIÓN RADICAL PARA MÓVIL (SISTEMA FORMIGO)
+   ========================================================= */
+
+@media (max-width: 768px) {
+    /* 1. ELIMINAR EL "EFECTO ASFIXIA": Reset de márgenes */
+    .pagina-libro {
+        padding: 30px 15px !important; /* De 120px pasamos a 15px */
+        margin: 10px !important;
+        width: auto !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 2. AJUSTE DE TÍTULOS: Que no se salgan de la pantalla */
+    h2, .titulo-solemne {
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+        word-wrap: break-word !important;
+    }
+
+    .subtitulo {
+        letter-spacing: 3px !important;
+        font-size: 0.6rem !important;
+        margin-bottom: 30px !important;
+    }
+
+    /* 3. GRID DE ESTUDIOS: Una sola columna perfecta */
+    .grid-estudios {
+        grid-template-columns: 1fr !important; /* Forzamos 1 columna */
+        padding: 0 !important;
+        gap: 15px !important;
+    }
+
+    .tarjeta-estudio {
+        flex-direction: column !important; /* Número arriba, texto abajo */
+        padding: 20px !important;
+        text-align: center;
+    }
+
+    .tarjeta-estudio .numero {
+        margin-right: 0 !important;
+        margin-bottom: 10px !important;
+        font-size: 1.4rem !important;
+    }
+
+    /* 4. PANELES Y TABLAS TÉCNICAS */
+    .panel-tecnico, .panel-informativo, .eje-card {
+        padding: 20px 15px !important;
+        margin: 15px 0 !important;
+        flex-direction: column !important;
+    }
+
+    .grid-ejes {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* 5. TEXTO DE LECTURA: Legibilidad */
+    .introduccion-texto p, .descripcion-breve {
+        font-size: 1.05rem !important;
+        text-align: left !important; /* El justificado queda mal en móvil */
+        line-height: 1.5 !important;
+    }
+
+    /* 6. BOTÓN FLOTANTE: Que no tape el texto */
+    .btn-abrir {
+        right: 10px !important;
+        top: 10px !important;
+        padding: 8px 12px !important;
+        font-size: 0.6rem !important;
+    }
+}
