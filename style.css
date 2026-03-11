@@ -1,288 +1,141 @@
-/* =========================================================
-   SISTEMA TEOLÓGICO FORMIGO - HOJA DE ESTILO INTEGRAL
-   ========================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@200;300;400&display=swap');
 
 :root {
-    --oro-fino: #9b804e;
-    --texto-oscuro: #2b2b2b;
-    --gris-texto: #666666;
-    --fondo-fuera: #f2f0eb;
+    --oro-viejo: #9b804e;
+    --oro-claro: #c5a367;
+    --gris-suave: #777;
+    --borde: #f0eee9;
+    --fondo-crema: #fdfcfb;
 }
 
-/* --- BASE --- */
 body {
-    background-color: var(--fondo-fuera);
-    /* Textura de papel sutil */
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0dcd3' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    color: var(--texto-oscuro);
-    font-family: 'Cormorant Garamond', serif;
+    background-color: #f8f7f5;
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden;
+    font-family: 'Cormorant Garamond', serif;
+    color: #1a1a1a;
 }
 
-/* --- ESTRUCTURA EDITORIAL --- */
 .pagina-libro {
-    background-color: #ffffff;
+    background: white;
     max-width: 800px;
-    width: 90%;
-    margin: 50px auto;
-    padding: 80px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.03);
-    border: 1px solid #eae6de;
-    box-sizing: border-box;
+    margin: 60px auto;
+    padding: 100px 120px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.03);
 }
 
+/* --- TEXTOS DE INTRODUCCIÓN --- */
 h2 {
-    text-align: center;
+    color: var(--oro-viejo);
     font-weight: 300;
-    font-size: 2.4rem;
-    color: var(--oro-fino);
-    margin-bottom: 10px;
-    letter-spacing: 2px;
+    font-size: 2.8rem;
+    text-align: center;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
 }
 
 .subtitulo {
-    text-align: center;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    color: var(--gris-texto);
+    font-size: 0.65rem;
+    letter-spacing: 5px;
     text-transform: uppercase;
+    text-align: center;
+    color: #bbb;
     margin-bottom: 50px;
 }
 
-p {
+.introduccion-texto p {
     font-size: 1.25rem;
     line-height: 1.8;
-    margin-bottom: 1.5rem;
+    color: #444;
     text-align: justify;
+    margin-bottom: 25px;
 }
 
-/* --- BOTÓN DE MENÚ (ABRIR) --- */
-.btn-abrir {
-    position: absolute;
-    top: 45px;
-    right: 50px;
-    background: transparent;
-    color: #ffffff;
-    border: 1px solid rgba(255,255,255,0.3);
-    padding: 10px 22px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 3px;
-    cursor: pointer;
-    z-index: 100;
-    transition: all 0.4s ease;
+/* --- SEPARADOR SOLEMNE --- */
+.separador-seccion {
+    text-align: center;
+    border-bottom: 1px solid var(--borde);
+    line-height: 0.1em;
+    margin: 80px 0 60px;
 }
 
-.btn-abrir:hover {
-    border-color: var(--oro-fino);
-    color: var(--oro-fino);
-}
-
-/* --- PANEL DEL MENÚ LATERAL --- */
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    right: -400px; /* Oculto por defecto */
-    width: 350px;
-    height: 100vh;
-    background-color: #0f0f0f;
-    box-shadow: -10px 0 50px rgba(0,0,0,0.6);
-    z-index: 1000;
-    transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-    overflow-y: auto;
-    border-left: 1px solid #1a1a1a;
-}
-
-.btn-cerrar {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    background: none;
-    border: none;
-    color: #444;
-    font-size: 2.5rem;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-cerrar:hover { color: var(--oro-fino); }
-
-.menu-contenido {
-    padding: 80px 40px;
-}
-
-.menu-contenido h3 {
-    font-family: 'Montserrat', sans-serif;
-    color: #444;
-    font-size: 0.7rem;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-}
-
-.menu-contenido a {
-    display: block;
-    color: #999;
-    text-decoration: none;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    padding: 12px 0;
-    border-bottom: 1px solid #1a1a1a;
-    transition: 0.3s;
-}
-
-.menu-contenido a:hover {
-    color: #ffffff;
-    padding-left: 10px;
-    border-bottom-color: var(--oro-fino);
-}
-
-.separador-menu {
-    height: 1px;
-    background: var(--oro-fino);
-    opacity: 0.2;
-    margin: 30px 0;
-}
-
-/* --- LISTA DE INICIO (INDEX) --- */
-.lista-estudios {
-    display: flex;
-    flex-direction: column;
-}
-
-.lista-estudios a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--texto-oscuro);
-    padding: 22px 10px;
-    border-bottom: 1px solid #f0eee9;
-    transition: 0.4s;
-}
-
-.lista-estudios a .numero {
-    font-style: italic;
-    color: var(--oro-fino);
-    font-size: 1.3rem;
-    width: 70px;
-}
-
-.lista-estudios a .titulo {
-    font-size: 1.4rem;
-}
-
-.lista-estudios a:hover {
-    background-color: #faf9f7;
-    padding-left: 20px;
-}
-
-/* --- RESPONSIVE (MÓVIL) --- */
-@media (max-width: 600px) {
-    .pagina-libro { padding: 40px 25px; }
-    .btn-abrir { right: 20px; top: 20px; }
-    .menu-lateral { width: 100%; right: -100%; }
-}
-@media (max-width: 600px) {
-    .btn-abrir {
-        top: 20px;
-        right: 20px;
-        padding: 12px 25px; /* Más grande para el dedo */
-        background: rgba(0,0,0,0.5); /* Un poco de fondo para que resalte sobre el negro */
-        border-radius: 4px;
-    }
-    
-    .pagina-libro {
-        padding: 40px 20px; /* Menos margen lateral en móvil */
-        margin: 20px auto;
-        width: 95%;
-    }
-
-    h2 {
-        font-size: 1.8rem; /* Título un poco más pequeño para que no salte de línea */
-    }
-}
-/* --- TARJETAS DE ESTUDIO CON PREVIEW --- */
-.lista-estudios {
-    display: grid;
-    grid-template-columns: 1fr; /* Una columna para que parezca un libro */
-    gap: 40px;
-    margin-top: 40px;
-}
-
-.tarjeta-estudio {
-    position: relative;
-    border: 1px solid #f0eee9;
-    padding: 30px;
-    transition: all 0.4s ease;
+.separador-seccion span {
     background: #fff;
+    padding: 0 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 4px;
+    color: #999;
 }
 
-.tarjeta-estudio:hover {
-    border-color: var(--oro-fino);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+/* --- LISTA ESTILO EDITORIAL --- */
+.fila-estudio {
+    display: grid;
+    grid-template-columns: 60px 1fr; /* Columna fija para el número */
+    gap: 20px;
+    padding: 45px 0;
+    border-bottom: 1px solid var(--borde);
+    align-items: start;
 }
 
-.tarjeta-estudio .numero {
+.fila-estudio:last-child {
+    border-bottom: none;
+}
+
+.numero {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    color: var(--oro-fino);
-    font-size: 1.2rem;
+    color: var(--oro-viejo);
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.titulo-estudio {
     display: block;
-    margin-bottom: 10px;
-}
-
-.tarjeta-estudio h3 {
-    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem; /* Título grande */
+    color: #1a1a1a;
+    text-decoration: none;
+    margin-bottom: 12px;
     font-weight: 400;
-    font-size: 1.8rem;
-    margin: 0 0 15px 0;
-    color: var(--texto-oscuro);
+    transition: color 0.3s;
 }
 
-.descripcion-preview {
-    font-size: 1.1rem;
-    color: #666;
+.titulo-estudio:hover {
+    color: var(--oro-viejo);
+}
+
+.descripcion-breve {
+    font-size: 1.05rem; /* Descripción más pequeña que el título */
+    color: var(--gris-suave);
     line-height: 1.6;
-    height: 80px; /* Altura fija para el texto corto */
-    overflow: hidden; /* Corta el texto */
-    position: relative;
     margin-bottom: 20px;
-    text-align: justify;
+    max-width: 90%;
 }
 
-/* El efecto de difuminado blanco al final del texto */
-.descripcion-preview::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background: linear-gradient(transparent, white);
-}
-
-.btn-ver-estudio {
+/* --- BOTÓN ELEGANTE --- */
+.link-leer {
     display: inline-block;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
+    font-size: 0.65rem;
+    font-weight: 400;
     text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--oro-viejo);
     text-decoration: none;
-    color: var(--oro-fino);
-    border: 1px solid var(--oro-fino);
-    padding: 10px 20px;
-    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 4px;
+    transition: all 0.4s ease;
 }
 
-.btn-ver-estudio:hover {
-    background: var(--oro-fino);
-    color: white;
+.link-leer:hover {
+    color: var(--oro-claro);
+    border-bottom: 1px solid var(--oro-claro);
+    padding-left: 5px; /* Pequeño desplazamiento suave */
+}
+
+/* Adaptación móvil */
+@media (max-width: 600px) {
+    .pagina-libro { padding: 40px 25px; }
+    .fila-estudio { grid-template-columns: 1fr; gap: 10px; }
+    h2 { font-size: 2rem; }
 }
