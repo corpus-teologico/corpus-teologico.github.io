@@ -1,141 +1,247 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Montserrat:wght@200;300;400&display=swap');
+/* =========================================================
+   SISTEMA TEOLÓGICO FORMIGO - HOJA DE ESTILO MAESTRA
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
 
 :root {
-    --oro-viejo: #9b804e;
-    --oro-claro: #c5a367;
-    --gris-suave: #777;
-    --borde: #f0eee9;
-    --fondo-crema: #fdfcfb;
+    --oro-profundo: #8a6d3b;
+    --oro-brillante: #c5a367;
+    --texto-negro: #1a1a1a;
+    --texto-gris: #555555;
+    --linea-divisoria: #e8e2d9;
+    --fondo-fuera: #f4f1ed;
+    --blanco-papel: #ffffff;
 }
 
+/* --- BASE Y FONDO --- */
 body {
-    background-color: #f8f7f5;
+    background-color: var(--fondo-fuera);
     margin: 0;
+    padding: 0;
     font-family: 'Cormorant Garamond', serif;
-    color: #1a1a1a;
+    color: var(--texto-negro);
+    line-height: 1.6;
 }
 
+/* --- CONTENEDOR TIPO LIBRO --- */
 .pagina-libro {
-    background: white;
-    max-width: 800px;
+    background: var(--blanco-papel);
+    max-width: 850px;
     margin: 60px auto;
     padding: 100px 120px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+    border: 1px solid var(--linea-divisoria);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+    position: relative;
 }
 
-/* --- TEXTOS DE INTRODUCCIÓN --- */
+/* --- CABECERA DE LA PÁGINA (INTRO) --- */
 h2 {
-    color: var(--oro-viejo);
+    color: var(--oro-profundo);
     font-weight: 300;
-    font-size: 2.8rem;
+    font-size: 3.5rem;
     text-align: center;
-    margin-bottom: 5px;
-    letter-spacing: 1px;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
 }
 
 .subtitulo {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 5px;
+    font-size: 0.7rem;
+    letter-spacing: 7px;
     text-transform: uppercase;
     text-align: center;
-    color: #bbb;
-    margin-bottom: 50px;
+    color: #a0a0a0;
+    margin-bottom: 60px;
+    display: block;
 }
 
 .introduccion-texto p {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    color: #444;
+    font-size: 1.3rem;
+    line-height: 1.9;
+    color: #333;
     text-align: justify;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 /* --- SEPARADOR SOLEMNE --- */
 .separador-seccion {
     text-align: center;
-    border-bottom: 1px solid var(--borde);
+    border-bottom: 1px solid var(--linea-divisoria);
     line-height: 0.1em;
     margin: 80px 0 60px;
 }
 
 .separador-seccion span {
-    background: #fff;
+    background: var(--blanco-papel);
     padding: 0 30px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 4px;
+    font-size: 0.65rem;
+    letter-spacing: 5px;
     color: #999;
 }
 
-/* --- LISTA ESTILO EDITORIAL --- */
+/* --- LISTA DE TRATADOS (TABLA EDITORIAL) --- */
+.lista-estudios {
+    display: flex;
+    flex-direction: column;
+}
+
 .fila-estudio {
-    display: grid;
-    grid-template-columns: 60px 1fr; /* Columna fija para el número */
-    gap: 20px;
-    padding: 45px 0;
-    border-bottom: 1px solid var(--borde);
-    align-items: start;
+    display: flex;
+    gap: 50px;
+    padding: 60px 0;
+    border-bottom: 1px solid var(--linea-divisoria);
+    transition: all 0.5s ease;
 }
 
 .fila-estudio:last-child {
     border-bottom: none;
 }
 
-.numero {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    color: var(--oro-viejo);
-    font-size: 1.4rem;
-    line-height: 1;
+.fila-estudio:hover {
+    background-color: #faf9f7;
+    padding-left: 20px;
 }
 
+/* El Número Romano */
+.numero {
+    flex: 0 0 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--oro-brillante);
+    font-size: 1.8rem;
+    font-weight: 400;
+    padding-top: 5px;
+}
+
+.contenido-estudio {
+    flex: 1;
+}
+
+/* Título del Tratado */
 .titulo-estudio {
     display: block;
-    font-size: 1.9rem; /* Título grande */
-    color: #1a1a1a;
+    font-size: 2.3rem; /* Mucho más grande que la descripción */
+    font-weight: 600;
+    color: var(--texto-negro);
     text-decoration: none;
-    margin-bottom: 12px;
-    font-weight: 400;
-    transition: color 0.3s;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    transition: color 0.3s ease;
 }
 
 .titulo-estudio:hover {
-    color: var(--oro-viejo);
+    color: var(--oro-profundo);
 }
 
+/* Descripción del Tratado */
 .descripcion-breve {
-    font-size: 1.05rem; /* Descripción más pequeña que el título */
-    color: var(--gris-suave);
-    line-height: 1.6;
-    margin-bottom: 20px;
-    max-width: 90%;
+    font-size: 1.15rem; /* Tamaño contenido y elegante */
+    color: var(--texto-gris);
+    line-height: 1.7;
+    margin: 0 0 30px 0;
+    text-align: justify;
+    font-style: italic; /* Toque de libro antiguo */
 }
 
-/* --- BOTÓN ELEGANTE --- */
+/* --- EL BOTÓN DE LECTURA SOLEMNE --- */
 .link-leer {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.65rem;
-    font-weight: 400;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--oro-viejo);
+    letter-spacing: 3px;
+    color: var(--oro-profundo);
     text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 4px;
-    transition: all 0.4s ease;
+    padding: 10px 20px;
+    border: 1px solid var(--oro-brillante);
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .link-leer:hover {
-    color: var(--oro-claro);
-    border-bottom: 1px solid var(--oro-claro);
-    padding-left: 5px; /* Pequeño desplazamiento suave */
+    background: var(--oro-profundo);
+    color: white;
+    border-color: var(--oro-profundo);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(138, 109, 59, 0.2);
 }
 
-/* Adaptación móvil */
-@media (max-width: 600px) {
-    .pagina-libro { padding: 40px 25px; }
-    .fila-estudio { grid-template-columns: 1fr; gap: 10px; }
-    h2 { font-size: 2rem; }
+/* --- MENÚ LATERAL (SISTEMA) --- */
+.btn-abrir {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    background: transparent;
+    color: white; /* Asumiendo que el header es negro */
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 12px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+.btn-abrir:hover {
+    border-color: var(--oro-brillante);
+    color: var(--oro-brillante);
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100vh;
+    background: #0f0f0f;
+    z-index: 2000;
+    transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+    overflow-y: auto;
+    padding: 60px 40px;
+}
+
+.btn-cerrar {
+    background: none;
+    border: none;
+    color: #444;
+    font-size: 2.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.menu-contenido a {
+    display: block;
+    color: #888;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 15px 0;
+    border-bottom: 1px solid #1a1a1a;
+    transition: 0.3s;
+}
+
+.menu-contenido a:hover {
+    color: white;
+    padding-left: 10px;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .pagina-libro {
+        padding: 50px 30px;
+        margin: 20px;
+    }
+    .fila-estudio {
+        flex-direction: column;
+        gap: 15px;
+        padding: 40px 0;
+    }
+    h2 { font-size: 2.5rem; }
 }
