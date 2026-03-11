@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. EL MENÚ LATERAL (Enlaces actualizados para SEO)
+    // 1. EL MENÚ LATERAL
     const menuHTML = `
         <div id="menu-lateral" class="menu-lateral">
             <button id="cerrar-menu" class="btn-cerrar">&times;</button>
@@ -69,14 +69,33 @@ document.addEventListener("DOMContentLoaded", function() {
     const panel = document.getElementById('menu-lateral');
 
     if (btnAbrir && panel) {
-        btnAbrir.onclick = function() { panel.style.right = '0'; };
+        btnAbrir.onclick = function(e) { 
+            e.stopPropagation(); // Evita que el clic se propague al documento
+            panel.style.right = '0'; 
+        };
     }
+
     if (btnCerrar && panel) {
         btnCerrar.onclick = function() { panel.style.right = '-400px'; };
     }
+
+    // NUEVA FUNCIÓN: CERRAR AL HACER CLIC FUERA
+    document.addEventListener('click', function(event) {
+        // Si el clic NO fue dentro del panel Y el panel está abierto
+        if (panel && !panel.contains(event.target) && panel.style.right === '0px') {
+            panel.style.right = '-400px';
+        }
+    });
+
+    // Evitar que los clics DENTRO del panel lo cierren
+    if (panel) {
+        panel.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
 });
 
-// LÓGICA PARA CAMBIAR EL COLOR DEL BOTÓN AL HACER SCROLL
+// LÓGICA DE SCROLL
 window.onscroll = function() {
     const btnMenu = document.getElementById('abrir-menu');
     if (btnMenu) {
