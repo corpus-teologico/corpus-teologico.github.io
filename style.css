@@ -1,0 +1,56 @@
+/* --- VARIABLES PARA QUE TOQUES FÁCIL --- */
+:root {
+    --fondo-papel: #fcfaf7;   /* Un blanco crema muy elegante */
+    --texto-principal: #1a1a1a;
+    --dorado-teologico: #967d4a; /* Dorado para detalles solemnes */
+    --borde-acento: #2c3e50;    /* Azul petróleo muy oscuro */
+}
+
+body {
+    background-color: var(--fondo-papel);
+    color: var(--texto-principal);
+    font-family: 'Georgia', serif; /* Letra tipo libro antiguo */
+    margin: 0;
+    line-height: 1.8;
+}
+
+header {
+    background-color: var(--borde-acento);
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    border-bottom: 5px solid var(--dorado-teologico);
+}
+
+h1 {
+    font-size: 2.8rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.contenedor {
+    max-width: 850px;
+    margin: 50px auto;
+    padding: 40px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Estilo para los enlaces de tus 23 estudios */
+.lista-estudios a {
+    display: block;
+    padding: 15px;
+    margin: 10px 0;
+    color: var(--texto-principal);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: 0.3s;
+    background: #f9f9f9;
+}
+
+.lista-estudios a:hover {
+    border-left: 3px solid var(--dorado-teologico);
+    background: #fff;
+    padding-left: 25px;
+}
