@@ -1,21 +1,83 @@
-/* =========================================
-   DISEÑO DEL MENÚ LATERAL (OFF-CANVAS)
-   ========================================= */
+/* =========================================================
+   SISTEMA TEOLÓGICO FORMIGO - HOJA DE ESTILO INTEGRAL
+   ========================================================= */
 
-/* El botón transparente y fino arriba a la derecha */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400&display=swap');
+
+:root {
+    --oro-fino: #9b804e;
+    --texto-oscuro: #2b2b2b;
+    --gris-texto: #666666;
+    --fondo-fuera: #f2f0eb;
+}
+
+/* --- BASE --- */
+body {
+    background-color: var(--fondo-fuera);
+    /* Textura de papel sutil */
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0dcd3' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    color: var(--texto-oscuro);
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- ESTRUCTURA EDITORIAL --- */
+.pagina-libro {
+    background-color: #ffffff;
+    max-width: 800px;
+    width: 90%;
+    margin: 50px auto;
+    padding: 80px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+    border: 1px solid #eae6de;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    font-weight: 300;
+    font-size: 2.4rem;
+    color: var(--oro-fino);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.subtitulo {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: var(--gris-texto);
+    text-transform: uppercase;
+    margin-bottom: 50px;
+}
+
+p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+/* --- BOTÓN DE MENÚ (ABRIR) --- */
 .btn-abrir {
     position: absolute;
-    top: 35px;
-    right: 40px;
+    top: 45px;
+    right: 50px;
     background: transparent;
     color: #ffffff;
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 10px 22px;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.7rem;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     cursor: pointer;
-    z-index: 999;
+    z-index: 100;
     transition: all 0.4s ease;
 }
 
@@ -24,62 +86,57 @@
     color: var(--oro-fino);
 }
 
-/* El panel oscuro que se desliza */
+/* --- PANEL DEL MENÚ LATERAL --- */
 .menu-lateral {
     position: fixed;
     top: 0;
-    right: -400px; /* Escondido fuera de la pantalla */
-    width: 320px;
+    right: -400px; /* Oculto por defecto */
+    width: 350px;
     height: 100vh;
-    background-color: #0f0f0f; /* Negro absoluto, muy premium */
-    box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+    background-color: #0f0f0f;
+    box-shadow: -10px 0 50px rgba(0,0,0,0.6);
     z-index: 1000;
     transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-    overflow-y: auto; /* Permite hacer scroll si no caben los 23 */
+    overflow-y: auto;
     border-left: 1px solid #1a1a1a;
 }
 
-/* El botón para cerrar (la X) */
 .btn-cerrar {
     position: absolute;
     top: 20px;
     right: 25px;
     background: none;
     border: none;
-    color: #555;
+    color: #444;
     font-size: 2.5rem;
-    font-weight: 300;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: 0.3s;
 }
 
 .btn-cerrar:hover { color: var(--oro-fino); }
 
-/* Los enlaces dentro del menú */
 .menu-contenido {
-    padding: 70px 30px;
-    display: flex;
-    flex-direction: column;
+    padding: 80px 40px;
 }
 
 .menu-contenido h3 {
     font-family: 'Montserrat', sans-serif;
-    color: var(--gris-texto);
+    color: #444;
     font-size: 0.7rem;
-    letter-spacing: 4px;
+    letter-spacing: 5px;
     text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .menu-contenido a {
-    color: #888888;
+    display: block;
+    color: #999;
     text-decoration: none;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    padding: 8px 0;
-    border-bottom: 1px solid #151515;
-    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    padding: 12px 0;
+    border-bottom: 1px solid #1a1a1a;
+    transition: 0.3s;
 }
 
 .menu-contenido a:hover {
@@ -92,5 +149,44 @@
     height: 1px;
     background: var(--oro-fino);
     opacity: 0.2;
-    margin: 25px 0;
+    margin: 30px 0;
+}
+
+/* --- LISTA DE INICIO (INDEX) --- */
+.lista-estudios {
+    display: flex;
+    flex-direction: column;
+}
+
+.lista-estudios a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--texto-oscuro);
+    padding: 22px 10px;
+    border-bottom: 1px solid #f0eee9;
+    transition: 0.4s;
+}
+
+.lista-estudios a .numero {
+    font-style: italic;
+    color: var(--oro-fino);
+    font-size: 1.3rem;
+    width: 70px;
+}
+
+.lista-estudios a .titulo {
+    font-size: 1.4rem;
+}
+
+.lista-estudios a:hover {
+    background-color: #faf9f7;
+    padding-left: 20px;
+}
+
+/* --- RESPONSIVE (MÓVIL) --- */
+@media (max-width: 600px) {
+    .pagina-libro { padding: 40px 25px; }
+    .btn-abrir { right: 20px; top: 20px; }
+    .menu-lateral { width: 100%; right: -100%; }
 }
