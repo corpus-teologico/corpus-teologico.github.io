@@ -75,3 +75,13 @@ document.addEventListener("DOMContentLoaded", function() {
         btnCerrar.onclick = function() { panel.style.right = '-400px'; };
     }
 });
+
+// LÓGICA PARA CAMBIAR EL COLOR DEL BOTÓN AL HACER SCROLL
+    window.onscroll = function() {
+        const btnMenu = document.getElementById('abrir-menu');
+        if (window.scrollY > 100) { // Si baja más de 100px
+            btnMenu.classList.add('scrolled');
+        } else {
+            btnMenu.classList.remove('scrolled');
+        }
+    };
