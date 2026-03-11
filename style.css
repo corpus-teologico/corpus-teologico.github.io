@@ -641,3 +641,26 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
         width: calc(100% - 20px) !important;
     }
 }
+.pagina-libro {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.testimonio p {
+    margin-bottom: 1.5em;
+    text-align: justify;
+}
+
+.firma {
+    text-align: right;
+    margin-top: 3em;
+    font-style: italic;
+}
+
+.cita-autor {
+    margin-top: 4em;
+    text-align: center;
+    border-top: 1px solid var(--oro); /* O el color que uses */
+    padding-top: 2em;
+}
