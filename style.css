@@ -190,3 +190,22 @@ p {
     .btn-abrir { right: 20px; top: 20px; }
     .menu-lateral { width: 100%; right: -100%; }
 }
+@media (max-width: 600px) {
+    .btn-abrir {
+        top: 20px;
+        right: 20px;
+        padding: 12px 25px; /* Más grande para el dedo */
+        background: rgba(0,0,0,0.5); /* Un poco de fondo para que resalte sobre el negro */
+        border-radius: 4px;
+    }
+    
+    .pagina-libro {
+        padding: 40px 20px; /* Menos margen lateral en móvil */
+        margin: 20px auto;
+        width: 95%;
+    }
+
+    h2 {
+        font-size: 1.8rem; /* Título un poco más pequeño para que no salte de línea */
+    }
+}
