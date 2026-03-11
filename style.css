@@ -1,152 +1,88 @@
-/* =========================================================
-   SISTEMA TEOLÓGICO FORMIGO - CSS EDITORIAL SOLEMNE
-   Autor: ROBERTO FORMIGO | Soli Deo Gloria
-   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
-/* --- Importar Tipografía Elegante (Playfair Display) --- */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
-
-/* --- VARIABLES DE COLOR SOLEMNE --- */
 :root {
-    --fondo-papel: #f9f7f2;   /* Un blanco hueso muy tenue, no cansa la vista */
-    --texto-principal: #151515; /* Negro profundo, no puro */
-    --texto-secundario: #6f6f6f;
-    --dorado-viejo: #a67c00;     /* Tipo bronce, no amarillo */
-    --borde-institucional: #2c3e50; /* Azul petróleo muy oscuro, casi negro */
-    --blanco-puro: #ffffff;
+    --oro: #967d4a;
+    --negro: #1a1a1a;
+    --papel: #ffffff;
+    --gris-fino: #f0f0f0;
 }
 
-/* --- ESTILOS GENERALES --- */
 body {
-    background-color: var(--fondo-papel);
-    color: var(--texto-principal);
-    font-family: 'Georgia', 'Times New Roman', serif; /* Para lectura larga */
+    background-color: #f5f5f5;
+    color: var(--negro);
+    font-family: 'Libre Baskerville', serif;
     margin: 0;
-    line-height: 1.8;
-    -webkit-font-smoothing: antialiased; /* Suavizar letras */
+    padding: 0;
 }
 
-/* --- ENCABEZADO MONUMENTAL --- */
 header {
-    background: linear-gradient(135deg, var(--borde-institucional) 0%, #1a1a1a 100%);
-    color: var(--blanco-puro);
+    background: var(--negro);
+    color: white;
+    padding: 80px 20px;
     text-align: center;
-    padding: 120px 20px;
-    border-bottom: 5px solid var(--dorado-viejo);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-bottom: 4px solid var(--oro);
 }
 
-header .logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    letter-spacing: 6px;
+header h1 {
+    font-family: 'Cinzel', serif; /* Fuente tipo grabados romanos */
+    font-size: 3rem;
+    letter-spacing: 8px;
     margin: 0;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
-header p {
-    font-family: 'Playfair Display', serif;
-    letter-spacing: 3px;
-    opacity: 0.85;
-    margin-top: 15px;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-}
-
-/* --- CONTENEDOR EDITORIAL --- */
 .contenedor {
-    max-width: 900px;
-    margin: 60px auto;
+    max-width: 800px;
+    margin: -40px auto 60px auto; /* Eleva el contenido sobre el header */
+    background: var(--papel);
     padding: 60px;
-    background: var(--blanco-puro);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.03); /* Sombra muy sutil */
-    border-radius: 1px;
-}
-
-/* --- TÍTULOS DE CALIDAD --- */
-h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
-    margin-top: 0;
-    font-weight: 400;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border-radius: 4px;
 }
 
 h2 {
-    color: var(--dorado-viejo);
+    font-family: 'Cinzel', serif;
     text-align: center;
-    font-size: 2.2rem;
-    margin-bottom: 10px;
+    color: var(--oro);
+    font-size: 1.5rem;
+    margin-bottom: 40px;
 }
 
-/* --- ÍNDICE DE ESTUDIOS CON ICONOS --- */
 .lista-estudios {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .lista-estudios a {
-    display: flex;
+    display: grid;
+    grid-template-columns: 60px 1fr;
     align-items: center;
-    padding: 20px 25px;
-    color: var(--texto-principal);
     text-decoration: none;
-    background: #fff;
-    border: 1px solid #f1f1f1;
-    transition: all 0.4s ease;
-}
-
-/* El número romano */
-.lista-estudios a span.numero {
-    font-family: 'Times New Roman', serif;
-    color: var(--dorado-viejo);
-    font-weight: bold;
-    font-size: 1.1rem;
-    width: 60px; /* Ancho fijo para alineación perfecta */
-}
-
-/* El icono de FontAwesome */
-.lista-estudios a i {
-    color: #bdbdbd; /* Color icono desactivado */
-    font-size: 1.2rem;
-    margin-right: 20px;
-    transition: 0.3s;
-}
-
-/* El texto del título */
-.lista-estudios a span.titulo {
-    font-size: 1rem;
-    letter-spacing: 0.5px;
+    color: var(--negro);
+    padding: 20px;
+    border: 1px solid var(--gris-fino);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* --- EFECTOS HOVER DE ALTA CALIDAD --- */
+.lista-estudios a .numero {
+    font-weight: bold;
+    color: var(--oro);
+    font-size: 1.1rem;
+}
+
 .lista-estudios a:hover {
-    border-color: var(--dorado-viejo);
-    background-color: #fffcf5; /* Un toque de luz dorada */
-    transform: translateX(10px); /* Movimiento sutil */
-    box-shadow: 5px 5px 15px rgba(166,124,0,0.08);
+    background: #fffcf5;
+    border-color: var(--oro);
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-.lista-estudios a:hover i {
-    color: var(--dorado-viejo); /* Icono se ilumina en dorado */
-    transform: scale(1.1);
-}
-
-/* --- PIE DE PÁGINA --- */
 footer {
     text-align: center;
-    padding: 60px 20px;
-    font-size: 0.85rem;
-    color: var(--texto-secundario);
-    border-top: 1px solid #eee;
-    margin-top: 100px;
-    background: #fff;
-    line-height: 1.6;
-}
-
-footer strong {
-    color: var(--texto-principal);
-    letter-spacing: 2px;
+    padding: 40px;
+    color: #888;
+    font-size: 0.8rem;
 }
