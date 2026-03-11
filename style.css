@@ -1,88 +1,92 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400&display=swap');
 
 :root {
-    --oro: #967d4a;
-    --negro: #1a1a1a;
-    --papel: #ffffff;
-    --gris-fino: #f0f0f0;
+    --oro-fino: #9b804e;
+    --texto-oscuro: #2b2b2b;
+    --gris-texto: #666666;
+    --fondo-fuera: #f2f0eb; /* Color hueso elegante */
 }
 
 body {
-    background-color: #f5f5f5;
-    color: var(--negro);
-    font-family: 'Libre Baskerville', serif;
+    /* Fondo con un patrón sutil y muy fino */
+    background-color: var(--fondo-fuera);
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0dcd3' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    color: var(--texto-oscuro);
+    font-family: 'Cormorant Garamond', serif;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-header {
-    background: var(--negro);
-    color: white;
-    padding: 80px 20px;
-    text-align: center;
-    border-bottom: 4px solid var(--oro);
-}
-
-header h1 {
-    font-family: 'Cinzel', serif; /* Fuente tipo grabados romanos */
-    font-size: 3rem;
-    letter-spacing: 8px;
-    margin: 0;
-}
-
-.contenedor {
-    max-width: 800px;
-    margin: -40px auto 60px auto; /* Eleva el contenido sobre el header */
-    background: var(--papel);
-    padding: 60px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    border-radius: 4px;
+/* El "Libro" central */
+.pagina-libro {
+    background-color: #ffffff;
+    max-width: 750px;
+    width: 85%;
+    margin: 50px auto;
+    padding: 70px 80px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.02);
+    border: 1px solid #eae6de;
 }
 
 h2 {
-    font-family: 'Cinzel', serif;
     text-align: center;
-    color: var(--oro);
-    font-size: 1.5rem;
+    font-weight: 300;
+    font-size: 2.2rem;
+    color: var(--oro-fino);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.subtitulo {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--gris-texto);
+    text-transform: uppercase;
     margin-bottom: 40px;
 }
 
+/* La lista elegante */
 .lista-estudios {
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 .lista-estudios a {
-    display: grid;
-    grid-template-columns: 60px 1fr;
+    display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--negro);
-    padding: 20px;
-    border: 1px solid var(--gris-fino);
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: var(--texto-oscuro);
+    padding: 20px 10px;
+    border-bottom: 1px solid #f0eee9;
+    transition: all 0.4s ease;
+}
+
+.lista-estudios a:last-child {
+    border-bottom: none;
 }
 
 .lista-estudios a .numero {
-    font-weight: bold;
-    color: var(--oro);
-    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--oro-fino);
+    font-size: 1.2rem;
+    width: 60px;
+}
+
+.lista-estudios a .titulo {
+    font-size: 1.3rem;
+    font-weight: 400;
 }
 
 .lista-estudios a:hover {
-    background: #fffcf5;
-    border-color: var(--oro);
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    background-color: #faf9f7;
+    padding-left: 20px;
 }
 
-footer {
-    text-align: center;
-    padding: 40px;
-    color: #888;
-    font-size: 0.8rem;
+.lista-estudios a:hover .titulo {
+    color: var(--oro-fino);
 }
