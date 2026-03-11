@@ -466,6 +466,8 @@ h2 {
     border: 1px solid var(--linea-divisoria);
     transition: all 0.3s ease;
     position: relative;
+   background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 100%);
+box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interior */
 }
 
 .tarjeta-estudio:hover {
@@ -509,7 +511,6 @@ h2 {
     color: var(--oro-profundo);
     text-decoration: none;
     font-weight: 700;
-    border-bottom: 1px solid transparent;
     transition: border 0.3s;
 }
 
