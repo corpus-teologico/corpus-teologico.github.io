@@ -400,7 +400,7 @@ h2 {
 /* ESTILO DEL BOTÓN DE ÍNDICE (MAESTRO) */
 .btn-abrir {
     position: fixed;
-    right: 20px;
+    right: 47px;
     top: 20px; /* Posición inicial arriba */
     z-index: 1000;
     background-color: #151515;
