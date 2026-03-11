@@ -13,7 +13,9 @@
     --fondo-fuera: #f4f1ed;
     --blanco-papel: #ffffff;
 }
-
+div#header-global {
+    display: none;
+}
 /* --- BASE Y FONDO --- */
 body {
     background-color: var(--fondo-fuera);
@@ -29,7 +31,7 @@ body {
     background: var(--blanco-papel);
     max-width: 850px;
     margin: 60px auto;
-    padding: 100px 120px;
+    padding: 40px 120px;
     border: 1px solid var(--linea-divisoria);
     box-shadow: 0 30px 60px rgba(0,0,0,0.05);
     position: relative;
