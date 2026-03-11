@@ -1,13 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. EL MENÚ LATERAL (Con rutas absolutas /estudios/...)
+    // 1. EL MENÚ LATERAL (Rutas absolutas y numeración corregida)
     const menuHTML = `
         <div id="menu-lateral" class="menu-lateral">
             <button id="cerrar-menu" class="btn-cerrar">&times;</button>
             <div class="menu-contenido">
                 <h3>SISTEMA TEOLÓGICO</h3>
-                <a href="/index.html" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
-                <div class="separador-menu"></div>
+                <a href="/index.html" style="color: #9b804e; font-style: italic; border-bottom: 1px solid #333;">Introducción al Corpus</a>
+                
+                <div class="separador-menu" style="margin: 20px 0; height: 1px; background: rgba(155,128,78,0.2);"></div>
+                
                 <a href="/estudios/como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
                 <a href="/estudios/solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
                 <a href="/estudios/la-vida-de-jesus.html">III. La vida de Jesús</a>
@@ -26,21 +28,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 <a href="/estudios/defendiendo-mi-fe.html">XVI. Defendiendo mi fe</a>
                 <a href="/estudios/ciencia-y-fe.html">XVII. Ciencia y fe</a>
                 <a href="/estudios/nuestro-dios-trino.html">XVIII. Nuestro Dios Trino</a>
-                <a href="/estudios/lo-que-esta-por-venir.html">XX. Lo que está por venir</a>
-                <a href="/estudios/el-poder-del-espiritu.html">XXI. El poder del Espíritu</a>
-                <a href="/estudios/la-familia-de-dios.html">XXII. La familia de Dios</a>
-                <a href="/estudios/usar-bien-lo-que-dios-me-da.html">XXIII. Usar bien lo que Dios me da</a>
-                <a href="/estudios/la-guerra-en-mi-interior.html">XXIV. La guerra en mi interior</a>
-                <div class="separador-menu"></div>
+                <a href="/estudios/lo-que-esta-por-venir.html">XIX. Lo que está por venir</a>
+                <a href="/estudios/el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
+                <a href="/estudios/la-familia-de-dios.html">XXI. La familia de Dios</a>
+                <a href="/estudios/usar-bien-lo-que-dios-me-da.html">XXII. Usar bien lo que Dios me da</a>
+                <a href="/estudios/la-guerra-en-mi-interior.html">XXIII. La guerra en mi interior</a>
+                
+                <div class="separador-menu" style="margin: 20px 0; height: 1px; background: rgba(155,128,78,0.2);"></div>
+                
                 <a href="/bibliografia.html" style="color: #9b804e; font-style: italic;">Bibliografía Consultada</a>
             </div>
         </div>
         <button id="abrir-menu" class="btn-abrir">☰ ÍNDICE</button>
     `;
 
-    // 2. CABECERA
+    // 2. CABECERA (Logo STF)
     const headerHTML = `
-        <header style="background-color: #151515; padding: 70px 20px; text-align: center; border-bottom: 1px solid #9b804e; position: relative;">
+        <header style="background-color: #151515; padding: 60px 20px; text-align: center; border-bottom: 1px solid #9b804e; position: relative;">
             <h1 style="font-family: 'Cormorant Garamond', serif; color: #ffffff; font-size: 3rem; font-weight: 300; letter-spacing: 8px; margin: 0;">S T F</h1>
             <p style="font-family: 'Montserrat', sans-serif; color: #888; font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase; margin-top: 15px;">Sistema Teológico Personal</p>
         </header>
@@ -48,13 +52,13 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // 3. PIE DE PÁGINA
     const footerHTML = `
-        <footer style="text-align: center; padding: 50px 20px; margin-top: auto;">
+        <footer style="text-align: center; padding: 50px 20px; margin-top: auto; border-top: 1px solid rgba(155,128,78,0.1);">
             <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #777; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">Roberto Formigo</p>
             <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: #9b804e; margin: 0;">Soli Deo Gloria</p>
         </footer>
     `;
 
-    // INYECCIÓN DE CÓDIGO
+    // INYECCIÓN DE ELEMENTOS AL DOM
     document.body.insertAdjacentHTML('afterbegin', menuHTML);
     
     const hGlobal = document.getElementById('header-global');
@@ -63,11 +67,12 @@ document.addEventListener("DOMContentLoaded", function() {
     if (hGlobal) hGlobal.innerHTML = headerHTML;
     if (fGlobal) fGlobal.innerHTML = footerHTML;
 
-    // LÓGICA DE BOTONES
+    // --- LÓGICA DE INTERACCIÓN DEL MENÚ ---
     const btnAbrir = document.getElementById('abrir-menu');
     const btnCerrar = document.getElementById('cerrar-menu');
     const panel = document.getElementById('menu-lateral');
 
+    // Función Abrir
     if (btnAbrir && panel) {
         btnAbrir.onclick = function(e) { 
             e.stopPropagation();
@@ -75,16 +80,22 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
 
+    // Función Cerrar
     if (btnCerrar && panel) {
-        btnCerrar.onclick = function() { panel.style.right = '-400px'; };
+        btnCerrar.onclick = function(e) { 
+            e.stopPropagation();
+            panel.style.right = '-100%'; 
+        };
     }
 
+    // Cerrar al hacer clic fuera del panel (muy importante en móvil)
     document.addEventListener('click', function(event) {
-        if (panel && !panel.contains(event.target) && panel.style.right === '0px') {
-            panel.style.right = '-400px';
+        if (panel && !panel.contains(event.target) && event.target !== btnAbrir) {
+            panel.style.right = '-100%';
         }
     });
 
+    // Evitar que los clics dentro del menú lo cierren
     if (panel) {
         panel.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -92,11 +103,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// LÓGICA DE SCROLL
+// LÓGICA DE SCROLL (Botón dinámico)
 window.onscroll = function() {
     const btnMenu = document.getElementById('abrir-menu');
     if (btnMenu) {
-        if (window.scrollY > 100) {
+        if (window.scrollY > 150) {
             btnMenu.classList.add('scrolled');
         } else {
             btnMenu.classList.remove('scrolled');
