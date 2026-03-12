@@ -704,21 +704,27 @@ body.alto-contraste .separador-seccion span {
     color: #000 !important;
     font-weight: bold;
 }
-/* --- MENÚ OVERLAY FULLSCREEN --- */
 .menu-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Fondo exterior semi-transparente */
+    background: rgba(0, 0, 0, 0.8);
     z-index: 10005;
-    display: none;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    visibility: hidden; /* Cambiamos display:none por visibility */
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: none; /* No interfiere si está oculto */
+}
+
+.menu-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto; /* Se activa al abrir */
 }
 
 /* --- RECUADRO CENTRAL (EL MODAL) --- */
