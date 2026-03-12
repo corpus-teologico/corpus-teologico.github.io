@@ -78,76 +78,97 @@ const inyectarGemaSabiduria = () => {
 
 inyectarGemaSabiduria();
 
-    // --- 11. DICCIONARIO TEOLÓGICO EXPANDIDO ---
+// --- 11. DICCIONARIO TEOLÓGICO INTEGRAL (STF) ---
 const inicializarDiccionarioPropio = () => {
     const diccionarioSTF = {
-        // --- Doctrina de la Palabra ---
+        // --- BIBLIOLOGÍA (La Palabra) ---
         "inerrancia": "La convicción de que las Escrituras, en sus documentos originales, están libres de error en todo lo que afirman.",
-        "infalibilidad": "La incapacidad de las Escrituras para fallar en su propósito de revelar la verdad de Dios y su voluntad para la salvación.",
-        "sola scriptura": "El principio de que solo la Biblia es la autoridad final y suficiente para la fe y la práctica cristiana.",
-        "canon": "La lista cerrada de libros inspirados por Dios que constituyen la norma de fe y conducta.",
-        
-        // --- Atributos de Dios ---
-        "soberanía": "El ejercicio del poder supremo de Dios sobre toda la creación, dirigiendo todas las cosas según su voluntad divina.",
-        "providencia": "El cuidado continuo por el cual Dios sostiene y gobierna el universo, desde las galaxias hasta el más mínimo detalle.",
-        "omnipotencia": "El poder infinito de Dios para realizar todo lo que es consistente con su naturaleza santa y su propósito.",
-        "santidad": "La separación absoluta de Dios de toda maldad y su pureza infinita que lo distingue de todo lo creado.",
-        "trinidad": "La existencia de un solo Dios en tres personas coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
+        "infalibilidad": "La incapacidad de la Biblia para fallar en su propósito de revelar la verdad salvadora de Dios.",
+        "sola scriptura": "Principio reformado que establece la Biblia como la única autoridad final e infalible para la fe.",
+        "canon": "La colección cerrada de 66 libros inspirados que constituyen la regla de fe del creyente.",
+        "iluminación": "La obra del Espíritu Santo que permite al lector comprender y aplicar la verdad espiritual de la Biblia.",
+        "revelación": "El acto de Dios de comunicarse a la humanidad, ya sea de forma general (creación) o especial (Escrituras).",
 
-        // --- Antropología y Hamartiología (El hombre y el mal) ---
-        "depravación": "La condición del hombre tras la caída, donde el pecado ha afectado todas las facultades humanas: voluntad, mente y corazón.",
-        "pecado": "Cualquier falta de conformidad con la ley de Dios o la transgresión de la misma, que separa al hombre de su Creador.",
-        "caída": "El evento histórico donde la humanidad, en Adán, se rebeló contra Dios, perdiendo su justicia original.",
-        "maldad": "La ausencia o privación del bien debido, no como una sustancia en sí misma, sino como una corrupción de lo que Dios creó bueno.",
-        "libre albedrío": "En el sistema teológico, la capacidad del hombre de elegir según su naturaleza; tras la caída, esta naturaleza está inclinada al pecado.",
+        // --- TEONTOLOGÍA (Atributos de Dios) ---
+        "soberanía": "El gobierno absoluto de Dios sobre toda la creación, ejecutando Su voluntad eterna sin impedimentos.",
+        "providencia": "El cuidado continuo por el cual Dios sostiene, dirige y gobierna todas las criaturas y eventos.",
+        "omnisciencia": "Atributo por el cual Dios posee conocimiento perfecto y total de todas las cosas: pasadas, presentes, futuras y posibles.",
+        "omnipotencia": "El poder ilimitado de Dios para realizar todo lo que es conforme a Su carácter santo.",
+        "omnipresencia": "La presencia total de Dios en todo lugar y tiempo con toda Su plenitud.",
+        "aseidad": "La cualidad de Dios de existir por Sí mismo, sin depender de ninguna causa externa.",
+        "inmutabilidad": "La perfección de Dios por la cual Él no cambia en Su ser, perfecciones, propósitos o promesas.",
+        "trinidad": "Un solo Dios en tres personas distintas, coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
+        "santidad": "La trascendencia y pureza absoluta de Dios, que lo separa de toda criatura y pecado.",
 
-        // --- Soteriología (Salvación) ---
-        "gracia": "El favor inmerecido de Dios hacia los pecadores, mediante el cual otorga salvación y vida eterna a través de Cristo.",
-        "justificación": "El acto judicial donde Dios declara justo al creyente basándose únicamente en la obra de Cristo recibida por fe.",
-        "redención": "El rescate del pecador de la esclavitud del pecado y la muerte mediante el pago del sacrificio de Jesús en la cruz.",
-        "arrepentimiento": "Un cambio de mente y corazón que produce un alejamiento del pecado y un retorno hacia Dios.",
-        "propiciación": "El sacrificio que aplaca la ira justa de Dios contra el pecado, satisfaciendo las demandas de su justicia.",
-        
-        // --- Vida Cristiana ---
-        "santificación": "El proceso progresivo mediante el cual el Espíritu Santo conforma la vida del creyente a la imagen de Cristo.",
-        "exégesis": "La extracción objetiva del significado original de un texto bíblico, evitando imponer ideas propias (eisegesis).",
-        "soli deo gloria": "El fin principal del hombre y de la creación: que toda la gloria sea dada únicamente a Dios."
+        // --- CRISTOLOGÍA (Cristo) ---
+        "encarnación": "El acto por el cual el Hijo eterno de Dios asumió una naturaleza humana completa sin dejar de ser Dios.",
+        "unión hipostática": "La unión de las dos naturalezas (divina y humana) en la única persona de Jesucristo.",
+        "propiciación": "El sacrificio de Cristo que aplaca la ira justa de Dios contra el pecado.",
+        "expiación": "La obra de Cristo en la cruz para cancelar la deuda del pecado y reconciliar al hombre con Dios.",
+        "imputación": "El acto legal donde Dios acredita la justicia de Cristo al creyente y el pecado del creyente a Cristo.",
+
+        // --- ANTROPOLOGÍA Y HAMARTIOLOGÍA (El Hombre y el Mal) ---
+        "depravación": "La corrupción total del hombre tras la caída, afectando intelecto, voluntad y emociones.",
+        "imago dei": "La creación del ser humano 'a imagen de Dios', dotado de capacidades morales y espirituales.",
+        "caída": "La desobediencia histórica de Adán que sumergió a la humanidad en un estado de pecado y muerte.",
+        "maldad": "La privación o corrupción del bien; no una sustancia, sino un desvío del orden divino.",
+        "concupiscencia": "La inclinación desordenada hacia el pecado que reside en el corazón del hombre caído.",
+
+        // --- SOTERIOLOGÍA (Salvación) ---
+        "gracia": "El favor inmerecido de Dios; Su amor activo hacia quienes solo merecen castigo.",
+        "justificación": "Acto judicial donde Dios declara justo al pecador sobre la base de la fe en Cristo.",
+        "regeneración": "El 'nuevo nacimiento'; la obra soberana del Espíritu que da vida espiritual al muerto.",
+        "arrepentimiento": "Cambio radical de mente y dirección respecto al pecado y hacia Dios.",
+        "adopción": "El acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia.",
+        "santificación": "El proceso progresivo de crecimiento en santidad por el cual el creyente es conformado a Cristo.",
+        "perseverancia": "La seguridad de que aquellos que Dios ha salvado serán sostenidos por Él hasta el fin.",
+
+        // --- TÉRMINOS TÉCNICOS Y OTROS ---
+        "exégesis": "La extracción objetiva del sentido original de un texto bíblico.",
+        "hermenéutica": "La ciencia y el arte de interpretar correctamente los textos sagrados.",
+        "escatalogía": "El estudio de las últimas cosas: el retorno de Cristo, el juicio final y la eternidad.",
+        "parusía": "El término técnico para la segunda venida gloriosa de Jesucristo.",
+        "pneumatología": "El estudio teológico de la persona y obra del Espíritu Santo.",
+        "soli deo gloria": "El principio de que todo el propósito de la existencia es la gloria de Dios.",
+        "eclesiología": "La doctrina sobre la naturaleza, misión y estructura de la Iglesia."
     };
 
     const btnExegesis = document.createElement('div');
     btnExegesis.id = 'exegesis-box';
-    btnExegesis.style.cssText = "position:absolute; display:none; background:#1a1a1a; color:#fff; border:1px solid #9b804e; border-radius:4px; padding:15px; font-size:14px; z-index:10001; box-shadow:0 10px 30px rgba(0,0,0,0.6); max-width:300px; line-height:1.5; font-family:'Montserrat',sans-serif;";
+    btnExegesis.style.cssText = "position:absolute; display:none; background:#1a1a1a; color:#fff; border:1px solid #9b804e; border-radius:4px; padding:18px; font-size:14px; z-index:10001; box-shadow:0 10px 40px rgba(0,0,0,0.7); max-width:320px; line-height:1.6; font-family:'Montserrat',sans-serif;";
     document.body.appendChild(btnExegesis);
 
     document.addEventListener('mouseup', (e) => {
-        let seleccion = window.getSelection().toString().trim().toLowerCase();
-        
-        // Normalización simple para plurales (ej: soberanías -> soberanía)
-        if (seleccion.endsWith('s') && seleccion.length > 4) {
-            let singular = seleccion.slice(0, -1);
-            if (diccionarioSTF[singular]) seleccion = singular;
-        }
+        let rawSelection = window.getSelection().toString().trim();
+        let seleccion = rawSelection.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quita tildes para búsqueda
 
-        if (seleccion.length > 3) {
-            if (diccionarioSTF[seleccion]) {
+        // Diccionario con llaves sin tildes para búsqueda fácil
+        const keys = Object.keys(diccionarioSTF).map(k => k.normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+        const index = keys.indexOf(seleccion.endsWith('s') && seleccion.length > 5 ? seleccion.slice(0, -1) : seleccion);
+
+        if (rawSelection.length > 3) {
+            if (index !== -1) {
+                const termReal = Object.keys(diccionarioSTF)[index];
                 btnExegesis.innerHTML = `
-                    <div style="color:#9b804e; font-weight:bold; text-transform:uppercase; font-size:0.6rem; letter-spacing:2px; margin-bottom:8px; border-bottom:1px solid #333; padding-bottom:4px;">Definición del Sistema</div>
-                    <div style="font-family:'Cormorant Garamond', serif; font-size:1.1rem; line-height:1.3;">"${diccionarioSTF[seleccion]}"</div>
+                    <div style="color:#9b804e; font-weight:bold; text-transform:uppercase; font-size:0.65rem; letter-spacing:2px; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">Definición del Sistema</div>
+                    <div style="font-family:'Cormorant Garamond', serif; font-size:1.15rem; color:#eee;">
+                        <b style="color:#fff; text-transform:capitalize;">${termReal}:</b> "${diccionarioSTF[termReal]}"
+                    </div>
                 `;
             } else {
                 btnExegesis.innerHTML = `
-                    <button id="search-external" style="background:transparent; color:#9b804e; border:none; cursor:pointer; font-size:15px; display:flex; align-items:center; gap:10px; font-family:'Montserrat';">
-                        <span style="font-size:18px;">✍</span> Investigar "${seleccion}"
+                    <button id="search-external" style="background:transparent; color:#9b804e; border:none; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:10px; font-family:'Montserrat'; font-weight:500;">
+                        <span style="font-size:18px;">✍</span> Investigar "${rawSelection}"
                     </button>
                 `;
                 document.getElementById('search-external').onclick = () => {
-                    window.open(`https://www.google.com/search?q=${encodeURIComponent(seleccion + " teología cristiana")}`, '_blank');
+                    window.open(`https://www.google.com/search?q=${encodeURIComponent(rawSelection + " teología cristiana")}`, '_blank');
                 };
             }
 
-            // Posicionamiento inteligente
             btnExegesis.style.left = `${e.pageX + 10}px`;
-            btnExegesis.style.top = `${e.pageY - 80}px`;
+            btnExegesis.style.top = `${e.pageY - 100}px`;
             btnExegesis.style.display = 'block';
         }
     });
@@ -158,6 +179,8 @@ const inicializarDiccionarioPropio = () => {
 };
 
 inicializarDiccionarioPropio();
+
+    
  // --- 9. MARCADOR DE LECTURA (Save State) ---
 const inicializarMarcadorLectura = () => {
     const idPagina = window.location.pathname; // Identificador único por tratado
