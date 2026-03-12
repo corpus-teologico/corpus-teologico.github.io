@@ -3,6 +3,18 @@
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+
+
+   const botonMenu = document.getElementById('abrir-menu');
+    
+    window.addEventListener('scroll', () => {
+        // Si bajamos más de 100px, el botón se desplaza al centro
+        if (window.scrollY > 100) {
+            botonMenu.classList.add('scrolled');
+        } else {
+            botonMenu.classList.remove('scrolled');
+        }
+    });
     // --- 0. CONFIGURACIÓN DE RUTAS Y CONTEXTO ---
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
