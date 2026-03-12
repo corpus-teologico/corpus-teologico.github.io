@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Ejecutar al cargar la página
     aplicarClaseSoporte();
+    window.addEventListener('resize', aplicarClaseSoporte);
     
     // --- CONFIGURACIÓN DE SEO DINÁMICO ---
     const seoConfig = {
