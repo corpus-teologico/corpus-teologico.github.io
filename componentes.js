@@ -23,7 +23,74 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
     crearBarraProgreso();
-    
+ // --- 9. MARCADOR DE LECTURA (Save State) ---
+const inicializarMarcadorLectura = () => {
+    const idPagina = window.location.pathname; // Identificador único por tratado
+    const posicionGuardada = localStorage.getItem(`scroll-pos-${idPagina}`);
+
+    // 1. Guardar la posición mientras el usuario hace scroll (con debounce para no saturar)
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            const scrollActual = window.scrollY || document.documentElement.scrollTop;
+            // Solo guardamos si ha bajado más de 300px para evitar marcar el inicio
+            if (scrollActual > 300) {
+                localStorage.setItem(`scroll-pos-${idPagina}`, scrollActual);
+            }
+        }, 500);
+    });
+
+    // 2. Si existe una posición previa, preguntar al lector
+    if (posicionGuardada && posicionGuardada > 300) {
+        // Crear un pequeño aviso elegante
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed; bottom: 20px; right: 20px; 
+            background: #1a1a1a; color: #fff; border: 1px solid #9b804e;
+            padding: 15px 20px; font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem; z-index: 10002; display: flex;
+            flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: aparecerBoton 0.5s ease-out;
+        `;
+
+        toast.innerHTML = `
+            <span style="color: #9b804e; letter-spacing: 1px; font-weight: bold;">LECTURA PENDIENTE</span>
+            <span style="font-style: italic; opacity: 0.8;">¿Desea retomar el estudio donde lo dejó?</span>
+            <div style="display: flex; gap: 10px; margin-top: 5px;">
+                <button id="btn-retomar" style="background: #9b804e; color: white; border: none; padding: 5px 12px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.6rem; font-weight: bold; text-transform: uppercase;">Retomar</button>
+                <button id="btn-ignorar" style="background: transparent; color: #888; border: 1px solid #444; padding: 5px 12px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.6rem; text-transform: uppercase;">Ignorar</button>
+            </div>
+        `;
+        document.body.appendChild(toast);
+
+        // Lógica de los botones
+        document.getElementById('btn-retomar').onclick = () => {
+            window.scrollTo({
+                top: parseInt(posicionGuardada),
+                behavior: 'smooth'
+            });
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 1000);
+        };
+
+        document.getElementById('btn-ignorar').onclick = () => {
+            localStorage.removeItem(`scroll-pos-${idPagina}`);
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 1000);
+        };
+
+        // El aviso desaparece solo tras 15 segundos si no se interactúa
+        setTimeout(() => {
+            if (toast) {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 1000);
+            }
+        }, 15000);
+    }
+};
+
+inicializarMarcadorLectura();   
 // --- 8. RECORDATORIO CÍCLICO DE FUNCIONES ---
 const iniciarRecordatorioCiclico = () => {
     // Creamos el elemento una sola vez
