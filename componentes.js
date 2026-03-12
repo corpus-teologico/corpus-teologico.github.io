@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
 
-   // --- 1. BASE DE DATOS DOCTRINAL (DICCIONARIO MAESTRO INTEGRAL EXPANDIDO) ---
+    // --- 1. BASE DE DATOS DOCTRINAL (DICCIONARIO MAESTRO) ---
     const diccionarioSTF = {
         "Abba": "Término arameo que denota una intimidad profunda y filial con Dios Padre, expresando confianza y seguridad.",
         "Adopción": "Acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia celestial.",
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (document.getElementById('progress-bar')) return;
         const barra = document.createElement('div');
         barra.id = 'progress-bar';
-        barra.style.cssText = "position:fixed; top:0; left:0; height:3px; background:#9b804e; z-index:10000; width:0%; transition: width 0.1s ease;";
+        barra.style.cssText = "position:fixed; top:0; left:0; height:3px; background:#9b804e; z-index:11000; width:0%; transition: width 0.1s ease;";
         document.body.appendChild(barra);
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.addEventListener('mousedown', (e) => { if (!box.contains(e.target)) box.style.display = 'none'; });
     };
 
- // --- 4. GENERADOR DE PÁGINA GLOSARIO (ARQUITECTURA PROFESIONAL STF) ---
+    // --- 4. GENERADOR DE PÁGINA GLOSARIO ---
     const generarPaginaGlosario = () => {
         const contenedor = document.getElementById('glosario-dinamico');
         const nav = document.getElementById('alfabeto-nav');
@@ -156,21 +156,14 @@ document.addEventListener("DOMContentLoaded", function() {
         contenedor.innerHTML = ""; 
         if(nav) nav.innerHTML = "";
 
-        // Ordenar términos alfabéticamente
         const ordenados = Object.keys(diccionarioSTF).sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
         let letras = new Set();
 
         ordenados.forEach(term => {
             const L = term[0].toUpperCase();
-            
-            // Crear encabezado de letra elegante
             if (!letras.has(L)) {
                 letras.add(L);
-                contenedor.innerHTML += `
-                    <div class="separador-seccion" id="letra-${L}" style="margin-top: 100px; margin-bottom: 50px;">
-                        <span>SECCIÓN ${L}</span>
-                    </div>`;
-                
+                contenedor.innerHTML += `<div class="separador-seccion" id="letra-${L}" style="margin-top: 100px; margin-bottom: 50px;"><span>SECCIÓN ${L}</span></div>`;
                 if(nav) {
                     const a = document.createElement('a');
                     a.href = `#letra-${L}`; a.innerText = L;
@@ -178,87 +171,102 @@ document.addEventListener("DOMContentLoaded", function() {
                     nav.appendChild(a);
                 }
             }
-
-            // Bloque de Término con look de Tratado
             contenedor.innerHTML += `
-                <article class="entrada-glosario-maestra" style="margin-bottom: 45px; transition: 0.3s;">
-                    <div class="introduccion-texto" style="text-align: justify;">
-                        <p style="font-size: 1.3rem; line-height: 1.7; border-left: 3px solid #9b804e; padding-left: 35px; font-family: 'Cormorant Garamond', serif; margin:0;">
-                            <strong style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #9b804e; display: block; margin-bottom: 12px; letter-spacing: 3px; font-weight: 500; text-transform: uppercase;">
-                                ${term}
-                            </strong>
-                            ${diccionarioSTF[term]}
-                        </p>
-                    </div>
+                <article class="entrada-glosario-maestra" style="margin-bottom: 45px; text-align: justify;">
+                    <p style="font-size: 1.3rem; line-height: 1.7; border-left: 3px solid #9b804e; padding-left: 35px; font-family: 'Cormorant Garamond', serif; margin:0;">
+                        <strong style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #9b804e; display: block; margin-bottom: 12px; letter-spacing: 3px; font-weight: 500; text-transform: uppercase;">${term}</strong>
+                        ${diccionarioSTF[term]}
+                    </p>
                 </article>`;
         });
     };
 
-  // --- 5. COMPONENTES VISUALES Y MENÚ COMPLETO ---
+    // --- 5. CONFIGURACIÓN VISUAL Y MENÚ FULLSCREEN (POPOVER) ---
     const setupVisuals = () => {
-        // ... (mantén el código anterior de los links de Google Fonts)
+        // Inyectar Estilos Críticos para el Menú Fullscreen
+        const styles = `
+            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,10,0.98); z-index: 10005; display: none; opacity: 0; transition: opacity 0.4s ease; overflow-y: auto; }
+            .menu-full-content { display: flex; flex-direction: column; align-items: center; padding: 100px 20px; text-align: center; }
+            .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1100px; margin-top: 40px; }
+            .nav-col { display: flex; flex-direction: column; gap: 15px; }
+            .nav-link-full { color: #666; text-decoration: none; font-family: 'Cormorant Garamond'; font-size: 1.4rem; transition: 0.3s; padding: 5px 15px; border-left: 2px solid transparent; }
+            .nav-link-full:hover { color: #9b804e; transform: translateX(10px); }
+            .nav-link-full.active-page { color: #fff !important; border-left: 2px solid #9b804e; font-weight: bold; background: rgba(155,128,78,0.1); }
+            .btn-abrir-full { position: fixed; top: 25px; right: 25px; background: #1a1a1a; color: #9b804e; border: 1px solid #9b804e; padding: 10px 20px; font-family: 'Montserrat'; font-size: 0.7rem; letter-spacing: 2px; cursor: pointer; z-index: 9999; }
+            .btn-cerrar-full { position: absolute; top: 30px; right: 40px; background: none; border: none; color: #9b804e; font-size: 3rem; cursor: pointer; }
+            @media (max-width: 768px) { .nav-grid { grid-template-columns: 1fr; } .nav-link-full { font-size: 1.1rem; } }
+        `;
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = styles;
+        head.appendChild(styleSheet);
 
-        // Lógica para detectar página activa
-        const paginaActual = window.location.pathname.split("/").pop() || "index.html";
+        if (!document.querySelector('link[rel="icon"]')) {
+            const headContent = `
+                <link rel="icon" type="image/svg+xml" href="${rutaBase}favicon.svg">
+                <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+                <link rel="stylesheet" href="${rutaBase}style.css">
+            `;
+            head.insertAdjacentHTML('beforeend', headContent);
+        }
 
-        const links = [
-            { href: "index.html", text: "Introducción al Corpus", especial: "italic" },
-            { href: "glosario.html", text: "Glosario Maestro", especial: "bold" },
-            { href: "carta-abierta.html", text: "Carta Abierta" },
-            { separador: true },
-            { href: "estudios/como-nos-habla-dios.html", text: "I. ¿Cómo nos habla Dios?" },
-            { href: "estudios/solo-la-biblia-basta.html", text: "II. Sólo la Biblia basta" },
-            { href: "estudios/la-armonia-de-los-evangelios.html", text: "III. Armonía de los Evangelios" },
-            { href: "estudios/aprender-a-descansar.html", text: "IV. Aprender a descansar" },
-            { href: "estudios/conocer-para-amar.html", text: "V. Conocer para amar" },
-            { href: "estudios/de-donde-viene-el-mal.html", text: "VI. ¿De dónde viene el mal?" },
-            { href: "estudios/un-mundo-roto.html", text: "VII. Un mundo roto" },
-            { href: "estudios/el-problema-del-pecado.html", text: "VIII. El problema del pecado" },
-            { href: "estudios/nuestra-oscuridad.html", text: "IX. Nuestra oscuridad" },
-            { href: "estudios/el-dios-justo-y-amoroso.html", text: "X. El Dios justo y amoroso" },
-            { href: "estudios/volver-a-dios.html", text: "XI. Volver a Dios" },
-            { href: "estudios/ser-de-una-sola-pieza.html", text: "XII. Ser de una sola pieza" },
-            { href: "estudios/mi-amistad-con-dios.html", text: "XIII. Mi amistad con Dios" },
-            { href: "estudios/el-matrimonio-ideal.html", text: "XIV. El matrimonio ideal" },
-            { href: "estudios/libertad-de-las-cadenas.html", text: "XV. Libertad de las cadenas" },
-            { href: "estudios/defendiendo-mi-fe.html", text: "XVI. Defendiendo mi fe" },
-            { href: "estudios/ciencia-y-fe.html", text: "XVII. Ciencia y fe" },
-            { href: "estudios/nuestro-dios-trino.html", text: "XVIII. Nuestro Dios Trino" },
-            { href: "estudios/lo-que-esta-por-venir.html", text: "XIX. Lo que está por venir" },
-            { href: "estudios/el-poder-del-espiritu.html", text: "XX. El poder del Espíritu" },
-            { href: "estudios/la-familia-de-dios.html", text: "XXI. La familia de Dios" },
-            { href: "estudios/usar-bien-lo-que-dios-me-da.html", text: "XXII. Usar bien lo que Dios me da" },
-            { href: "estudios/la-guerra-en-mi-interior.html", text: "XXIII. La guerra en mi interior" },
-            { separador: true },
-            { href: "bibliografia.html", text: "Bibliografía", color: "#777" }
-        ];
+        const menuHTML = `
+            <div id="menu-fullscreen" class="menu-overlay">
+                <button id="cerrar-menu" class="btn-cerrar-full">&times;</button>
+                <div class="menu-full-content">
+                    <h3 style="letter-spacing: 6px; color: #9b804e; font-size: 0.7rem; margin-bottom: 20px;">SISTEMA TEOLÓGICO FORMIGO</h3>
+                    <div class="nav-grid">
+                        <div class="nav-col">
+                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción al Corpus</a>
+                            <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario Maestro</a>
+                            <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
+                            <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">Bibliografía</a>
+                        </div>
+                        <div class="nav-col">
+                            <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link-full" data-path="como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
+                            <a href="${rutaBase}estudios/solo-la-biblia-basta.html" class="nav-link-full" data-path="solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
+                            <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html" class="nav-link-full" data-path="la-armonia-de-los-evangelios.html">III. Armonía de los Evangelios</a>
+                            <a href="${rutaBase}estudios/aprender-a-descansar.html" class="nav-link-full" data-path="aprender-a-descansar.html">IV. Aprender a descansar</a>
+                            <a href="${rutaBase}estudios/conocer-para-amar.html" class="nav-link-full" data-path="conocer-para-amar.html">V. Conocer para amar</a>
+                            <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link-full" data-path="de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
+                            <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VII. Un mundo roto</a>
+                            <a href="${rutaBase}estudios/el-problema-del-pecado.html" class="nav-link-full" data-path="el-problema-del-pecado.html">VIII. El problema del pecado</a>
+                            <a href="${rutaBase}estudios/nuestra-oscuridad.html" class="nav-link-full" data-path="nuestra-oscuridad.html">IX. Nuestra oscuridad</a>
+                            <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link-full" data-path="el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
+                            <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. Volver a Dios</a>
+                            <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XII. Ser de una sola pieza</a>
+                            <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link-full" data-path="mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
+                            <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link-full" data-path="el-matrimonio-ideal.html">XIV. El matrimonio ideal</a>
+                            <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link-full" data-path="libertad-de-las-cadenas.html">XV. Libertad de las cadenas</a>
+                            <a href="${rutaBase}estudios/defendiendo-mi-fe.html" class="nav-link-full" data-path="defendiendo-mi-fe.html">XVI. Defendiendo mi fe</a>
+                            <a href="${rutaBase}estudios/ciencia-y-fe.html" class="nav-link-full" data-path="ciencia-y-fe.html">XVII. Ciencia y fe</a>
+                            <a href="${rutaBase}estudios/nuestro-dios-trino.html" class="nav-link-full" data-path="nuestro-dios-trino.html">XVIII. Nuestro Dios Trino</a>
+                            <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XIX. Lo que está por venir</a>
+                            <a href="${rutaBase}estudios/el-poder-del-espiritu.html" class="nav-link-full" data-path="el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
+                            <a href="${rutaBase}estudios/la-familia-de-dios.html" class="nav-link-full" data-path="la-familia-de-dios.html">XXI. La familia de Dios</a>
+                            <a href="${rutaBase}estudios/usar-bien-lo-que-dios-me-da.html" class="nav-link-full" data-path="usar-bien-lo-que-dios-me-da.html">XXII. Usar bien lo que Dios me da</a>
+                            <a href="${rutaBase}estudios/la-guerra-en-mi-interior.html" class="nav-link-full" data-path="la-guerra-en-mi-interior.html">XXIII. La guerra en mi interior</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="abrir-menu" class="btn-abrir-full">☰ ÍNDICE</button>
+        `;
+        document.body.insertAdjacentHTML('afterbegin', menuHTML);
 
-        let menuLinksHTML = "";
-        links.forEach(link => {
-            if (link.separador) {
-                menuLinksHTML += `<div class="separador-menu"></div>`;
-            } else {
-                const esActivo = link.href.includes(paginaActual);
-                const styleActivo = esActivo ? "color: #fff !important; font-weight: bold; border-left: 2px solid #9b804e; padding-left: 15px; background: rgba(155, 128, 78, 0.1);" : "";
-                const hrefFinal = esEstudio ? (link.href.includes('estudios/') ? link.href.replace('estudios/', './') : '../' + link.href) : (link.href.includes('estudios/') ? './' + link.href : link.href);
-
-                menuLinksHTML += `<a href="${hrefFinal}" style="${link.color ? 'color:'+link.color+';' : ''} ${link.especial === 'italic' ? 'font-style:italic;' : ''} ${styleActivo}">${link.text} ${esActivo ? ' ⮕' : ''}</a>`;
+        // Resaltar Página Activa
+        const pathActual = window.location.pathname.toLowerCase();
+        document.querySelectorAll('.nav-link-full').forEach(link => {
+            const linkPath = link.getAttribute('data-path').toLowerCase();
+            if (pathActual.includes(linkPath)) {
+                link.classList.add('active-page');
             }
         });
 
-        const menuHTML = `
-            <div id="menu-lateral" class="menu-lateral">
-                <button id="cerrar-menu" class="btn-cerrar">&times;</button>
-                <div class="menu-contenido">
-                    <h3 style="letter-spacing: 4px; font-size: 0.7rem; color: #555; margin-bottom: 20px;">SISTEMA TEOLÓGICO</h3>
-                    ${menuLinksHTML}
-                </div>
-            </div>
-            <button id="abrir-menu" class="btn-abrir">☰ ÍNDICE</button>
-        `;
-        document.body.insertAdjacentHTML('afterbegin', menuHTML);
-        
-        // ... (resto de headers y footers)
+        // Headers y Footers
+        const hGlobal = document.getElementById('header-global');
+        const fGlobal = document.getElementById('footer-global');
+        if (hGlobal) hGlobal.innerHTML = `<header style="background-color:#151515; padding:70px 20px; text-align:center; border-bottom:1px solid #9b804e;"><h1 style="font-family:'Cormorant Garamond',serif; color:#fff; font-size:3rem; letter-spacing:8px; margin:0;">S T F</h1><p style="font-family:'Montserrat',sans-serif; color:#888; font-size:0.7rem; letter-spacing:5px; text-transform:uppercase; margin-top:15px;">Sistema Teológico Personal</p></header>`;
+        if (fGlobal) fGlobal.innerHTML = `<footer style="text-align:center; padding:50px 20px; margin-top:auto;"><p style="font-family:'Montserrat',sans-serif; font-size:0.75rem; color:#777; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px;">Roberto Formigo</p><p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem; color:#9b804e; margin:0;">Soli Deo Gloria</p></footer>`;
     };
 
     // --- 6. GEMAS DE SABIDURÍA ---
@@ -282,9 +290,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    // --- 7. CITAS, MARCADOR Y ACCESIBILIDAD ---
+    // --- 7. UTILIDADES ---
     const inicializarUtilidades = () => {
-        // Citas automáticas
         document.addEventListener('copy', (e) => {
             const s = window.getSelection();
             if (s.toString().length < 50) return;
@@ -293,7 +300,6 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
         });
 
-        // Marcador de lectura
         const id = window.location.pathname;
         const pos = localStorage.getItem(`scroll-pos-${id}`);
         window.addEventListener('scroll', () => { if (window.scrollY > 500) localStorage.setItem(`scroll-pos-${id}`, window.scrollY); });
@@ -306,7 +312,6 @@ document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => t.remove(), 12000);
         }
 
-        // Accesibilidad (Alto Contraste)
         const btnAcc = document.createElement('button');
         btnAcc.innerHTML = '◐';
         btnAcc.style.cssText = "position:fixed; bottom:20px; left:20px; z-index:9999; width:45px; height:45px; border-radius:50%; background:#9b804e; color:#fff; border:none; cursor:pointer; font-size:20px;";
@@ -318,20 +323,32 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     };
 
-    // --- 8. CONTROL DEL MENÚ LATERAL ---
+    // --- 8. CONTROL DEL MENÚ FULLSCREEN ---
     const inicializarMenu = () => {
         const btnAbrir = document.getElementById('abrir-menu');
         const btnCerrar = document.getElementById('cerrar-menu');
-        const panel = document.getElementById('menu-lateral');
-        if(!btnAbrir || !panel) return;
+        const overlay = document.getElementById('menu-fullscreen');
+        if(!btnAbrir || !overlay) return;
 
-        btnAbrir.onclick = (e) => { e.stopPropagation(); panel.style.right = '0'; };
-        btnCerrar.onclick = () => { panel.style.right = '-400px'; };
-        document.addEventListener('click', (e) => { if (!panel.contains(e.target) && e.target !== btnAbrir) panel.style.right = '-400px'; });
+        btnAbrir.onclick = () => {
+            overlay.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Bloquear scroll fondo
+            setTimeout(() => overlay.style.opacity = '1', 10);
+        };
+
+        btnCerrar.onclick = () => {
+            overlay.style.opacity = '0';
+            document.body.style.overflow = 'auto'; // Restaurar scroll
+            setTimeout(() => overlay.style.display = 'none', 400);
+        };
         
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) btnAbrir.style.opacity = "0.8";
-            else btnAbrir.style.opacity = "1";
+        // Cerrar al hacer click en un enlace
+        overlay.querySelectorAll('a').forEach(link => {
+            link.onclick = () => {
+                overlay.style.opacity = '0';
+                document.body.style.overflow = 'auto';
+                setTimeout(() => overlay.style.display = 'none', 400);
+            };
         });
     };
 
