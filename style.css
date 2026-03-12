@@ -531,4 +531,35 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
 .media-xs .panel-tecnico {
     padding: 20px !important;
 }
+/* --- BARRA DE SCROLL GLOBAL DEL NAVEGADOR (ORO STF) --- */
 
+/* 1. Ancho y Estilo General */
+::-webkit-scrollbar {
+    width: 12px; /* Un grosor elegante para escritorio */
+}
+
+/* 2. Fondo de la barra (el carril por donde desliza) */
+::-webkit-scrollbar-track {
+    background: #0a0a0a; /* Un negro profundo para que no distraiga */
+    border-left: 1px solid #1a1a1a;
+}
+
+/* 3. El tirador (la barra que se mueve) */
+::-webkit-scrollbar-thumb {
+    background: #9b804e; /* Tu color Oro característico */
+    border-radius: 10px;
+    /* Creamos un borde del mismo color que el fondo para que la barra parezca "flotar" */
+    border: 3px solid #0a0a0a; 
+}
+
+/* 4. Efecto al pasar el ratón */
+::-webkit-scrollbar-thumb:hover {
+    background: #c5a059; /* Un oro más vivo al tocarlo */
+    cursor: pointer;
+}
+
+/* Soporte para Firefox (Propiedades estándar) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #9b804e #0a0a0a;
+}
