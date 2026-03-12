@@ -77,6 +77,87 @@ const inyectarGemaSabiduria = () => {
 };
 
 inyectarGemaSabiduria();
+
+    // --- 11. DICCIONARIO TEOLÓGICO EXPANDIDO ---
+const inicializarDiccionarioPropio = () => {
+    const diccionarioSTF = {
+        // --- Doctrina de la Palabra ---
+        "inerrancia": "La convicción de que las Escrituras, en sus documentos originales, están libres de error en todo lo que afirman.",
+        "infalibilidad": "La incapacidad de las Escrituras para fallar en su propósito de revelar la verdad de Dios y su voluntad para la salvación.",
+        "sola scriptura": "El principio de que solo la Biblia es la autoridad final y suficiente para la fe y la práctica cristiana.",
+        "canon": "La lista cerrada de libros inspirados por Dios que constituyen la norma de fe y conducta.",
+        
+        // --- Atributos de Dios ---
+        "soberanía": "El ejercicio del poder supremo de Dios sobre toda la creación, dirigiendo todas las cosas según su voluntad divina.",
+        "providencia": "El cuidado continuo por el cual Dios sostiene y gobierna el universo, desde las galaxias hasta el más mínimo detalle.",
+        "omnipotencia": "El poder infinito de Dios para realizar todo lo que es consistente con su naturaleza santa y su propósito.",
+        "santidad": "La separación absoluta de Dios de toda maldad y su pureza infinita que lo distingue de todo lo creado.",
+        "trinidad": "La existencia de un solo Dios en tres personas coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
+
+        // --- Antropología y Hamartiología (El hombre y el mal) ---
+        "depravación": "La condición del hombre tras la caída, donde el pecado ha afectado todas las facultades humanas: voluntad, mente y corazón.",
+        "pecado": "Cualquier falta de conformidad con la ley de Dios o la transgresión de la misma, que separa al hombre de su Creador.",
+        "caída": "El evento histórico donde la humanidad, en Adán, se rebeló contra Dios, perdiendo su justicia original.",
+        "maldad": "La ausencia o privación del bien debido, no como una sustancia en sí misma, sino como una corrupción de lo que Dios creó bueno.",
+        "libre albedrío": "En el sistema teológico, la capacidad del hombre de elegir según su naturaleza; tras la caída, esta naturaleza está inclinada al pecado.",
+
+        // --- Soteriología (Salvación) ---
+        "gracia": "El favor inmerecido de Dios hacia los pecadores, mediante el cual otorga salvación y vida eterna a través de Cristo.",
+        "justificación": "El acto judicial donde Dios declara justo al creyente basándose únicamente en la obra de Cristo recibida por fe.",
+        "redención": "El rescate del pecador de la esclavitud del pecado y la muerte mediante el pago del sacrificio de Jesús en la cruz.",
+        "arrepentimiento": "Un cambio de mente y corazón que produce un alejamiento del pecado y un retorno hacia Dios.",
+        "propiciación": "El sacrificio que aplaca la ira justa de Dios contra el pecado, satisfaciendo las demandas de su justicia.",
+        
+        // --- Vida Cristiana ---
+        "santificación": "El proceso progresivo mediante el cual el Espíritu Santo conforma la vida del creyente a la imagen de Cristo.",
+        "exégesis": "La extracción objetiva del significado original de un texto bíblico, evitando imponer ideas propias (eisegesis).",
+        "soli deo gloria": "El fin principal del hombre y de la creación: que toda la gloria sea dada únicamente a Dios."
+    };
+
+    const btnExegesis = document.createElement('div');
+    btnExegesis.id = 'exegesis-box';
+    btnExegesis.style.cssText = "position:absolute; display:none; background:#1a1a1a; color:#fff; border:1px solid #9b804e; border-radius:4px; padding:15px; font-size:14px; z-index:10001; box-shadow:0 10px 30px rgba(0,0,0,0.6); max-width:300px; line-height:1.5; font-family:'Montserrat',sans-serif;";
+    document.body.appendChild(btnExegesis);
+
+    document.addEventListener('mouseup', (e) => {
+        let seleccion = window.getSelection().toString().trim().toLowerCase();
+        
+        // Normalización simple para plurales (ej: soberanías -> soberanía)
+        if (seleccion.endsWith('s') && seleccion.length > 4) {
+            let singular = seleccion.slice(0, -1);
+            if (diccionarioSTF[singular]) seleccion = singular;
+        }
+
+        if (seleccion.length > 3) {
+            if (diccionarioSTF[seleccion]) {
+                btnExegesis.innerHTML = `
+                    <div style="color:#9b804e; font-weight:bold; text-transform:uppercase; font-size:0.6rem; letter-spacing:2px; margin-bottom:8px; border-bottom:1px solid #333; padding-bottom:4px;">Definición del Sistema</div>
+                    <div style="font-family:'Cormorant Garamond', serif; font-size:1.1rem; line-height:1.3;">"${diccionarioSTF[seleccion]}"</div>
+                `;
+            } else {
+                btnExegesis.innerHTML = `
+                    <button id="search-external" style="background:transparent; color:#9b804e; border:none; cursor:pointer; font-size:15px; display:flex; align-items:center; gap:10px; font-family:'Montserrat';">
+                        <span style="font-size:18px;">✍</span> Investigar "${seleccion}"
+                    </button>
+                `;
+                document.getElementById('search-external').onclick = () => {
+                    window.open(`https://www.google.com/search?q=${encodeURIComponent(seleccion + " teología cristiana")}`, '_blank');
+                };
+            }
+
+            // Posicionamiento inteligente
+            btnExegesis.style.left = `${e.pageX + 10}px`;
+            btnExegesis.style.top = `${e.pageY - 80}px`;
+            btnExegesis.style.display = 'block';
+        }
+    });
+
+    document.addEventListener('mousedown', (e) => {
+        if (!btnExegesis.contains(e.target)) btnExegesis.style.display = 'none';
+    });
+};
+
+inicializarDiccionarioPropio();
  // --- 9. MARCADOR DE LECTURA (Save State) ---
 const inicializarMarcadorLectura = () => {
     const idPagina = window.location.pathname; // Identificador único por tratado
