@@ -1,4 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
+// --- DETECCIÓN DE DISPOSITIVO (Mobile vs Desktop) ---
+    function aplicarClaseSoporte() {
+        const htmlElement = document.documentElement; // Selecciona la etiqueta <html>
+        const anchoPantalla = window.innerWidth;
+
+        // Limpiamos clases previas para evitar duplicados al redimensionar
+        htmlElement.classList.remove('media-xs', 'media-lg');
+
+        if (anchoPantalla < 768) {
+            htmlElement.classList.add('media-xs');
+            console.log("Soporte detectado: Móvil (media-xs)");
+        } else {
+            htmlElement.classList.add('media-lg');
+            console.log("Soporte detectado: Escritorio (media-lg)");
+        }
+    }
+
+    // Ejecutar al cargar la página
+    aplicarClaseSoporte();
+    
     // --- CONFIGURACIÓN DE SEO DINÁMICO ---
     const seoConfig = {
         description: "Sistema Teológico Personal de Roberto Formigo. Un estudio profundo sobre la soberanía de Dios, la Sola Gratia y el despertar espiritual a través de las Escrituras.",
