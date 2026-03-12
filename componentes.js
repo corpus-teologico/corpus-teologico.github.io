@@ -276,39 +276,7 @@ const iniciarRecordatorioCiclico = () => {
 };
 
 iniciarRecordatorioCiclico();
-    // --- 2. HERRAMIENTA DE EXÉGESIS (Selección de texto) ---
-    const inicializarHerramientaExegesis = () => {
-        let btnExegesis = document.getElementById('btn-exegesis');
-        if (!btnExegesis) {
-            btnExegesis = document.createElement('button');
-            btnExegesis.id = 'btn-exegesis';
-            btnExegesis.innerHTML = '✍'; 
-            btnExegesis.title = 'Consultar término teológico';
-            btnExegesis.style.cssText = "position:absolute; display:none; background:#1a1a1a; color:#9b804e; border:1px solid #9b804e; border-radius:4px; padding:5px 10px; font-size:16px; cursor:pointer; z-index:10001; box-shadow:0 4px 10px rgba(0,0,0,0.3);";
-            document.body.appendChild(btnExegesis);
-        }
-
-        document.addEventListener('mouseup', (e) => {
-            const seleccion = window.getSelection().toString().trim();
-            if (seleccion.length > 3) {
-                btnExegesis.style.left = `${e.pageX + 5}px`;
-                btnExegesis.style.top = `${e.pageY - 45}px`;
-                btnExegesis.style.display = 'block';
-                
-                btnExegesis.onclick = () => {
-                    const url = `https://www.google.com/search?q=${encodeURIComponent(seleccion + " teología cristiana")}`;
-                    window.open(url, '_blank');
-                    btnExegesis.style.display = 'none';
-                    window.getSelection().removeAllRanges(); // Limpia la selección azul
-                };
-            }
-        });
-
-        document.addEventListener('mousedown', (e) => {
-            if (e.target !== btnExegesis) btnExegesis.style.display = 'none';
-        });
-    };
-    inicializarHerramientaExegesis();
+ 
 
     // --- 3. FUNCIÓN DE ACCESIBILIDAD ---
     const inicializarAccesibilidad = () => {
