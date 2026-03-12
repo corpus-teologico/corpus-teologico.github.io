@@ -5,51 +5,45 @@ document.addEventListener("DOMContentLoaded", function() {
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
 
-    // --- 1. BASE DE DATOS DOCTRINAL (DICCIONARIO MAESTRO) ---
+   // --- 1. BASE DE DATOS DOCTRINAL (DICCIONARIO MAESTRO INTEGRAL) ---
     const diccionarioSTF = {
-        "inerrancia": "La convicción de que las Escrituras, en sus documentos originales, están libres de error en todo lo que afirman.",
-        "infalibilidad": "La incapacidad de la Biblia para fallar en su propósito de revelar la verdad salvadora de Dios.",
-        "sola scriptura": "Principio reformado que establece la Biblia como la única autoridad final e infalible para la fe.",
-        "canon": "La colección cerrada de 66 libros inspirados que constituyen la regla de fe del creyente.",
-        "iluminación": "La obra del Espíritu Santo que permite al lector comprender y aplicar la verdad espiritual de la Biblia.",
-        "revelación": "El acto de Dios de comunicarse a la humanidad, ya sea de forma general (creación) o especial (Escrituras).",
-        "inspiración": "La influencia sobrenatural del Espíritu Santo sobre los autores bíblicos para que escribieran exactamente lo que Dios quería.",
-        "hermenéutica": "La ciencia y el arte de interpretar correctamente el significado de los textos bíblicos.",
-        "soberanía": "El gobierno absoluto de Dios sobre toda la creación, ejecutando Su voluntad eterna sin impedimentos.",
-        "providencia": "El cuidado continuo por el cual Dios sostiene, dirige y gobierna todas las criaturas y eventos.",
-        "omnisciencia": "Atributo por el cual Dios posee conocimiento perfecto y total de todas las cosas: pasadas, presentes, futuras y posibles.",
-        "omnipotencia": "El poder ilimitado de Dios para realizar todo lo que es conforme a Su carácter santo.",
-        "omnipresencia": "La presencia total de Dios en todo lugar y tiempo con toda Su plenitud.",
-        "aseidad": "La cualidad de Dios de existir por Sí mismo, sin depender de ninguna causa externa.",
-        "trinidad": "Un solo Dios en tres personas distintas, coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
-        "inmutabilidad": "La perfección de Dios por la cual Él no cambia en Su ser, propósitos o promesas.",
-        "santidad": "La separación absoluta de Dios de toda maldad y Su pureza infinita que lo distingue de todo lo creado.",
-        "trascendencia": "La existencia de Dios por encima y más allá de los límites del universo creado.",
-        "inmanencia": "La presencia y participación activa de Dios dentro de Su creación sin mezclarse con ella.",
-        "encarnación": "El acto por el cual el Hijo eterno de Dios asumió una naturaleza humana completa sin dejar de ser Dios.",
-        "unión hipostática": "La unión misteriosa de las naturalezas divina y humana en la única persona de Jesucristo.",
-        "pneumatología": "El estudio teológico de la persona y la obra del Espíritu Santo.",
-        "paráclito": "Término para el Espíritu Santo como Consolador, Abogado o Ayudador enviado por el Padre.",
-        "cristocentrismo": "El enfoque teológico que coloca a Jesucristo como el centro de toda la revelación y la historia.",
-        "depravación": "La corrupción radical del hombre tras la caída, afectando su voluntad, mente y corazón.",
-        "imago dei": "La condición del ser humano creado a 'imagen de Dios', dotado de capacidades morales y espirituales.",
-        "caída": "La desobediencia histórica de Adán que introdujo el pecado y la muerte en la experiencia humana.",
-        "concupiscencia": "La inclinación desordenada y persistentente hacia el pecado en la naturaleza humana caída.",
-        "pecado": "Cualquier falta de conformidad con la ley de Dios o la transgresión de la misma.",
-        "justificación": "Acto judicial donde Dios declara justo al pecador sobre la base de la fe en la justicia de Cristo.",
-        "gracia": "El favor inmerecido de Dios; Su amor activo hacia quienes solo merecen Su juicio.",
-        "redención": "El rescate del pecador de la esclavitud del pecado mediante el pago del sacrificio de Cristo.",
-        "propiciación": "El sacrificio de Cristo que satisface la justicia de Dios y aplaca Su ira contra el pecado.",
-        "expiación": "La obra de Cristo en la cruz para cubrir el pecado y reconciliar al hombre con Dios.",
-        "regeneración": "El acto soberano del Espíritu Santo que imparte nueva vida espiritual al corazón del hombre (nuevo nacimiento).",
-        "adopción": "El acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia celestial.",
-        "santificación": "El proceso progresivo de crecimiento en santidad por el cual el creyente es conformado a Cristo.",
-        "imputación": "El acto legal donde la justicia de Cristo es acreditada a la cuenta del creyente.",
-        "escatología": "El estudio teológico de las últimas cosas: el fin del tiempo, el juicio y la eternidad.",
-        "parusía": "El término técnico para la segunda venida gloriosa de Jesucristo al final de la historia.",
-        "exégesis": "La extracción objetiva del sentido original de un texto bíblico.",
-        "soli deo gloria": "El principio de que todo el propósito de la existencia es la gloria de Dios.",
-        "eclesiología": "El estudio de la naturaleza, misión y estructura de la Iglesia como cuerpo de Cristo."
+        "Aseidad": "Atributo divino por el cual Dios tiene vida en sí mismo y es totalmente independiente de Su creación.",
+        "Adopción": "Acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia celestial.",
+        "Antropomorfismo": "Uso de lenguaje humano para describir atributos o acciones de Dios para nuestra comprensión limitada.",
+        "Bibliología": "El estudio sistemático de las Escrituras, su inspiración, inerrancia, autoridad y suficiencia.",
+        "Canon": "La colección cerrada de los 66 libros inspirados que constituyen la única regla de fe y conducta.",
+        "Cristocentrismo": "Enfoque teológico que coloca a Jesucristo como el centro y cumplimiento de toda la revelación divina.",
+        "Concupiscencia": "La inclinación desordenada hacia el pecado que permanece en la naturaleza humana tras la caída.",
+        "Depravación Radical": "La corrupción total del hombre que afecta su voluntad, mente y corazón, incapacitándolo para buscar a Dios.",
+        "Doxología": "Expresión de alabanza a la gloria de Dios como el fin supremo de toda teología y existencia.",
+        "Escatología": "El estudio de las últimas cosas: la parusía, el juicio final, la resurrección y el estado eterno.",
+        "Exégesis": "La extracción objetiva del significado original de un texto bíblico mediante un análisis gramatical e histórico.",
+        "Expiación": "La obra de Cristo en la cruz para cubrir el pecado y satisfacer las demandas de la justicia divina.",
+        "Fideísmo": "La postura errónea que sostiene que la fe es independiente o contraria a la razón.",
+        "Gracia Irresistible": "La obra del Espíritu Santo que vence la resistencia del pecador y lo atrae eficazmente a la salvación.",
+        "Glorificación": "La etapa final de la redención donde el creyente es liberado de la presencia misma del pecado en la eternidad.",
+        "Hermenéutica": "La ciencia y el arte de interpretar correctamente el mensaje y la aplicación de las Escrituras.",
+        "Hipóstasis": "Término técnico para referirse a la 'persona' en el contexto de la Trinidad y la Unión Hipostática.",
+        "Inerrancia": "La convicción de que las Escrituras, en sus autógrafos originales, están libres de todo error.",
+        "Imputación": "Acto legal donde la justicia de Cristo es acreditada a la cuenta del pecador creyente.",
+        "Justificación": "Declaración judicial de Dios por la cual el pecador es visto como justo solo por la fe en Cristo.",
+        "Kenosis": "El acto del Hijo de Dios de despojarse de la manifestación de Su gloria al asumir la forma de siervo.",
+        "Legalismo": "El error de intentar ganar el favor de Dios o la santidad mediante el cumplimiento mecánico de reglas.",
+        "Monergismo": "La doctrina de que la regeneración es una obra exclusiva de Dios sin la cooperación del hombre.",
+        "Naturaleza Divina": "La esencia pura y perfecta de Dios que Cristo posee en plenitud desde la eternidad.",
+        "Omnisciencia": "La perfección de Dios por la cual Él conoce todas las cosas reales y posibles de manera inmediata.",
+        "Pneumatología": "La rama de la teología que estudia la persona, deidad y obra del Espíritu Santo.",
+        "Propiciación": "El aspecto del sacrificio de Cristo que aplaca la ira santa de Dios contra el pecado.",
+        "Quididad": "La esencia de lo que algo es; en teología, se usa para discutir la naturaleza de los atributos divinos.",
+        "Regeneración": "El nuevo nacimiento obrado por el Espíritu Santo que imparte vida espiritual al muerto en pecados.",
+        "Sola Scriptura": "Principio que establece la Biblia como la única norma que norma (norma normans) la fe de la Iglesia.",
+        "Trinidad": "Un solo Dios en tres personas distintas, coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
+        "Unión Hipostática": "La unión de la naturaleza divina y humana en la única persona de Jesucristo sin mezcla ni confusión.",
+        "Vicario": "El carácter sustitutivo de Cristo, quien actuó en lugar de Sus elegidos bajo el juicio de Dios.",
+        "Westminster": "Referencia a los estándares doctrinales que resumen con precisión la fe reformada y el sistema teológico.",
+        "Xenoglosia": "El fenómeno bíblico de hablar en idiomas humanos reales no aprendidos, como señal del Espíritu.",
+        "Yahweh": "El nombre pactual de Dios que revela Su autoexistencia, fidelidad y relación con Su pueblo.",
+        "Zelote": "Históricamente, aquellos celosos por la ley; teológicamente, el celo por la gloria de Dios en la verdad."
     };
 
     // --- 2. BARRA DE PROGRESO ---
@@ -107,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.addEventListener('mousedown', (e) => { if (!box.contains(e.target)) box.style.display = 'none'; });
     };
 
- // --- 4. GENERADOR DE PÁGINA GLOSARIO (VERSIÓN ELEGANTE STF) ---
+ // --- 4. GENERADOR DE PÁGINA GLOSARIO (ARQUITECTURA PROFESIONAL STF) ---
     const generarPaginaGlosario = () => {
         const contenedor = document.getElementById('glosario-dinamico');
         const nav = document.getElementById('alfabeto-nav');
@@ -116,39 +110,41 @@ document.addEventListener("DOMContentLoaded", function() {
         contenedor.innerHTML = ""; 
         if(nav) nav.innerHTML = "";
 
+        // Ordenar términos alfabéticamente
         const ordenados = Object.keys(diccionarioSTF).sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
         let letras = new Set();
 
         ordenados.forEach(term => {
             const L = term[0].toUpperCase();
+            
+            // Crear encabezado de letra elegante
             if (!letras.has(L)) {
                 letras.add(L);
-                // Título de la Letra con diseño solemne
                 contenedor.innerHTML += `
-                    <div class="separador-seccion" id="letra-${L}" style="margin-top: 80px;">
+                    <div class="separador-seccion" id="letra-${L}" style="margin-top: 100px; margin-bottom: 50px;">
                         <span>SECCIÓN ${L}</span>
                     </div>`;
                 
                 if(nav) {
                     const a = document.createElement('a');
                     a.href = `#letra-${L}`; a.innerText = L;
-                    a.style.cssText = "margin:0 8px; text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-weight:bold; font-size: 0.9rem; transition: 0.3s;";
-                    a.onmouseover = () => a.style.color = "#fff";
-                    a.onmouseout = () => a.style.color = "#9b804e";
+                    a.style.cssText = "margin:0 10px; text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-weight:bold; font-size: 0.85rem; letter-spacing: 1px;";
                     nav.appendChild(a);
                 }
             }
 
-            // Inyección del término con "Look and Feel" de Tratado Maestro
+            // Bloque de Término con look de Tratado
             contenedor.innerHTML += `
-                <div class="introduccion-texto" style="text-align: justify; margin-bottom: 40px;">
-                    <p style="font-size: 1.35rem; line-height: 1.6; border-left: 3px solid #9b804e; padding-left: 30px; font-family: 'Cormorant Garamond', serif; color: #eee;">
-                        <strong style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #9b804e; display: block; margin-bottom: 12px; letter-spacing: 3px; font-weight: 500;">
-                            ${term.toUpperCase()}
-                        </strong>
-                        ${diccionarioSTF[term]}
-                    </p>
-                </div>`;
+                <article class="entrada-glosario-maestra" style="margin-bottom: 45px; transition: 0.3s;">
+                    <div class="introduccion-texto" style="text-align: justify;">
+                        <p style="font-size: 1.3rem; line-height: 1.7; border-left: 3px solid #9b804e; padding-left: 35px; font-family: 'Cormorant Garamond', serif; color: #d1d1d1; margin:0;">
+                            <strong style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #9b804e; display: block; margin-bottom: 12px; letter-spacing: 3px; font-weight: 500; text-transform: uppercase;">
+                                ${term}
+                            </strong>
+                            ${diccionarioSTF[term]}
+                        </p>
+                    </div>
+                </article>`;
         });
     };
 
