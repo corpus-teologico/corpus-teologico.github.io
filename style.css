@@ -625,3 +625,14 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
     white-space: normal;
     word-wrap: break-word;
 }
+/* --- AJUSTES DE LEGIBILIDAD PARA MÓVILES --- */
+@media (max-width: 768px) {
+    .introduccion-texto p, 
+    .descripcion-breve, 
+    .panel-tecnico p, 
+    .tarjeta-estudio .descripcion-breve,
+    p {
+        text-align: left !important;
+        line-height: normal !important;
+    }
+}
