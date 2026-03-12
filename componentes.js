@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="menu-contenido">
                 <h3>SISTEMA TEOLÓGICO</h3>
                 <a href="/index.html" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
-                <a href="/acerca-de-mi.html" style="color: #9b804e; font-weight: bold;">Mi Despertar (Testimonio)</a>
+                <a href="/carta-abierta.html" style="color: #9b804e; font-weight: bold;">Carta abierta (Testimonio)</a>
                 <div class="separador-menu"></div>
                 <a href="/estudios/como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
                 <a href="/estudios/solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
