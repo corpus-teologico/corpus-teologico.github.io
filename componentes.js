@@ -160,7 +160,30 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
     setupVisuals();
+// --- 7. NOTIFICACIÓN DE BIENVENIDA ---
+const mostrarAvisoHabilidades = () => {
+    if (localStorage.getItem('stf-leido') === 'si') return;
 
+    const aviso = document.createElement('div');
+    aviso.style.cssText = `
+        position: fixed; bottom: 80px; left: 20px; 
+        background: #1a1a1a; color: #9b804e; padding: 15px;
+        border: 1px solid #9b804e; font-family: 'Montserrat', sans-serif;
+        font-size: 0.7rem; letter-spacing: 1px; z-index: 10000;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0;
+        transition: opacity 1s ease;
+    `;
+    aviso.innerHTML = "SISTEMA ACTIVO: Use ◐ para contraste y subraye texto para consultar términos.";
+    document.body.appendChild(aviso);
+
+    setTimeout(() => aviso.style.opacity = "1", 2000);
+    setTimeout(() => {
+        aviso.style.opacity = "0";
+        setTimeout(() => aviso.remove(), 1000);
+        localStorage.setItem('stf-leido', 'si');
+    }, 8000);
+};
+mostrarAvisoHabilidades();
     // --- 6. LÓGICA DE INTERACCIÓN FINAL ---
     const btnAbrir = document.getElementById('abrir-menu');
     const btnCerrar = document.getElementById('cerrar-menu');
