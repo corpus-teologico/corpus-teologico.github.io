@@ -830,3 +830,33 @@ body.alto-contraste .separador-seccion span {
 .nav-link-full:hover + .tooltip-contraste {
     opacity: 1;
 }
+/* Botón en estado inicial (Arriba) */
+.btn-menu-flotante {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: #1a1a1a;
+    color: #9b804e;
+    border: 1px solid #9b804e;
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); /* Movimiento elegante */
+}
+
+/* Botón cuando el usuario hace scroll (Se queda a mitad de pantalla) */
+.btn-menu-flotante.scrolled {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 15px 10px;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    writing-mode: vertical-rl; /* Se gira para no estorbar la lectura */
+    text-orientation: mixed;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+}
