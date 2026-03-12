@@ -293,49 +293,46 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
         };
     };
-// --- 8. CONTROL DEL MENÚ CON LOGICA DE ACCESIBILIDAD ---
+// --- 8. CONTROL DEL MENÚ Y VALIDACIÓN DE CONTRASTE ---
     const inicializarMenu = () => {
         const btnAbrir = document.getElementById('abrir-menu');
         const overlay = document.getElementById('menu-fullscreen');
         
         if (!btnAbrir || !overlay) return;
 
-        // Función para verificar contraste (la "inteligencia" del sistema)
-        const verificarAccesibilidad = (link) => {
-            // Aquí puedes añadir tu lógica anterior de validación de contraste
-            // Por ejemplo, si el color es muy oscuro, avisar.
-            const color = window.getComputedStyle(link).color;
-            if (color === 'rgb(0, 0, 0)') { 
-                console.warn("Aviso: Enlace con bajo contraste detectado.");
-            }
-        };
-
-        btnAbrir.onclick = (e) => {
-            e.preventDefault();
-            overlay.classList.add('is-open');
-            document.body.style.overflow = 'hidden';
-            
-            // Re-escaneamos los links al abrir para asegurar que los avisos funcionan
-            overlay.querySelectorAll('.nav-link-full').forEach(link => {
-                verificarAccesibilidad(link);
-                
-                // Si quieres que salga un aviso al pasar el ratón:
-                link.onmouseenter = () => {
-                    // Lógica para mostrar tooltip si el contraste es malo
-                };
+        // Función para validar contraste profesionalmente
+        const validarContraste = () => {
+            const links = overlay.querySelectorAll('.nav-link-full');
+            links.forEach(link => {
+                // Obtenemos el color del texto y del fondo del recuadro
+                const colorTexto = window.getComputedStyle(link).color;
+                // Si el color es demasiado oscuro (ej. gris muy bajo), avisamos
+                if (colorTexto === 'rgb(68, 68, 68)' || colorTexto === 'rgb(0, 0, 0)') {
+                    link.style.borderBottom = "1px dotted red";
+                    link.title = "Aviso: Contraste insuficiente para lectura";
+                    console.warn("Accesibilidad: Enlace con poco contraste:", link.innerText);
+                }
             });
         };
 
-        const cerrarMenu = () => {
-            overlay.classList.remove('is-open');
-            document.body.style.overflow = 'auto';
+        btnAbrir.onclick = () => {
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Bloquea scroll fondo
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                validarContraste(); // Ejecuta el chequeo al abrir
+            }, 10);
         };
 
-        document.getElementById('cerrar-menu').onclick = cerrarMenu;
-        
-        // Cerrar al clickar fuera o en links
-        overlay.onclick = (e) => { if (e.target === overlay) cerrarMenu(); };
-        overlay.querySelectorAll('a').forEach(l => l.onclick = cerrarMenu);
+        const cerrar = () => {
+            overlay.style.opacity = '0';
+            document.body.style.overflow = 'auto';
+            setTimeout(() => overlay.style.display = 'none', 400);
+        };
+
+        document.getElementById('cerrar-menu').onclick = cerrar;
+        overlay.onclick = (e) => { if (e.target === overlay) cerrar(); };
+        overlay.querySelectorAll('a').forEach(l => l.onclick = cerrar);
     };
     // --- EJECUCIÓN ---
     setupVisuals();
