@@ -4,46 +4,30 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-
-   const botonMenu = document.getElementById('abrir-menu');
-    
-    window.addEventListener('scroll', () => {
-        // Si bajamos más de 100px, el botón se desplaza al centro
-        if (window.scrollY > 100) {
-            botonMenu.classList.add('scrolled');
-        } else {
-            botonMenu.classList.remove('scrolled');
-        }
-    });
     // --- 0. CONFIGURACIÓN DE RUTAS Y CONTEXTO ---
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
 
- // --- 1. INYECCIÓN DE METADATOS Y FAVICON SVG ---
+    // --- 1. INYECCIÓN DE METADATOS Y FAVICON SVG ---
     const inyectarFaviconsYFuentes = () => {
         const head = document.head;
         
-        // Creamos el enlace para el favicon SVG
         const faviconSVG = document.createElement('link');
         faviconSVG.rel = 'icon';
         faviconSVG.type = 'image/svg+xml';
-        // Usamos rutaBase para que funcione en /estudios/ y en la raíz
-        faviconSVG.href = `${rutaBase}favicon.svg`; 
+        faviconSVG.href = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB4PSIxMCIgeT0iMjAiIHdpZHRoPSIzNSIgaGVpZ2h0PSI2MCIgcng9IjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzliODA0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHJlY3QgeD0iNTUiIHk9IjIwIiB3aWR0aD0iMzUiIGhlaWdodD0iNjAiIHJ4PSI1IiBmaWxsPSJub25lIiBzdHJva2U9IiM5YjgwNGUiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik01MCAxNXY3ME0zNSA0NWgzMCIgc3Ryb2tlPSIjOWI4MDRlIiBzdHJva2Utd2lkdGg9IjQiLz48L3N2Zz4=';
         head.appendChild(faviconSVG);
 
-        // Opcional: Mantener compatibilidad con Apple
         const appleIcon = document.createElement('link');
         appleIcon.rel = 'apple-touch-icon';
         appleIcon.href = `${rutaBase}apple-touch-icon.png`;
         head.appendChild(appleIcon);
 
-        // Meta Theme Color (Barra móvil)
         const metaTheme = document.createElement('meta');
         metaTheme.name = 'theme-color';
         metaTheme.content = '#1a1a1a';
         head.appendChild(metaTheme);
 
-        // FontAwesome (Necesario para los iconos ☰ y ✕ del menú)
         const fontAwesome = document.createElement('link');
         fontAwesome.rel = 'stylesheet';
         fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
@@ -226,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // --- 6. COMPONENTES VISUALES ---
+    // --- 6. COMPONENTES VISUALES (BOTÓN ELEGANTE) ---
     const setupVisuals = () => {
         const menuHTML = `
            <div id="menu-fullscreen" class="menu-overlay">
@@ -273,15 +257,46 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                 </div>
-
             </div>
-            <button id="abrir-menu" class="btn-menu-flotante">☰ ÍNDICE</button>
-`;
+            <button id="abrir-menu" style="
+                position: fixed; 
+                top: 20px; 
+                right: 20px; 
+                z-index: 10000; 
+                background: #1a1a1a; 
+                color: #9b804e; 
+                border: 1px solid #9b804e; 
+                padding: 10px 20px; 
+                font-family: 'Montserrat', sans-serif; 
+                font-size: 12px; 
+                letter-spacing: 2px; 
+                cursor: pointer; 
+                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+                transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            ">☰ ÍNDICE</button>
+        `;
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
+
+        // LÓGICA DE SCROLL PARA EL BOTÓN
+        const btnMenu = document.getElementById('abrir-menu');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                btnMenu.style.top = "50%";
+                btnMenu.style.transform = "translateY(-50%)";
+                btnMenu.style.padding = "15px 12px";
+                btnMenu.style.fontSize = "10px";
+            } else {
+                btnMenu.style.top = "20px";
+                btnMenu.style.transform = "translateY(0)";
+                btnMenu.style.padding = "10px 20px";
+                btnMenu.style.fontSize = "12px";
+            }
+        });
         
         const pathActual = window.location.pathname.toLowerCase();
         document.querySelectorAll('.nav-link-full').forEach(link => {
-            if (pathActual.includes(link.getAttribute('data-path').toLowerCase())) {
+            const dPath = link.getAttribute('data-path');
+            if (dPath && pathActual.includes(dPath.toLowerCase())) {
                 link.classList.add('active-page');
             }
         });
@@ -308,9 +323,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-   // --- 8. UTILIDADES Y ACCESIBILIDAD (CON ADVERTENCIA) ---
+   // --- 8. UTILIDADES Y ACCESIBILIDAD ---
     const inicializarUtilidades = () => {
-        // A. Copia con atribución automática
         document.addEventListener('copy', (e) => {
             const s = window.getSelection();
             if (s.toString().length < 50) return;
@@ -319,7 +333,6 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
         });
 
-        // B. Recordatorio de posición de lectura
         const id = window.location.pathname;
         const pos = localStorage.getItem(`scroll-pos-${id}`);
         window.addEventListener('scroll', () => { 
@@ -334,10 +347,8 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => { if(t) t.remove(); }, 12000);
         }
 
-        // C. Botón de Accesibilidad (Contraste)
         const btnAcc = document.createElement('button');
         btnAcc.innerHTML = '◐';
-        btnAcc.id = 'btn-contraste-float';
         btnAcc.style.cssText = "position:fixed; bottom:20px; left:20px; z-index:9999; width:45px; height:45px; border-radius:50%; background:#9b804e; color:#fff; border:none; cursor:pointer; font-size:20px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);";
         document.body.appendChild(btnAcc);
         
@@ -346,21 +357,18 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAcc.onclick = () => {
             document.body.classList.toggle('alto-contraste');
             localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
-            const advExistente = document.getElementById('advertencia-contraste');
-            if(advExistente) advExistente.remove(); // Si hace clic, quitamos el aviso
+            if(document.getElementById('advertencia-contraste')) document.getElementById('advertencia-contraste').remove();
         };
 
-        // D. LA ADVERTENCIA (Aparece a los 10 segundos)
+        // ADVERTENCIA DE 10 SEGUNDOS
         setTimeout(() => {
-            // Solo si el usuario aún no ha activado el contraste
             if (localStorage.getItem('stf-contraste') !== 'activo') {
                 const adv = document.createElement('div');
                 adv.id = 'advertencia-contraste';
-                adv.style.cssText = "position:fixed; bottom:75px; left:20px; background:#1a1a1a; color:#9b804e; border:1px solid #9b804e; padding:12px; font-family:'Montserrat',sans-serif; font-size:10px; z-index:9998; letter-spacing:1px; border-radius:4px; box-shadow:0 10px 30px rgba(0,0,0,0.5);";
+                adv.style.cssText = "position:fixed; bottom:75px; left:20px; background:#1a1a1a; color:#9b804e; border:1px solid #9b804e; padding:12px; font-family:'Montserrat',sans-serif; font-size:10px; z-index:9998; border-radius:4px; box-shadow:0 10px 30px rgba(0,0,0,0.5);";
                 adv.innerHTML = "💡 PRUEBA EL MODO DE ALTO CONTRASTE AQUÍ";
                 document.body.appendChild(adv);
 
-                // Desaparece sola tras 10 segundos de mostrarse
                 setTimeout(() => {
                     if (document.getElementById('advertencia-contraste')) {
                         adv.style.transition = "opacity 1s ease";
@@ -369,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }, 10000);
             }
-        }, 10000); // 10000ms = 10 segundos de espera para salir
+        }, 10000);
     };
 
     // --- 9. CONTROL DEL MENÚ ---
@@ -396,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- EJECUCIÓN MAESTRA ---
-    inyectarFaviconsYFuentes(); // <--- Los favicons se inyectan primero
+    inyectarFaviconsYFuentes();
     setupVisuals();
     crearBarraProgreso();
     inicializarDiccionarioPropio();
