@@ -23,6 +23,29 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
     crearBarraProgreso();
+
+// --- 12. GENERADOR DE CITAS AUTOMÁTICO ---
+const inicializarCitasAutomaticas = () => {
+    document.addEventListener('copy', (e) => {
+        const seleccion = window.getSelection();
+        if (seleccion.toString().length < 50) return; // Solo para textos largos
+
+        const tituloTratado = document.title || "Tratado del Sistema Teológico";
+        const urlActual = window.location.href;
+        const textoCita = `\n\n---\nFuente: "${tituloTratado}"\nAutor: Roberto Formigo\nCorpus: Sistema Teológico Formigo\nEnlace: ${urlActual}\n"Soli Deo Gloria"`;
+
+        const mensajeCopiado = seleccion + textoCita;
+        
+        // Insertar en el portapapeles
+        e.clipboardData.setData('text/plain', mensajeCopiado);
+        e.preventDefault();
+        
+        console.log("Cita bibliográfica añadida al portapapeles.");
+    });
+};
+
+inicializarCitasAutomaticas();
+    
     // --- 10. GEMAS DE SABIDURÍA (Reflexión Final) ---
 const inyectarGemaSabiduria = () => {
     const gemas = [
