@@ -23,6 +23,35 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
     crearBarraProgreso();
+    
+    const notificarHerramientaBusqueda = () => {
+    if (localStorage.getItem('guia-busqueda-vista')) return;
+
+    const aviso = document.createElement('div');
+    aviso.innerHTML = "💡 <b>Sugerencia de estudio:</b> Subraye cualquier palabra para realizar una consulta exegética.";
+    aviso.style.cssText = `
+        position: fixed; bottom: 85px; left: 20px; width: 250px;
+        background: #1a1a1a; color: #9b804e; padding: 15px;
+        border-left: 3px solid #9b804e; font-family: 'Montserrat', sans-serif;
+        font-size: 0.7rem; line-height: 1.4; z-index: 10000;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4); opacity: 0;
+        transition: opacity 0.8s ease;
+    `;
+    document.body.appendChild(aviso);
+
+    setTimeout(() => aviso.style.opacity = "1", 3000); // Aparece a los 3 segundos
+    
+    // Se cierra al hacer clic o tras 10 segundos
+    const cerrarAviso = () => {
+        aviso.style.opacity = "0";
+        setTimeout(() => aviso.remove(), 800);
+        localStorage.setItem('guia-busqueda-vista', 'si');
+    };
+
+    aviso.onclick = cerrarAviso;
+    setTimeout(cerrarAviso, 12000);
+};
+notificarHerramientaBusqueda();
 
     // --- 2. HERRAMIENTA DE EXÉGESIS (Selección de texto) ---
     const inicializarHerramientaExegesis = () => {
