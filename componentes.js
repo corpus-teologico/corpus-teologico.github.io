@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.addEventListener('mousedown', (e) => { if (!box.contains(e.target)) box.style.display = 'none'; });
     };
 
-    // --- 4. GENERADOR DE PÁGINA GLOSARIO ---
+ // --- 4. GENERADOR DE PÁGINA GLOSARIO (VERSIÓN ELEGANTE STF) ---
     const generarPaginaGlosario = () => {
         const contenedor = document.getElementById('glosario-dinamico');
         const nav = document.getElementById('alfabeto-nav');
@@ -123,18 +123,31 @@ document.addEventListener("DOMContentLoaded", function() {
             const L = term[0].toUpperCase();
             if (!letras.has(L)) {
                 letras.add(L);
-                contenedor.innerHTML += `<h2 id="letra-${L}" style="color:#9b804e; border-bottom:1px solid #333; margin-top:50px; font-family:'Cormorant Garamond'; font-size:2.5rem;">${L}</h2>`;
+                // Título de la Letra con diseño solemne
+                contenedor.innerHTML += `
+                    <div class="separador-seccion" id="letra-${L}" style="margin-top: 80px;">
+                        <span>SECCIÓN ${L}</span>
+                    </div>`;
+                
                 if(nav) {
                     const a = document.createElement('a');
                     a.href = `#letra-${L}`; a.innerText = L;
-                    a.style.cssText = "margin:0 10px; text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-weight:bold;";
+                    a.style.cssText = "margin:0 8px; text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-weight:bold; font-size: 0.9rem; transition: 0.3s;";
+                    a.onmouseover = () => a.style.color = "#fff";
+                    a.onmouseout = () => a.style.color = "#9b804e";
                     nav.appendChild(a);
                 }
             }
+
+            // Inyección del término con "Look and Feel" de Tratado Maestro
             contenedor.innerHTML += `
-                <div style="margin:25px 0; padding-left:20px; border-left:2px solid #9b804e; text-align:left;">
-                    <h3 style="text-transform:capitalize; color:#fff; font-family:'Montserrat'; font-size:1.1rem; margin-bottom:5px;">${term}</h3>
-                    <p style="font-family:'Cormorant Garamond'; font-style:italic; font-size:1.2rem; color:#aaa; margin:0;">${diccionarioSTF[term]}</p>
+                <div class="introduccion-texto" style="text-align: justify; margin-bottom: 40px;">
+                    <p style="font-size: 1.35rem; line-height: 1.6; border-left: 3px solid #9b804e; padding-left: 30px; font-family: 'Cormorant Garamond', serif; color: #eee;">
+                        <strong style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #9b804e; display: block; margin-bottom: 12px; letter-spacing: 3px; font-weight: 500;">
+                            ${term.toUpperCase()}
+                        </strong>
+                        ${diccionarioSTF[term]}
+                    </p>
                 </div>`;
         });
     };
