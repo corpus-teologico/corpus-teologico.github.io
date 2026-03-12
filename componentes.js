@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
             contenedor.innerHTML += `
                 <article class="entrada-glosario-maestra" style="margin-bottom: 45px; transition: 0.3s;">
                     <div class="introduccion-texto" style="text-align: justify;">
-                        <p style="font-size: 1.3rem; line-height: 1.7; border-left: 3px solid #9b804e; padding-left: 35px; font-family: 'Cormorant Garamond', serif; color: #d1d1d1; margin:0;">
+                        <p style="font-size: 1.3rem; line-height: 1.7; border-left: 3px solid #9b804e; padding-left: 35px; font-family: 'Cormorant Garamond', serif; margin:0;">
                             <strong style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #9b804e; display: block; margin-bottom: 12px; letter-spacing: 3px; font-weight: 500; text-transform: uppercase;">
                                 ${term}
                             </strong>
