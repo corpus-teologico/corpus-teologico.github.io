@@ -1,11 +1,43 @@
-document.addEventListener("DOMContentLoaded", function() {
+/* =========================================================
+   SISTEMA TEOLÓGICO FORMIGO - COMPONENTES Y METADATOS
+   ========================================================= */
 
+document.addEventListener("DOMContentLoaded", () => {
     // --- 0. CONFIGURACIÓN DE RUTAS Y CONTEXTO ---
-    const head = document.head;
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
 
-    // --- 1. BASE DE DATOS DOCTRINAL (DICCIONARIO MAESTRO) ---
+    // --- 1. INYECCIÓN DE METADATOS Y FAVICONS ---
+    // Esto asegura que los iconos aparezcan sin importar la profundidad de la carpeta
+    const inyectarFaviconsYFuentes = () => {
+        const head = document.head;
+        const favicons = [
+            { rel: 'apple-touch-icon', sizes: '180x180', href: `${rutaBase}apple-touch-icon.png` },
+            { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${rutaBase}favicon-32x32.png` },
+            { rel: 'icon', type: 'image/png', sizes: '16x16', href: `${rutaBase}favicon-16x16.png` },
+            { rel: 'manifest', href: `${rutaBase}site.webmanifest` }
+        ];
+
+        favicons.forEach(config => {
+            const link = document.createElement('link');
+            Object.keys(config).forEach(key => link.setAttribute(key, config[key]));
+            head.appendChild(link);
+        });
+
+        // Meta Theme Color (Barra móvil)
+        const metaTheme = document.createElement('meta');
+        metaTheme.name = 'theme-color';
+        metaTheme.content = '#1a1a1a';
+        head.appendChild(metaTheme);
+
+        // FontAwesome (Iconos de la interfaz)
+        const fontAwesome = document.createElement('link');
+        fontAwesome.rel = 'stylesheet';
+        fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+        head.appendChild(fontAwesome);
+    };
+
+    // --- 2. BASE DE DATOS DOCTRINAL ---
     const diccionarioSTF = {
         "Abba": "Término arameo que denota una intimidad profunda y filial con Dios Padre, expresando confianza y seguridad.",
         "Adopción": "Acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia celestial.",
@@ -92,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "Zelote": "Históricamente, aquellos celosos por la ley; teológicamente, el celo por la gloria de Dios en la verdad."
     };
 
-    // --- 2. BARRA DE PROGRESO ---
+    // --- 3. BARRA DE PROGRESO ---
     const crearBarraProgreso = () => {
         if (document.getElementById('progress-bar')) return;
         const barra = document.createElement('div');
@@ -106,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-    // --- 3. DICCIONARIO FLOTANTE (EXÉGESIS) ---
+    // --- 4. DICCIONARIO FLOTANTE (EXÉGESIS) ---
     const inicializarDiccionarioPropio = () => {
         let box = document.createElement('div');
         box.id = 'exegesis-box';
@@ -147,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.addEventListener('mousedown', (e) => { if (!box.contains(e.target)) box.style.display = 'none'; });
     };
 
-    // --- 4. GENERADOR DE PÁGINA GLOSARIO ---
+    // --- 5. GENERADOR DE PÁGINA GLOSARIO ---
     const generarPaginaGlosario = () => {
         const contenedor = document.getElementById('glosario-dinamico');
         const nav = document.getElementById('alfabeto-nav');
@@ -181,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-// --- 5. COMPONENTES VISUALES (SIN ESTILOS INLINE) ---
+    // --- 6. COMPONENTES VISUALES ---
     const setupVisuals = () => {
         const menuHTML = `
            <div id="menu-fullscreen" class="menu-overlay">
@@ -194,7 +226,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción</a>
                             <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario</a>
                             <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
-                            
                             <span class="nav-group-title" style="margin-top:20px">Tratados I — VII</span>
                             <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link-full" data-path="como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
                             <a href="${rutaBase}estudios/solo-la-biblia-basta.html" class="nav-link-full" data-path="solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
@@ -204,7 +235,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link-full" data-path="de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
                             <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VII. Un mundo roto</a>
                         </div>
-
                         <div class="nav-col">
                             <span class="nav-group-title">Tratados VIII — XV</span>
                             <a href="${rutaBase}estudios/el-problema-del-pecado.html" class="nav-link-full" data-path="el-problema-del-pecado.html">VIII. El problema del pecado</a>
@@ -216,7 +246,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link-full" data-path="el-matrimonio-ideal.html">XIV. El matrimonio ideal</a>
                             <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link-full" data-path="libertad-de-las-cadenas.html">XV. Libertad de las cadenas</a>
                         </div>
-
                         <div class="nav-col">
                             <span class="nav-group-title">Tratados XVI — XXIII</span>
                             <a href="${rutaBase}estudios/defendiendo-mi-fe.html" class="nav-link-full" data-path="defendiendo-mi-fe.html">XVI. Defendiendo mi fe</a>
@@ -244,10 +273,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-   
-
-   
-    // --- 6. GEMAS DE SABIDURÍA ---
+    // --- 7. GEMAS DE SABIDURÍA ---
     const inyectarGemaSabiduria = () => {
         const gemas = [
             { texto: "La esencia de la fe es la seguridad; la esencia de la incredulidad es dudar.", autor: "Charles Spurgeon" },
@@ -268,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    // --- 7. UTILIDADES ---
+    // --- 8. UTILIDADES Y ACCESIBILIDAD ---
     const inicializarUtilidades = () => {
         document.addEventListener('copy', (e) => {
             const s = window.getSelection();
@@ -300,35 +326,17 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
         };
     };
-// --- 8. CONTROL DEL MENÚ Y VALIDACIÓN DE CONTRASTE ---
+
+    // --- 9. CONTROL DEL MENÚ ---
     const inicializarMenu = () => {
         const btnAbrir = document.getElementById('abrir-menu');
         const overlay = document.getElementById('menu-fullscreen');
-        
         if (!btnAbrir || !overlay) return;
-
-        // Función para validar contraste profesionalmente
-        const validarContraste = () => {
-            const links = overlay.querySelectorAll('.nav-link-full');
-            links.forEach(link => {
-                // Obtenemos el color del texto y del fondo del recuadro
-                const colorTexto = window.getComputedStyle(link).color;
-                // Si el color es demasiado oscuro (ej. gris muy bajo), avisamos
-                if (colorTexto === 'rgb(68, 68, 68)' || colorTexto === 'rgb(0, 0, 0)') {
-                    link.style.borderBottom = "1px dotted red";
-                    link.title = "Aviso: Contraste insuficiente para lectura";
-                    console.warn("Accesibilidad: Enlace con poco contraste:", link.innerText);
-                }
-            });
-        };
 
         btnAbrir.onclick = () => {
             overlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Bloquea scroll fondo
-            setTimeout(() => {
-                overlay.style.opacity = '1';
-                validarContraste(); // Ejecuta el chequeo al abrir
-            }, 10);
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => overlay.style.opacity = '1', 10);
         };
 
         const cerrar = () => {
@@ -341,7 +349,9 @@ document.addEventListener("DOMContentLoaded", function() {
         overlay.onclick = (e) => { if (e.target === overlay) cerrar(); };
         overlay.querySelectorAll('a').forEach(l => l.onclick = cerrar);
     };
-    // --- EJECUCIÓN ---
+
+    // --- EJECUCIÓN MAESTRA ---
+    inyectarFaviconsYFuentes(); // <--- Los favicons se inyectan primero
     setupVisuals();
     crearBarraProgreso();
     inicializarDiccionarioPropio();
