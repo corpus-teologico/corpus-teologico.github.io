@@ -68,8 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="separador-menu"></div>
                 <a href="${rutaBase}estudios/como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
                 <a href="${rutaBase}estudios/solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
-                <a href="${rutaBase}estudios/la-vida-de-jesus.html">III. La vida de Jesús</a>
-                <a href="${rutaBase}estudios/aprender-a-descansar.html">IV. Aprender a descansar</a>
+                <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html">III. La Armonía de los Evangelios</a>                <a href="${rutaBase}estudios/aprender-a-descansar.html">IV. Aprender a descansar</a>
                 <a href="${rutaBase}estudios/conocer-para-amar.html">V. Conocer para amar</a>
                 <a href="${rutaBase}estudios/de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
                 <a href="${rutaBase}estudios/un-mundo-roto.html">VII. Un mundo roto</a>
