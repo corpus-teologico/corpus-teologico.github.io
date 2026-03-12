@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const menuHTML = `
             <div id="menu-lateral" class="menu-lateral">
                 <button id="cerrar-menu" class="btn-cerrar">&times;</button>
-                <div class="menu-contenido">
+                <div class="menu-contenido" id="menu-scroll-container">
                     <h3>SISTEMA TEOLÓGICO</h3>
                     <a href="${rutaBase}index.html" class="nav-link" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
                     <a href="${rutaBase}glosario.html" class="nav-link" style="color: #9b804e; font-weight: bold;">Glosario Maestro</a>
@@ -244,6 +244,30 @@ document.addEventListener("DOMContentLoaded", function() {
             <button id="abrir-menu" class="btn-abrir">☰ ÍNDICE</button>
         `;
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
+
+        // --- LÓGICA DE SELECCIÓN ACTIVA REFORZADA ---
+        const pathActual = window.location.pathname.toLowerCase();
+        const linksMenu = document.querySelectorAll('.nav-link');
+        
+        linksMenu.forEach(link => {
+            // Obtenemos la URL absoluta del enlace para comparar peras con peras
+            const linkPath = new URL(link.href).pathname.toLowerCase();
+            
+            if (pathActual === linkPath || (pathActual.endsWith('/') && linkPath.endsWith('index.html'))) {
+                link.style.color = "#ffffff";
+                link.style.borderLeft = "3px solid #9b804e";
+                link.style.paddingLeft = "20px";
+                link.style.fontWeight = "600";
+                link.style.backgroundColor = "rgba(155, 128, 78, 0.15)";
+                
+                // Hacer scroll automático hacia el elemento activo dentro del menú
+                setTimeout(() => {
+                    link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 500);
+            }
+        });
+
+        // (Mantén aquí el resto de hGlobal y fGlobal...)
 
         // --- LÓGICA DE SELECCIÓN ACTIVA ---
         const pathActual = window.location.pathname;
