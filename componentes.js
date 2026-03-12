@@ -184,20 +184,18 @@ document.addEventListener("DOMContentLoaded", function() {
 // --- 5. COMPONENTES VISUALES (SIN ESTILOS INLINE) ---
     const setupVisuals = () => {
         const menuHTML = `
-            <div id="menu-fullscreen" class="menu-overlay">
+           <div id="menu-fullscreen" class="menu-overlay">
                 <div class="menu-card">
                     <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
-                    <p class="menu-label-top">Sistema Teológico Personal</p>
+                    <p class="menu-label-top">Sistema Teológico Formigo</p>
                     <div class="nav-grid">
                         <div class="nav-col">
-                            <span class="nav-group-title">Navegación</span>
+                            <span class="nav-group-title">Fundamentos</span>
                             <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción</a>
                             <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario</a>
                             <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
-                            <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">Bibliografía</a>
-                        </div>
-                        <div class="nav-col">
-                            <span class="nav-group-title">Tratados I — X</span>
+                            
+                            <span class="nav-group-title" style="margin-top:20px">Tratados I — VII</span>
                             <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link-full" data-path="como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
                             <a href="${rutaBase}estudios/solo-la-biblia-basta.html" class="nav-link-full" data-path="solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
                             <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html" class="nav-link-full" data-path="la-armonia-de-los-evangelios.html">III. Armonía de los Evangelios</a>
@@ -205,22 +203,31 @@ document.addEventListener("DOMContentLoaded", function() {
                             <a href="${rutaBase}estudios/conocer-para-amar.html" class="nav-link-full" data-path="conocer-para-amar.html">V. Conocer para amar</a>
                             <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link-full" data-path="de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
                             <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VII. Un mundo roto</a>
+                        </div>
+
+                        <div class="nav-col">
+                            <span class="nav-group-title">Tratados VIII — XV</span>
                             <a href="${rutaBase}estudios/el-problema-del-pecado.html" class="nav-link-full" data-path="el-problema-del-pecado.html">VIII. El problema del pecado</a>
                             <a href="${rutaBase}estudios/nuestra-oscuridad.html" class="nav-link-full" data-path="nuestra-oscuridad.html">IX. Nuestra oscuridad</a>
                             <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link-full" data-path="el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
-                        </div>
-                        <div class="nav-col">
-                            <span class="nav-group-title">Tratados XI — XXIII</span>
                             <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. Volver a Dios</a>
                             <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XII. Ser de una sola pieza</a>
                             <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link-full" data-path="mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
                             <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link-full" data-path="el-matrimonio-ideal.html">XIV. El matrimonio ideal</a>
                             <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link-full" data-path="libertad-de-las-cadenas.html">XV. Libertad de las cadenas</a>
+                        </div>
+
+                        <div class="nav-col">
+                            <span class="nav-group-title">Tratados XVI — XXIII</span>
                             <a href="${rutaBase}estudios/defendiendo-mi-fe.html" class="nav-link-full" data-path="defendiendo-mi-fe.html">XVI. Defendiendo mi fe</a>
                             <a href="${rutaBase}estudios/ciencia-y-fe.html" class="nav-link-full" data-path="ciencia-y-fe.html">XVII. Ciencia y fe</a>
                             <a href="${rutaBase}estudios/nuestro-dios-trino.html" class="nav-link-full" data-path="nuestro-dios-trino.html">XVIII. Nuestro Dios Trino</a>
                             <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XIX. Lo que está por venir</a>
                             <a href="${rutaBase}estudios/el-poder-del-espiritu.html" class="nav-link-full" data-path="el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
+                            <a href="${rutaBase}estudios/la-iglesia-de-cristo.html" class="nav-link-full" data-path="la-iglesia-de-cristo.html">XXI. La Iglesia de Cristo</a>
+                            <a href="${rutaBase}estudios/el-bautismo-biblico.html" class="nav-link-full" data-path="el-bautismo-biblico.html">XXII. El bautismo bíblico</a>
+                            <a href="${rutaBase}estudios/la-gran-comision.html" class="nav-link-full" data-path="la-gran-comision.html">XXIII. La gran comisión</a>
+                            <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html" style="margin-top:10px; opacity:0.6">Bibliografía Final</a>
                         </div>
                     </div>
                 </div>
