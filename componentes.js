@@ -24,35 +24,56 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     crearBarraProgreso();
     
-    const notificarHerramientaBusqueda = () => {
-    if (localStorage.getItem('guia-busqueda-vista')) return;
-
+// --- 8. RECORDATORIO CÍCLICO DE FUNCIONES ---
+const iniciarRecordatorioCiclico = () => {
+    // Creamos el elemento una sola vez
     const aviso = document.createElement('div');
-    aviso.innerHTML = "💡 <b>Sugerencia de estudio:</b> Subraye cualquier palabra para realizar una consulta exegética.";
+    aviso.id = 'aviso-sistema-ciclico';
+    aviso.innerHTML = `
+        <div style="border-bottom: 1px solid #9b804e; margin-bottom: 8px; padding-bottom: 4px; font-weight: bold; text-transform: uppercase; font-size: 0.6rem;">Manual del Corpus</div>
+        Subraye texto para exégesis ✍<br>
+        Use ◐ para alto contraste.
+    `;
+    
     aviso.style.cssText = `
-        position: fixed; bottom: 85px; left: 20px; width: 250px;
-        background: #1a1a1a; color: #9b804e; padding: 15px;
-        border-left: 3px solid #9b804e; font-family: 'Montserrat', sans-serif;
-        font-size: 0.7rem; line-height: 1.4; z-index: 10000;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.4); opacity: 0;
-        transition: opacity 0.8s ease;
+        position: fixed; bottom: 85px; left: 25px; width: 220px;
+        background: rgba(26, 26, 26, 0.95); color: #c5a367; padding: 18px;
+        border: 1px solid #9b804e; font-family: 'Montserrat', sans-serif;
+        font-size: 0.7rem; line-height: 1.5; z-index: 10000;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.6); 
+        opacity: 0; pointer-events: none;
+        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(20px);
     `;
     document.body.appendChild(aviso);
 
-    setTimeout(() => aviso.style.opacity = "1", 3000); // Aparece a los 3 segundos
-    
-    // Se cierra al hacer clic o tras 10 segundos
-    const cerrarAviso = () => {
-        aviso.style.opacity = "0";
-        setTimeout(() => aviso.remove(), 800);
-        localStorage.setItem('guia-busqueda-vista', 'si');
+    const mostrar = () => {
+        aviso.style.opacity = "1";
+        aviso.style.transform = "translateY(0)";
+        aviso.style.pointerEvents = "auto";
+        
+        // Se oculta automáticamente a los 10 segundos
+        setTimeout(() => {
+            aviso.style.opacity = "0";
+            aviso.style.transform = "translateY(20px)";
+            aviso.style.pointerEvents = "none";
+        }, 10000); 
     };
 
-    aviso.onclick = cerrarAviso;
-    setTimeout(cerrarAviso, 12000);
-};
-notificarHerramientaBusqueda();
+    // Ejecutar inmediatamente la primera vez
+    setTimeout(mostrar, 3000);
 
+    // Iniciar el bucle: cada 60 segundos (1 minuto)
+    setInterval(mostrar, 60000);
+
+    // Permitir al usuario cerrarlo al hacer clic si le molesta
+    aviso.onclick = () => {
+        aviso.style.opacity = "0";
+        aviso.style.transform = "translateY(20px)";
+    };
+};
+
+iniciarRecordatorioCiclico();
     // --- 2. HERRAMIENTA DE EXÉGESIS (Selección de texto) ---
     const inicializarHerramientaExegesis = () => {
         let btnExegesis = document.getElementById('btn-exegesis');
