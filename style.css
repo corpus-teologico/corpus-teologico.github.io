@@ -636,3 +636,27 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
         line-height: normal !important;
     }
 }
+/* --- MODO ACCESIBILIDAD --- */
+body.alto-contraste {
+    --fondo-pagina: #ffffff; /* Blanco puro para máximo contraste */
+    --texto-negro: #000000;
+    --oro-profundo: #7a5a2a; /* Dorado oscurecido para legibilidad */
+    --oro-brillante: #5d451b;
+}
+
+body.alto-contraste .pagina-libro {
+    background: #ffffff !important;
+    box-shadow: none;
+}
+
+body.alto-contraste p, 
+body.alto-contraste li {
+    color: #000000 !important;
+    font-weight: 450; /* Un poco más de grosor para la lectura */
+}
+
+body.alto-contraste .label-oro, 
+body.alto-contraste .etiqueta-gold {
+    background: #000 !important;
+    color: #fff !important;
+}
