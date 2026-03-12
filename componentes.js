@@ -181,112 +181,111 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-// --- 5. COMPONENTES VISUALES: EDICIÓN PROFESIONAL Y LEGIBLE ---
+// --- 5. COMPONENTES VISUALES: ESTÉTICA EDITORIAL DE LUJO ---
     const setupVisuals = () => {
         const styles = `
-            /* Fondo con ligera profundidad */
             .menu-overlay { 
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(10, 10, 10, 0.98); z-index: 10005; 
+                background: rgba(5, 5, 5, 0.98); z-index: 10005; 
                 display: none; opacity: 0; 
-                transition: opacity 0.5s ease; 
-                overflow-y: auto;
-                backdrop-filter: blur(10px);
+                transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                backdrop-filter: blur(15px);
             }
 
             .menu-full-content { 
-                max-width: 1200px; margin: 0 auto; padding: 80px 40px;
+                max-width: 1100px; margin: 0 auto; padding: 10vh 40px;
+                display: flex; flex-direction: column; height: 80vh;
+            }
+
+            .menu-header-area {
+                text-align: center; margin-bottom: 80px;
             }
 
             .menu-label-top {
                 font-family: 'Montserrat', sans-serif;
-                color: #9b804e; font-size: 0.7rem; letter-spacing: 10px;
-                text-transform: uppercase; text-align: center; margin-bottom: 60px;
-                opacity: 0.8;
+                color: #9b804e; font-size: 0.65rem; letter-spacing: 12px;
+                text-transform: uppercase; margin-bottom: 15px; opacity: 0.6;
             }
 
-            /* GRID PROFESIONAL: 3 columnas en desktop, 2 en tablet, 1 en móvil */
+            /* GRID EDITORIAL: 3 columnas con espaciado amplio */
             .nav-grid { 
                 display: grid; 
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-                gap: 40px; 
-                width: 100%; 
-                border-top: 1px solid #222; 
-                padding-top: 50px;
+                grid-template-columns: 1fr 1.2fr 1.2fr; 
+                gap: 60px; width: 100%;
             }
 
             .nav-group-title {
                 font-family: 'Montserrat', sans-serif;
-                color: #555; font-size: 0.6rem; letter-spacing: 3px;
-                text-transform: uppercase; margin-bottom: 20px;
-                display: block; border-bottom: 1px solid #222; padding-bottom: 10px;
+                color: #444; font-size: 0.55rem; letter-spacing: 4px;
+                text-transform: uppercase; margin-bottom: 30px;
+                display: block; border-bottom: 1px solid #1a1a1a; padding-bottom: 12px;
             }
 
-            .nav-col { display: flex; flex-direction: column; gap: 15px; }
+            .nav-col { display: flex; flex-direction: column; gap: 18px; }
 
-            /* TEXTOS: Color marfil/gris claro para máxima legibilidad */
+            /* TIPOGRAFÍA: Elegancia en el trazo */
             .nav-link-full { 
-                color: #bbb; text-decoration: none; 
-                font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; 
-                transition: all 0.3s ease;
-                line-height: 1.4;
+                color: #888; text-decoration: none; 
+                font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; 
+                transition: all 0.4s ease; line-height: 1.2;
+                font-weight: 300;
             }
 
             .nav-link-full:hover { 
-                color: #fff; transform: translateX(8px);
+                color: #9b804e; padding-left: 10px;
             }
 
-            /* INDICADOR ACTIVO: Elegante y visible */
+            /* ESTADO ACTIVO: Minimalismo absoluto */
             .nav-link-full.active-page { 
-                color: #9b804e !important;
-                font-weight: 600;
-                padding-left: 15px;
-                border-left: 2px solid #9b804e;
+                color: #fff !important; font-style: italic;
+                padding-left: 15px; border-left: 1px solid #9b804e;
             }
 
-            /* BOTÓN ÍNDICE: Limpio y profesional */
+            /* BOTÓN ÍNDICE: Estilo "Ghost Button" profesional */
             .btn-abrir-full { 
-                position: fixed; top: 30px; right: 30px; 
-                background: #111; color: #9b804e; 
-                border: 1px solid #9b804e;
-                padding: 10px 20px;
-                font-family: 'Montserrat'; font-size: 0.65rem; 
-                letter-spacing: 3px; cursor: pointer; z-index: 9999;
-                transition: 0.3s;
+                position: fixed; top: 40px; right: 50px; 
+                background: transparent; color: #9b804e; 
+                border: none; padding: 10px;
+                font-family: 'Montserrat'; font-size: 0.6rem; 
+                letter-spacing: 6px; cursor: pointer; z-index: 9999;
+                transition: 0.4s; opacity: 0.7;
             }
-            .btn-abrir-full:hover { background: #9b804e; color: #000; }
+            .btn-abrir-full:hover { opacity: 1; letter-spacing: 8px; color: #fff; }
 
             .btn-cerrar-full { 
-                position: absolute; top: 30px; right: 40px; 
-                background: none; border: none; color: #fff; 
-                font-size: 2rem; cursor: pointer; opacity: 0.5;
+                position: absolute; top: 40px; left: 50px; 
+                background: none; border: none; color: #333; 
+                font-size: 1.5rem; cursor: pointer; transition: 0.3s;
             }
-            .btn-cerrar-full:hover { opacity: 1; color: #9b804e; }
+            .btn-cerrar-full:hover { color: #9b804e; transform: rotate(90deg); }
 
-            @media (max-width: 768px) {
-                .nav-grid { grid-template-columns: 1fr; }
-                .menu-full-content { padding: 100px 20px; }
+            @media (max-width: 900px) {
+                .nav-grid { grid-template-columns: 1fr; gap: 40px; }
+                .menu-full-content { padding: 60px 30px; }
             }
         `;
         const styleSheet = document.createElement("style");
         styleSheet.innerText = styles;
-        head.appendChild(styleSheet);
+        document.head.appendChild(styleSheet);
 
         const menuHTML = `
             <div id="menu-fullscreen" class="menu-overlay">
                 <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
                 <div class="menu-full-content">
-                    <p class="menu-label-top">Sistema Teológico Formigo</p>
+                    <div class="menu-header-area">
+                        <p class="menu-label-top">Sistema Teológico Formigo</p>
+                        <div style="width: 40px; height: 1px; background: #9b804e; margin: 0 auto; opacity: 0.4;"></div>
+                    </div>
                     <div class="nav-grid">
                         <div class="nav-col">
-                            <span class="nav-group-title">Fundamentos</span>
-                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción al Corpus</a>
+                            <span class="nav-group-title">Navegación</span>
+                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción</a>
                             <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario Maestro</a>
                             <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
                             <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">Bibliografía</a>
                         </div>
                         <div class="nav-col">
-                            <span class="nav-group-title">Estudios I - X</span>
+                            <span class="nav-group-title">Tratados I — X</span>
                             <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link-full" data-path="como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
                             <a href="${rutaBase}estudios/solo-la-biblia-basta.html" class="nav-link-full" data-path="solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
                             <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html" class="nav-link-full" data-path="la-armonia-de-los-evangelios.html">III. Armonía de los Evangelios</a>
@@ -299,7 +298,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link-full" data-path="el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
                         </div>
                         <div class="nav-col">
-                            <span class="nav-group-title">Estudios XI - XXIII</span>
+                            <span class="nav-group-title">Tratados XI — XX</span>
                             <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. Volver a Dios</a>
                             <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XII. Ser de una sola pieza</a>
                             <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link-full" data-path="mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
@@ -314,19 +313,43 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </div>
             </div>
-            <button id="abrir-menu" class="btn-abrir-full">☰ ÍNDICE</button>
+            <button id="abrir-menu" class="btn-abrir-full">ÍNDICE</button>
         `;
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
         
-        // Aplicar clase activa
-        const pathActual = window.location.pathname;
+        const pathActual = window.location.pathname.toLowerCase();
         document.querySelectorAll('.nav-link-full').forEach(link => {
-            if (pathActual.includes(link.getAttribute('data-path'))) {
+            if (pathActual.includes(link.getAttribute('data-path').toLowerCase())) {
                 link.classList.add('active-page');
             }
         });
     };
 
+    // --- 8. CONTROL DEL MENÚ (ANIMACIÓN SOFISTICADA) ---
+    const inicializarMenu = () => {
+        const btnAbrir = document.getElementById('abrir-menu');
+        const btnCerrar = document.getElementById('cerrar-menu');
+        const overlay = document.getElementById('menu-fullscreen');
+        if(!btnAbrir || !overlay) return;
+
+        btnAbrir.onclick = () => {
+            overlay.style.display = 'block';
+            document.body.style.overflow = 'hidden'; 
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                overlay.style.transform = 'scale(1)';
+            }, 10);
+        };
+
+        const cerrarProceso = () => {
+            overlay.style.opacity = '0';
+            document.body.style.overflow = 'auto'; 
+            setTimeout(() => overlay.style.display = 'none', 600); 
+        };
+
+        btnCerrar.onclick = cerrarProceso;
+        overlay.querySelectorAll('a').forEach(link => link.onclick = cerrarProceso);
+    };
     // --- 6. GEMAS DE SABIDURÍA ---
     const inyectarGemaSabiduria = () => {
         const gemas = [
