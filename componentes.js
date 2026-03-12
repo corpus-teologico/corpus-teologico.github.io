@@ -5,416 +5,142 @@ document.addEventListener("DOMContentLoaded", function() {
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
 
-    // --- 1. BARRA DE PROGRESO DE LECTURA ---
+    // --- 1. BASE DE DATOS DOCTRINAL (DICCIONARIO MAESTRO) ---
+    const diccionarioSTF = {
+        "inerrancia": "La convicción de que las Escrituras, en sus documentos originales, están libres de error en todo lo que afirman.",
+        "infalibilidad": "La incapacidad de la Biblia para fallar en su propósito de revelar la verdad salvadora de Dios.",
+        "sola scriptura": "Principio reformado que establece la Biblia como la única autoridad final e infalible para la fe.",
+        "canon": "La colección cerrada de 66 libros inspirados que constituyen la regla de fe del creyente.",
+        "iluminación": "La obra del Espíritu Santo que permite al lector comprender y aplicar la verdad espiritual de la Biblia.",
+        "revelación": "El acto de Dios de comunicarse a la humanidad, ya sea de forma general (creación) o especial (Escrituras).",
+        "inspiración": "La influencia sobrenatural del Espíritu Santo sobre los autores bíblicos para que escribieran exactamente lo que Dios quería.",
+        "hermenéutica": "La ciencia y el arte de interpretar correctamente el significado de los textos bíblicos.",
+        "soberanía": "El gobierno absoluto de Dios sobre toda la creación, ejecutando Su voluntad eterna sin impedimentos.",
+        "providencia": "El cuidado continuo por el cual Dios sostiene, dirige y gobierna todas las criaturas y eventos.",
+        "omnisciencia": "Atributo por el cual Dios posee conocimiento perfecto y total de todas las cosas: pasadas, presentes, futuras y posibles.",
+        "omnipotencia": "El poder ilimitado de Dios para realizar todo lo que es conforme a Su carácter santo.",
+        "omnipresencia": "La presencia total de Dios en todo lugar y tiempo con toda Su plenitud.",
+        "aseidad": "La cualidad de Dios de existir por Sí mismo, sin depender de ninguna causa externa.",
+        "trinidad": "Un solo Dios en tres personas distintas, coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
+        "inmutabilidad": "La perfección de Dios por la cual Él no cambia en Su ser, propósitos o promesas.",
+        "santidad": "La separación absoluta de Dios de toda maldad y Su pureza infinita que lo distingue de todo lo creado.",
+        "trascendencia": "La existencia de Dios por encima y más allá de los límites del universo creado.",
+        "inmanencia": "La presencia y participación activa de Dios dentro de Su creación sin mezclarse con ella.",
+        "encarnación": "El acto por el cual el Hijo eterno de Dios asumió una naturaleza humana completa sin dejar de ser Dios.",
+        "unión hipostática": "La unión misteriosa de las naturalezas divina y humana en la única persona de Jesucristo.",
+        "pneumatología": "El estudio teológico de la persona y la obra del Espíritu Santo.",
+        "paráclito": "Término para el Espíritu Santo como Consolador, Abogado o Ayudador enviado por el Padre.",
+        "cristocentrismo": "El enfoque teológico que coloca a Jesucristo como el centro de toda la revelación y la historia.",
+        "depravación": "La corrupción radical del hombre tras la caída, afectando su voluntad, mente y corazón.",
+        "imago dei": "La condición del ser humano creado a 'imagen de Dios', dotado de capacidades morales y espirituales.",
+        "caída": "La desobediencia histórica de Adán que introdujo el pecado y la muerte en la experiencia humana.",
+        "concupiscencia": "La inclinación desordenada y persistentente hacia el pecado en la naturaleza humana caída.",
+        "pecado": "Cualquier falta de conformidad con la ley de Dios o la transgresión de la misma.",
+        "justificación": "Acto judicial donde Dios declara justo al pecador sobre la base de la fe en la justicia de Cristo.",
+        "gracia": "El favor inmerecido de Dios; Su amor activo hacia quienes solo merecen Su juicio.",
+        "redención": "El rescate del pecador de la esclavitud del pecado mediante el pago del sacrificio de Cristo.",
+        "propiciación": "El sacrificio de Cristo que satisface la justicia de Dios y aplaca Su ira contra el pecado.",
+        "expiación": "La obra de Cristo en la cruz para cubrir el pecado y reconciliar al hombre con Dios.",
+        "regeneración": "El acto soberano del Espíritu Santo que imparte nueva vida espiritual al corazón del hombre (nuevo nacimiento).",
+        "adopción": "El acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia celestial.",
+        "santificación": "El proceso progresivo de crecimiento en santidad por el cual el creyente es conformado a Cristo.",
+        "imputación": "El acto legal donde la justicia de Cristo es acreditada a la cuenta del creyente.",
+        "escatología": "El estudio teológico de las últimas cosas: el fin del tiempo, el juicio y la eternidad.",
+        "parusía": "El término técnico para la segunda venida gloriosa de Jesucristo al final de la historia.",
+        "exégesis": "La extracción objetiva del sentido original de un texto bíblico.",
+        "soli deo gloria": "El principio de que todo el propósito de la existencia es la gloria de Dios.",
+        "eclesiología": "El estudio de la naturaleza, misión y estructura de la Iglesia como cuerpo de Cristo."
+    };
+
+    // --- 2. BARRA DE PROGRESO ---
     const crearBarraProgreso = () => {
         if (document.getElementById('progress-bar')) return;
         const barra = document.createElement('div');
         barra.id = 'progress-bar';
         barra.style.cssText = "position:fixed; top:0; left:0; height:3px; background:#9b804e; z-index:10000; width:0%; transition: width 0.1s ease;";
         document.body.appendChild(barra);
-
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            if (height > 0) {
-                const scrolled = (winScroll / height) * 100;
-                barra.style.width = scrolled + "%";
-            }
+            if (height > 0) barra.style.width = (winScroll / height) * 100 + "%";
         });
     };
-    crearBarraProgreso();
 
-// --- 12. GENERADOR DE CITAS AUTOMÁTICO ---
-const inicializarCitasAutomaticas = () => {
-    document.addEventListener('copy', (e) => {
-        const seleccion = window.getSelection();
-        if (seleccion.toString().length < 50) return; // Solo para textos largos
-
-        const tituloTratado = document.title || "Tratado del Sistema Teológico";
-        const urlActual = window.location.href;
-        const textoCita = `\n\n---\nFuente: "${tituloTratado}"\nAutor: Roberto Formigo\nCorpus: Sistema Teológico Formigo\nEnlace: ${urlActual}\n"Soli Deo Gloria"`;
-
-        const mensajeCopiado = seleccion + textoCita;
-        
-        // Insertar en el portapapeles
-        e.clipboardData.setData('text/plain', mensajeCopiado);
-        e.preventDefault();
-        
-        console.log("Cita bibliográfica añadida al portapapeles.");
-    });
-};
-
-inicializarCitasAutomaticas();
-    
-    // --- 10. GEMAS DE SABIDURÍA (Reflexión Final) ---
-const inyectarGemaSabiduria = () => {
-    const gemas = [
-        { texto: "La esencia de la fe es la seguridad; la esencia de la incredulidad es dudar.", autor: "Charles Spurgeon" },
-        { texto: "Nos hiciste, Señor, para ti, y nuestro corazón está inquieto hasta que descanse en ti.", autor: "Agustín de Hipona" },
-        { texto: "Nadie se conoce a sí mismo si primero no ha contemplado el rostro de Dios.", autor: "Juan Calvino" },
-        { texto: "La Biblia no es solo un libro para ser leído, sino un libro para ser vivido.", autor: "R.C. Sproul" },
-        { texto: "Un hombre con Dios siempre es la mayoría.", autor: "John Knox" },
-        { texto: "La oración es el aliento de la fe.", autor: "Martín Lutero" },
-        { texto: "Dios es más glorificado en nosotros cuando estamos más satisfechos en Él.", autor: "John Piper" },
-        { texto: "Porque de él, y por él, y para él, son todas las cosas. A él sea la gloria por los siglos.", autor: "Romanos 11:36" },
-        { texto: "Tu palabra es antorcha a mis pies y lumbrera a mi camino.", autor: "Salmo 119:105" }
-    ];
-
-    // Seleccionamos una gema aleatoria
-    const gemaSorteada = gemas[Math.floor(Math.random() * gemas.length)];
-
-    // Creamos el contenedor
-    const contenedorGema = document.createElement('div');
-    contenedorGema.id = 'gema-sabiduria';
-    contenedorGema.style.cssText = `
-        max-width: 600px; margin: 40px auto; padding: 30px;
-        text-align: center; border-top: 1px double #9b804e;
-        border-bottom: 1px double #9b804e; opacity: 0;
-        transition: opacity 2s ease-in-out;
-    `;
-
-    contenedorGema.innerHTML = `
-        <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: #777; margin-bottom: 10px;">
-            "${gemaSorteada.texto}"
-        </p>
-        <p style="font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 3px; color: #9b804e; text-transform: uppercase;">
-            — ${gemaSorteada.autor} —
-        </p>
-    `;
-
-    // Lo inyectamos justo antes del footer global
-    const footer = document.getElementById('footer-global');
-    if (footer) {
-        footer.parentNode.insertBefore(contenedorGema, footer);
-    }
-
-    // Lógica para que aparezca solo cuando el usuario llegue al final
-    const observarFinal = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            contenedorGema.style.opacity = "1";
-            observarFinal.disconnect(); // Solo se activa una vez por sesión
-        }
-    }, { threshold: 0.1 });
-
-    observarFinal.observe(contenedorGema);
-};
-
-inyectarGemaSabiduria();
-
-    // --- 13. GENERADOR DE PÁGINA DE GLOSARIO ---
-const generarPaginaGlosario = () => {
-    const contenedor = document.getElementById('glosario-dinamico');
-    const navAlfabeto = document.getElementById('alfabeto-nav');
-    if (!contenedor) return;
-
-    // Obtener y ordenar las llaves del diccionarioSTF
-    const terminosOrdenados = Object.keys(diccionarioSTF).sort((a, b) => a.localeCompare(b));
-    
-    let htmlGlosario = "";
-    let letrasUsadas = new Set();
-
-    terminosOrdenados.forEach(termino => {
-        const primeraLetra = termino[0].toUpperCase();
-        
-        // Añadir ancla por letra si es nueva
-        if (!letrasUsadas.has(primeraLetra)) {
-            htmlGlosario += `<h2 id="letra-${primeraLetra}" style="color:#9b804e; border-bottom:1px solid #333; margin-top:50px; font-family:'Cormorant Garamond'; font-size:2.5rem;">${primeraLetra}</h2>`;
-            letrasUsadas.add(primeraLetra);
-            
-            // Añadir al menú de navegación superior
-            const linkLetra = document.createElement('a');
-            linkLetra.href = `#letra-${primeraLetra}`;
-            linkLetra.innerText = primeraLetra;
-            linkLetra.style.margin = "0 10px";
-            linkLetra.style.textDecoration = "none";
-            linkLetra.style.color = "#9b804e";
-            navAlfabeto.appendChild(linkLetra);
-        }
-
-        htmlGlosario += `
-            <div class="entrada-glosario" style="margin:20px 0; padding-left:20px; border-left:2px solid #1a1a1a;">
-                <h3 style="text-transform:capitalize; color:#fff; font-family:'Montserrat'; font-size:1rem; letter-spacing:1px;">${termino}</h3>
-                <p style="font-family:'Cormorant Garamond'; font-style:italic; font-size:1.2rem; color:#888;">${diccionarioSTF[termino]}</p>
-            </div>
-        `;
-    });
-
-    contenedor.innerHTML = htmlGlosario;
-};
-    
-// --- 11. DICCIONARIO TEOLÓGICO INTEGRAL (STF) - VERSIÓN CORREGIDA ---
-const inicializarDiccionarioPropio = () => {
-    const diccionarioSTF = {
-    // --- BIBLIOLOGÍA (La Palabra) ---
-    "inerrancia": "La convicción de que las Escrituras, en sus documentos originales, están libres de error en todo lo que afirman.",
-    "infalibilidad": "La incapacidad de la Biblia para fallar en su propósito de revelar la verdad salvadora de Dios.",
-    "sola scriptura": "Principio reformado que establece la Biblia como la única autoridad final e infalible para la fe.",
-    "canon": "La colección cerrada de 66 libros inspirados que constituyen la regla de fe del creyente.",
-    "iluminación": "La obra del Espíritu Santo que permite al lector comprender y aplicar la verdad espiritual de la Biblia.",
-    "revelación": "El acto de Dios de comunicarse a la humanidad, ya sea de forma general (creación) o especial (Escrituras).",
-    "inspiración": "La influencia sobrenatural del Espíritu Santo sobre los autores bíblicos para que escribieran exactamente lo que Dios quería.",
-    "hermenéutica": "La ciencia y el arte de interpretar correctamente el significado de los textos bíblicos.",
-
-    // --- TEONTOLOGÍA (Atributos de Dios) ---
-    "soberanía": "El gobierno absoluto de Dios sobre toda la creación, ejecutando Su voluntad eterna sin impedimentos.",
-    "providencia": "El cuidado continuo por el cual Dios sostiene, dirige y gobierna todas las criaturas y eventos.",
-    "omnisciencia": "Atributo por el cual Dios posee conocimiento perfecto y total de todas las cosas: pasadas, presentes, futuras y posibles.",
-    "omnipotencia": "El poder ilimitado de Dios para realizar todo lo que es conforme a Su carácter santo.",
-    "omnipresencia": "La presencia total de Dios en todo lugar y tiempo con toda Su plenitud.",
-    "aseidad": "La cualidad de Dios de existir por Sí mismo, sin depender de ninguna causa externa.",
-    "trinidad": "Un solo Dios en tres personas distintas, coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
-    "inmutabilidad": "La perfección de Dios por la cual Él no cambia en Su ser, propósitos o promesas.",
-    "santidad": "La separación absoluta de Dios de toda maldad y Su pureza infinita que lo distingue de todo lo creado.",
-    "trascendencia": "La existencia de Dios por encima y más allá de los límites del universo creado.",
-    "inmanencia": "La presencia y participación activa de Dios dentro de Su creación sin mezclarse con ella.",
-
-    // --- CRISTOLOGÍA Y PNEUMATOLOGÍA ---
-    "encarnación": "El acto por el cual el Hijo eterno de Dios asumió una naturaleza humana completa sin dejar de ser Dios.",
-    "unión hipostática": "La unión misteriosa de las naturalezas divina y humana en la única persona de Jesucristo.",
-    "pneumatología": "El estudio teológico de la persona y la obra del Espíritu Santo.",
-    "paráclito": "Término para el Espíritu Santo como Consolador, Abogado o Ayudador enviado por el Padre.",
-    "cristocentrismo": "El enfoque teológico que coloca a Jesucristo como el centro de toda la revelación y la historia.",
-
-    // --- ANTROPOLOGÍA Y HAMARTIOLOGÍA (Hombre y Pecado) ---
-    "depravación": "La corrupción radical del hombre tras la caída, afectando su voluntad, mente y corazón.",
-    "imago dei": "La condición del ser humano creado a 'imagen de Dios', dotado de capacidades morales y espirituales.",
-    "caída": "La desobediencia histórica de Adán que introdujo el pecado y la muerte en la experiencia humana.",
-    "concupiscencia": "La inclinación desordenada y persistente hacia el pecado en la naturaleza humana caída.",
-    "pecado": "Cualquier falta de conformidad con la ley de Dios o la transgresión de la misma.",
-
-    // --- SOTERIOLOGÍA (Salvación) ---
-    "justificación": "Acto judicial donde Dios declara justo al pecador sobre la base de la fe en la justicia de Cristo.",
-    "gracia": "El favor inmerecido de Dios; Su amor activo hacia quienes solo merecen Su juicio.",
-    "redención": "El rescate del pecador de la esclavitud del pecado mediante el pago del sacrificio de Cristo.",
-    "propiciación": "El sacrificio de Cristo que satisface la justicia de Dios y aplaca Su ira contra el pecado.",
-    "expiación": "La obra de Cristo en la cruz para cubrir el pecado y reconciliar al hombre con Dios.",
-    "regeneración": "El acto soberano del Espíritu Santo que imparte nueva vida espiritual al corazón del hombre (nuevo nacimiento).",
-    "adopción": "El acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia celestial.",
-    "santificación": "El proceso progresivo de crecimiento en santidad por el cual el creyente es conformado a Cristo.",
-    "imputación": "El acto legal donde la justicia de Cristo es acreditada a la cuenta del creyente.",
-
-    // --- ESCATOLOGÍA Y OTROS ---
-    "escatología": "El estudio teológico de las últimas cosas: el fin del tiempo, el juicio y la eternidad.",
-    "parusía": "El término técnico para la segunda venida gloriosa de Jesucristo al final de la historia.",
-    "exégesis": "La extracción objetiva del sentido original de un texto bíblico.",
-    "soli deo gloria": "El principio de que todo el propósito de la existencia es la gloria de Dios.",
-    "eclesiología": "El estudio de la naturaleza, misión y estructura de la Iglesia como cuerpo de Cristo."
-};
-
-    let box = document.getElementById('exegesis-box');
-    if (!box) {
-        box = document.createElement('div');
+    // --- 3. DICCIONARIO FLOTANTE (EXÉGESIS) ---
+    const inicializarDiccionarioPropio = () => {
+        let box = document.createElement('div');
         box.id = 'exegesis-box';
         box.style.cssText = "position:absolute; display:none; background:#1a1a1a; color:#fff; border:1px solid #9b804e; border-radius:4px; padding:18px; font-size:14px; z-index:10001; box-shadow:0 10px 40px rgba(0,0,0,0.7); max-width:320px; line-height:1.6; font-family:'Montserrat',sans-serif;";
         document.body.appendChild(box);
-    }
 
-    // Función auxiliar para buscar en Google
-    window.buscarEnGoogleSTF = (termino) => {
-        const url = `https://www.google.com/search?q=${encodeURIComponent(termino + " teología cristiana")}`;
-        window.open(url, '_blank');
-        box.style.display = 'none';
-    };
+        window.buscarEnGoogleSTF = (termino) => {
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(termino + " teología cristiana")}`, '_blank');
+            box.style.display = 'none';
+        };
 
-    document.addEventListener('mouseup', (e) => {
-        const rawSelection = window.getSelection().toString().trim();
-        if (rawSelection.length < 3) return;
+        document.addEventListener('mouseup', (e) => {
+            const rawSelection = window.getSelection().toString().trim();
+            if (rawSelection.length < 3) return;
 
-        let seleccionNorm = rawSelection.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        
-        // Manejo de plurales simple
-        if (seleccionNorm.endsWith('s') && !diccionarioSTF[seleccionNorm]) {
-            let singular = seleccionNorm.slice(0, -1);
-            if (diccionarioSTF[singular]) seleccionNorm = singular;
-        }
+            let norm = rawSelection.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (norm.endsWith('s') && !diccionarioSTF[norm]) norm = norm.slice(0, -1);
 
-        const keys = Object.keys(diccionarioSTF).map(k => k.normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
-        const index = keys.indexOf(seleccionNorm);
+            const keys = Object.keys(diccionarioSTF);
+            const keysNorm = keys.map(k => k.normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+            const index = keysNorm.indexOf(norm);
 
-        if (index !== -1) {
-            const termReal = Object.keys(diccionarioSTF)[index];
-            box.innerHTML = `
-                <div style="color:#9b804e; font-weight:bold; text-transform:uppercase; font-size:0.65rem; letter-spacing:2px; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">Definición del Sistema</div>
-                <div style="font-family:'Cormorant Garamond', serif; font-size:1.15rem; color:#eee;">
-                    <b style="color:#fff; text-transform:capitalize;">${termReal}:</b> "${diccionarioSTF[termReal]}"
-                </div>
-            `;
-        } else {
-            // AQUÍ LA CORRECCIÓN: Usamos un atributo onclick directo en el HTML inyectado
-            box.innerHTML = `
-                <div onclick="buscarEnGoogleSTF('${rawSelection.replace(/'/g, "\\'")}')" style="color:#9b804e; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:10px; font-family:'Montserrat'; font-weight:500;">
-                    <span style="font-size:18px;">✍</span> Investigar "${rawSelection}"
-                </div>
-            `;
-        }
-
-        // Posicionamiento
-        box.style.left = `${e.pageX + 10}px`;
-        box.style.top = `${e.pageY - 100}px`;
-        box.style.display = 'block';
-    });
-
-    document.addEventListener('mousedown', (e) => {
-        if (!box.contains(e.target)) box.style.display = 'none';
-    });
-};
-
-inicializarDiccionarioPropio();
-
-    
- // --- 9. MARCADOR DE LECTURA (Save State) ---
-const inicializarMarcadorLectura = () => {
-    const idPagina = window.location.pathname; // Identificador único por tratado
-    const posicionGuardada = localStorage.getItem(`scroll-pos-${idPagina}`);
-
-    // 1. Guardar la posición mientras el usuario hace scroll (con debounce para no saturar)
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            const scrollActual = window.scrollY || document.documentElement.scrollTop;
-            // Solo guardamos si ha bajado más de 300px para evitar marcar el inicio
-            if (scrollActual > 300) {
-                localStorage.setItem(`scroll-pos-${idPagina}`, scrollActual);
+            if (index !== -1) {
+                const term = keys[index];
+                box.innerHTML = `
+                    <div style="color:#9b804e; font-weight:bold; text-transform:uppercase; font-size:0.6rem; letter-spacing:2px; border-bottom:1px solid #333; padding-bottom:5px; margin-bottom:10px;">Definición STF</div>
+                    <div style="font-family:'Cormorant Garamond'; font-size:1.1rem;"><b>${term}:</b> "${diccionarioSTF[term]}"</div>
+                    <a href="${rutaBase}glosario.html#letra-${term[0].toUpperCase()}" style="display:block; margin-top:10px; color:#9b804e; font-size:0.6rem; text-decoration:none; text-align:right;">VER EN GLOSARIO →</a>
+                `;
+            } else {
+                box.innerHTML = `<div onclick="buscarEnGoogleSTF('${rawSelection.replace(/'/g, "\\'")}')" style="color:#9b804e; cursor:pointer; font-family:'Montserrat';">✍ Investigar "${rawSelection}"</div>`;
             }
-        }, 500);
-    });
+            box.style.left = `${e.pageX + 10}px`;
+            box.style.top = `${e.pageY - 100}px`;
+            box.style.display = 'block';
+        });
 
-    // 2. Si existe una posición previa, preguntar al lector
-    if (posicionGuardada && posicionGuardada > 300) {
-        // Crear un pequeño aviso elegante
-        const toast = document.createElement('div');
-        toast.style.cssText = `
-            position: fixed; bottom: 20px; right: 20px; 
-            background: #1a1a1a; color: #fff; border: 1px solid #9b804e;
-            padding: 15px 20px; font-family: 'Montserrat', sans-serif;
-            font-size: 0.75rem; z-index: 10002; display: flex;
-            flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: aparecerBoton 0.5s ease-out;
-        `;
+        document.addEventListener('mousedown', (e) => { if (!box.contains(e.target)) box.style.display = 'none'; });
+    };
 
-        toast.innerHTML = `
-            <span style="color: #9b804e; letter-spacing: 1px; font-weight: bold;">LECTURA PENDIENTE</span>
-            <span style="font-style: italic; opacity: 0.8;">¿Desea retomar el estudio donde lo dejó?</span>
-            <div style="display: flex; gap: 10px; margin-top: 5px;">
-                <button id="btn-retomar" style="background: #9b804e; color: white; border: none; padding: 5px 12px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.6rem; font-weight: bold; text-transform: uppercase;">Retomar</button>
-                <button id="btn-ignorar" style="background: transparent; color: #888; border: 1px solid #444; padding: 5px 12px; cursor: pointer; font-family: 'Montserrat'; font-size: 0.6rem; text-transform: uppercase;">Ignorar</button>
-            </div>
-        `;
-        document.body.appendChild(toast);
+    // --- 4. GENERADOR DE PÁGINA GLOSARIO ---
+    const generarPaginaGlosario = () => {
+        const contenedor = document.getElementById('glosario-dinamico');
+        const nav = document.getElementById('alfabeto-nav');
+        if (!contenedor) return;
 
-        // Lógica de los botones
-        document.getElementById('btn-retomar').onclick = () => {
-            window.scrollTo({
-                top: parseInt(posicionGuardada),
-                behavior: 'smooth'
-            });
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 1000);
-        };
+        contenedor.innerHTML = ""; 
+        if(nav) nav.innerHTML = "";
 
-        document.getElementById('btn-ignorar').onclick = () => {
-            localStorage.removeItem(`scroll-pos-${idPagina}`);
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 1000);
-        };
+        const ordenados = Object.keys(diccionarioSTF).sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+        let letras = new Set();
 
-        // El aviso desaparece solo tras 15 segundos si no se interactúa
-        setTimeout(() => {
-            if (toast) {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 1000);
+        ordenados.forEach(term => {
+            const L = term[0].toUpperCase();
+            if (!letras.has(L)) {
+                letras.add(L);
+                contenedor.innerHTML += `<h2 id="letra-${L}" style="color:#9b804e; border-bottom:1px solid #333; margin-top:50px; font-family:'Cormorant Garamond'; font-size:2.5rem;">${L}</h2>`;
+                if(nav) {
+                    const a = document.createElement('a');
+                    a.href = `#letra-${L}`; a.innerText = L;
+                    a.style.cssText = "margin:0 10px; text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-weight:bold;";
+                    nav.appendChild(a);
+                }
             }
-        }, 15000);
-    }
-};
-
-inicializarMarcadorLectura();   
-// --- 8. RECORDATORIO CÍCLICO DE FUNCIONES ---
-const iniciarRecordatorioCiclico = () => {
-    // Creamos el elemento una sola vez
-    const aviso = document.createElement('div');
-    aviso.id = 'aviso-sistema-ciclico';
-    aviso.innerHTML = `
-        <div style="border-bottom: 1px solid #9b804e; margin-bottom: 8px; padding-bottom: 4px; font-weight: bold; text-transform: uppercase; font-size: 0.6rem;">Manual del Corpus</div>
-        Subraye texto para exégesis ✍<br>
-        Use ◐ para alto contraste.
-    `;
-    
-    aviso.style.cssText = `
-        position: fixed; bottom: 85px; left: 25px; width: 220px;
-        background: rgba(26, 26, 26, 0.95); color: #c5a367; padding: 18px;
-        border: 1px solid #9b804e; font-family: 'Montserrat', sans-serif;
-        font-size: 0.7rem; line-height: 1.5; z-index: 10000;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.6); 
-        opacity: 0; pointer-events: none;
-        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-        transform: translateY(20px);
-    `;
-    document.body.appendChild(aviso);
-
-    const mostrar = () => {
-        aviso.style.opacity = "1";
-        aviso.style.transform = "translateY(0)";
-        aviso.style.pointerEvents = "auto";
-        
-        // Se oculta automáticamente a los 10 segundos
-        setTimeout(() => {
-            aviso.style.opacity = "0";
-            aviso.style.transform = "translateY(20px)";
-            aviso.style.pointerEvents = "none";
-        }, 10000); 
+            contenedor.innerHTML += `
+                <div style="margin:25px 0; padding-left:20px; border-left:2px solid #9b804e; text-align:left;">
+                    <h3 style="text-transform:capitalize; color:#fff; font-family:'Montserrat'; font-size:1.1rem; margin-bottom:5px;">${term}</h3>
+                    <p style="font-family:'Cormorant Garamond'; font-style:italic; font-size:1.2rem; color:#aaa; margin:0;">${diccionarioSTF[term]}</p>
+                </div>`;
+        });
     };
 
-    // Ejecutar inmediatamente la primera vez
-    setTimeout(mostrar, 3000);
-
-    // Iniciar el bucle: cada 60 segundos (1 minuto)
-    setInterval(mostrar, 60000);
-
-    // Permitir al usuario cerrarlo al hacer clic si le molesta
-    aviso.onclick = () => {
-        aviso.style.opacity = "0";
-        aviso.style.transform = "translateY(20px)";
-    };
-};
-
-iniciarRecordatorioCiclico();
- 
-
-    // --- 3. FUNCIÓN DE ACCESIBILIDAD ---
-    const inicializarAccesibilidad = () => {
-        if (document.getElementById('btn-access-float')) return;
-        const btn = document.createElement('button');
-        btn.id = 'btn-access-float';
-        btn.innerHTML = '◐'; 
-        btn.style.cssText = "position:fixed; bottom:20px; left:20px; z-index:9999; width:45px; height:45px; border-radius:50%; cursor:pointer; background:#9b804e; color:white; border:none; box-shadow:0 2px 10px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; font-size:20px;";
-        document.body.appendChild(btn);
-
-        if (localStorage.getItem('stf-contraste') === 'activo') {
-            document.body.classList.add('alto-contraste');
-        }
-
-        btn.onclick = () => {
-            document.body.classList.toggle('alto-contraste');
-            localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
-        };
-    };
-    inicializarAccesibilidad();
-
-    // --- 4. DETECCIÓN DE DISPOSITIVO (Clases de soporte) ---
-    const aplicarClaseSoporte = () => {
-        const htmlElement = document.documentElement;
-        htmlElement.classList.remove('media-xs', 'media-lg');
-        if (window.innerWidth < 768) htmlElement.classList.add('media-xs');
-        else htmlElement.classList.add('media-lg');
-    };
-    aplicarClaseSoporte();
-    window.addEventListener('resize', aplicarClaseSoporte);
-
-    // --- 5. COMPONENTES VISUALES E INYECCIÓN DE HEAD ---
+    // --- 5. COMPONENTES VISUALES Y MENÚ COMPLETO ---
     const setupVisuals = () => {
-        // Inyectar Favicon y Fuentes si no existen
         if (!document.querySelector('link[rel="icon"]')) {
             const headContent = `
                 <link rel="icon" type="image/svg+xml" href="${rutaBase}favicon.svg">
@@ -430,7 +156,8 @@ iniciarRecordatorioCiclico();
                 <div class="menu-contenido">
                     <h3>SISTEMA TEOLÓGICO</h3>
                     <a href="${rutaBase}index.html" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
-                    <a href="${rutaBase}carta-abierta.html" style="color: #9b804e; font-weight: bold;">Carta abierta</a>
+                    <a href="${rutaBase}glosario.html" style="color: #9b804e; font-weight: bold;">Glosario Maestro</a>
+                    <a href="${rutaBase}carta-abierta.html" style="color: #9b804e;">Carta Abierta</a>
                     <div class="separador-menu"></div>
                     <a href="${rutaBase}estudios/como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
                     <a href="${rutaBase}estudios/solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
@@ -456,87 +183,99 @@ iniciarRecordatorioCiclico();
                     <a href="${rutaBase}estudios/usar-bien-lo-que-dios-me-da.html">XXII. Usar bien lo que Dios me da</a>
                     <a href="${rutaBase}estudios/la-guerra-en-mi-interior.html">XXIII. La guerra en mi interior</a>
                     <div class="separador-menu"></div>
-                    <a href="${rutaBase}bibliografia.html" style="color: #9b804e; font-style: italic;">Bibliografía Consultada</a>
+                    <a href="${rutaBase}bibliografia.html" style="color: #777;">Bibliografía</a>
                 </div>
             </div>
             <button id="abrir-menu" class="btn-abrir">☰ ÍNDICE</button>
         `;
-
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
 
         const hGlobal = document.getElementById('header-global');
         const fGlobal = document.getElementById('footer-global');
+        if (hGlobal) hGlobal.innerHTML = `<header style="background-color:#151515; padding:70px 20px; text-align:center; border-bottom:1px solid #9b804e;"><h1 style="font-family:'Cormorant Garamond',serif; color:#fff; font-size:3rem; letter-spacing:8px; margin:0;">S T F</h1><p style="font-family:'Montserrat',sans-serif; color:#888; font-size:0.7rem; letter-spacing:5px; text-transform:uppercase; margin-top:15px;">Sistema Teológico Personal</p></header>`;
+        if (fGlobal) fGlobal.innerHTML = `<footer style="text-align:center; padding:50px 20px; margin-top:auto;"><p style="font-family:'Montserrat',sans-serif; font-size:0.75rem; color:#777; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px;">Roberto Formigo</p><p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem; color:#9b804e; margin:0;">Soli Deo Gloria</p></footer>`;
+    };
 
-        if (hGlobal) {
-            hGlobal.innerHTML = `
-                <header style="background-color:#151515; padding:70px 20px; text-align:center; border-bottom:1px solid #9b804e;">
-                    <h1 style="font-family:'Cormorant Garamond',serif; color:#fff; font-size:3rem; letter-spacing:8px; margin:0;">S T F</h1>
-                    <p style="font-family:'Montserrat',sans-serif; color:#888; font-size:0.7rem; letter-spacing:5px; text-transform:uppercase; margin-top:15px;">Sistema Teológico Personal</p>
-                </header>`;
-        }
-
-        if (fGlobal) {
-            fGlobal.innerHTML = `
-                <footer style="text-align:center; padding:50px 20px; margin-top:auto;">
-                    <p style="font-family:'Montserrat',sans-serif; font-size:0.75rem; color:#777; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px;">Roberto Formigo</p>
-                    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem; color:#9b804e; margin:0;">Soli Deo Gloria</p>
-                </footer>`;
+    // --- 6. GEMAS DE SABIDURÍA ---
+    const inyectarGemaSabiduria = () => {
+        const gemas = [
+            { texto: "La esencia de la fe es la seguridad; la esencia de la incredulidad es dudar.", autor: "Charles Spurgeon" },
+            { texto: "Nos hiciste, Señor, para ti, y nuestro corazón está inquieto hasta que descanse en ti.", autor: "Agustín de Hipona" },
+            { texto: "Dios es más glorificado en nosotros cuando estamos más satisfechos en Él.", autor: "John Piper" },
+            { texto: "La Biblia no es solo un libro para ser leído, sino un libro para ser vivido.", autor: "R.C. Sproul" },
+            { texto: "Un hombre con Dios siempre es la mayoría.", autor: "John Knox" }
+        ];
+        const gema = gemas[Math.floor(Math.random() * gemas.length)];
+        const div = document.createElement('div');
+        div.style.cssText = "max-width:600px; margin:60px auto; padding:30px; text-align:center; border-top:1px double #9b804e; border-bottom:1px double #9b804e; opacity:0; transition:opacity 2s;";
+        div.innerHTML = `<p style="font-family:'Cormorant Garamond'; font-style:italic; font-size:1.4rem; color:#777;">"${gema.texto}"</p><p style="font-family:'Montserrat'; font-size:0.7rem; color:#9b804e; letter-spacing:3px;">— ${gema.autor} —</p>`;
+        const footer = document.getElementById('footer-global');
+        if (footer) {
+            footer.parentNode.insertBefore(div, footer);
+            const obs = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { div.style.opacity = "1"; obs.disconnect(); } }, { threshold: 0.1 });
+            obs.observe(div);
         }
     };
+
+    // --- 7. CITAS, MARCADOR Y ACCESIBILIDAD ---
+    const inicializarUtilidades = () => {
+        // Citas automáticas
+        document.addEventListener('copy', (e) => {
+            const s = window.getSelection();
+            if (s.toString().length < 50) return;
+            const cita = `\n\n---\nFuente: "${document.title}"\nAutor: Roberto Formigo\nCorpus: Sistema Teológico Formigo\n"Soli Deo Gloria"`;
+            e.clipboardData.setData('text/plain', s.toString() + cita);
+            e.preventDefault();
+        });
+
+        // Marcador de lectura
+        const id = window.location.pathname;
+        const pos = localStorage.getItem(`scroll-pos-${id}`);
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) localStorage.setItem(`scroll-pos-${id}`, window.scrollY); });
+        if (pos && pos > 500) {
+            const t = document.createElement('div');
+            t.style.cssText = "position:fixed; bottom:20px; right:20px; background:#1a1a1a; color:#fff; border:1px solid #9b804e; padding:15px; z-index:10002; font-family:'Montserrat'; font-size:0.7rem;";
+            t.innerHTML = `LECTURA PENDIENTE<br><button id='retomar' style='background:#9b804e; border:none; color:#fff; margin-top:10px; cursor:pointer; padding:5px 10px;'>RETOMAR</button>`;
+            document.body.appendChild(t);
+            document.getElementById('retomar').onclick = () => { window.scrollTo({top: parseInt(pos), behavior:'smooth'}); t.remove(); };
+            setTimeout(() => t.remove(), 12000);
+        }
+
+        // Accesibilidad (Alto Contraste)
+        const btnAcc = document.createElement('button');
+        btnAcc.innerHTML = '◐';
+        btnAcc.style.cssText = "position:fixed; bottom:20px; left:20px; z-index:9999; width:45px; height:45px; border-radius:50%; background:#9b804e; color:#fff; border:none; cursor:pointer; font-size:20px;";
+        document.body.appendChild(btnAcc);
+        if (localStorage.getItem('stf-contraste') === 'activo') document.body.classList.add('alto-contraste');
+        btnAcc.onclick = () => {
+            document.body.classList.toggle('alto-contraste');
+            localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
+        };
+    };
+
+    // --- 8. CONTROL DEL MENÚ LATERAL ---
+    const inicializarMenu = () => {
+        const btnAbrir = document.getElementById('abrir-menu');
+        const btnCerrar = document.getElementById('cerrar-menu');
+        const panel = document.getElementById('menu-lateral');
+        if(!btnAbrir || !panel) return;
+
+        btnAbrir.onclick = (e) => { e.stopPropagation(); panel.style.right = '0'; };
+        btnCerrar.onclick = () => { panel.style.right = '-400px'; };
+        document.addEventListener('click', (e) => { if (!panel.contains(e.target) && e.target !== btnAbrir) panel.style.right = '-400px'; });
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) btnAbrir.style.opacity = "0.8";
+            else btnAbrir.style.opacity = "1";
+        });
+    };
+
+    // --- EJECUCIÓN ---
     setupVisuals();
-// --- 7. NOTIFICACIÓN DE BIENVENIDA ---
-const mostrarAvisoHabilidades = () => {
-    if (localStorage.getItem('stf-leido') === 'si') return;
-
-    const aviso = document.createElement('div');
-    aviso.style.cssText = `
-        position: fixed; bottom: 80px; left: 20px; 
-        background: #1a1a1a; color: #9b804e; padding: 15px;
-        border: 1px solid #9b804e; font-family: 'Montserrat', sans-serif;
-        font-size: 0.7rem; letter-spacing: 1px; z-index: 10000;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0;
-        transition: opacity 1s ease;
-    `;
-    aviso.innerHTML = "SISTEMA ACTIVO: Use ◐ para contraste y subraye texto para consultar términos.";
-    document.body.appendChild(aviso);
-
-    setTimeout(() => aviso.style.opacity = "1", 2000);
-    setTimeout(() => {
-        aviso.style.opacity = "0";
-        setTimeout(() => aviso.remove(), 1000);
-        localStorage.setItem('stf-leido', 'si');
-    }, 8000);
-};
-mostrarAvisoHabilidades();
-    // --- 6. LÓGICA DE INTERACCIÓN FINAL ---
-    const btnAbrir = document.getElementById('abrir-menu');
-    const btnCerrar = document.getElementById('cerrar-menu');
-    const panel = document.getElementById('menu-lateral');
-
-    if (btnAbrir) {
-        btnAbrir.onclick = (e) => { 
-            e.stopPropagation(); 
-            panel.style.right = '0'; 
-        };
-    }
-
-    if (btnCerrar) {
-        btnCerrar.onclick = () => { 
-            panel.style.right = '-400px'; 
-        };
-    }
-
-    document.addEventListener('click', (e) => {
-        if (panel && !panel.contains(e.target) && e.target !== btnAbrir) {
-            panel.style.right = '-400px';
-        }
-    });
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            btnAbrir.classList.add('scrolled');
-        } else {
-            btnAbrir.classList.remove('scrolled');
-        }
-    });
+    crearBarraProgreso();
+    inicializarDiccionarioPropio();
+    generarPaginaGlosario();
+    inyectarGemaSabiduria();
+    inicializarUtilidades();
+    inicializarMenu();
 });
