@@ -8,26 +8,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
 
-    // --- 1. INYECCIÓN DE METADATOS Y FAVICON SVG ---
+ // --- 1. INYECCIÓN DE METADATOS Y FAVICON (BLINDADO) ---
     const inyectarFaviconsYFuentes = () => {
         const head = document.head;
         
+        // Eliminamos favicons previos para evitar duplicados
+        const links = head.querySelectorAll("link[rel*='icon']");
+        links.forEach(link => link.parentNode.removeChild(link));
+
+        // Favicon SVG incrustado (Logo Tablas y Cruz)
         const faviconSVG = document.createElement('link');
         faviconSVG.rel = 'icon';
         faviconSVG.type = 'image/svg+xml';
         faviconSVG.href = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB4PSIxMCIgeT0iMjAiIHdpZHRoPSIzNSIgaGVpZ2h0PSI2MCIgcng9IjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzliODA0ZSIgc3Ryb2tlLXdpZHRoPSIzIi8+PHJlY3QgeD0iNTUiIHk9IjIwIiB3aWR0aD0iMzUiIGhlaWdodD0iNjAiIHJ4PSI1IiBmaWxsPSJub25lIiBzdHJva2U9IiM5YjgwNGUiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik01MCAxNXY3ME0zNSA0NWgzMCIgc3Ryb2tlPSIjOWI4MDRlIiBzdHJva2Utd2lkdGg9IjQiLz48L3N2Zz4=';
         head.appendChild(faviconSVG);
 
+        // Apple Touch Icon
         const appleIcon = document.createElement('link');
         appleIcon.rel = 'apple-touch-icon';
         appleIcon.href = `${rutaBase}apple-touch-icon.png`;
         head.appendChild(appleIcon);
 
+        // Meta Theme Color
         const metaTheme = document.createElement('meta');
         metaTheme.name = 'theme-color';
         metaTheme.content = '#1a1a1a';
         head.appendChild(metaTheme);
 
+        // FontAwesome
         const fontAwesome = document.createElement('link');
         fontAwesome.rel = 'stylesheet';
         fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
