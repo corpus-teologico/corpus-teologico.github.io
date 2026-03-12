@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
+    
+    // --- 1. CONFIGURACIÓN DE RUTAS Y HEAD ---
     const head = document.head;
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
 
-    // 1. CONFIGURACIÓN DINÁMICA DEL HEAD (Favicons, Fuentes, CSS)
     const setupHead = () => {
         const headContent = `
             <link rel="icon" type="image/svg+xml" href="${rutaBase}favicon.svg">
@@ -21,25 +22,40 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     setupHead();
 
-    // 2. DETECCIÓN DE DISPOSITIVO
+    // --- 2. FUNCIÓN DE ACCESIBILIDAD (Corregida y unificada) ---
+    const inicializarAccesibilidad = () => {
+        const btn = document.createElement('button');
+        btn.id = 'btn-access-float';
+        btn.innerHTML = '◐'; 
+        btn.title = 'Alternar Alto Contraste';
+        // Estilo inline básico para asegurar visibilidad inmediata antes del CSS
+        btn.style.cssText = "position:fixed; bottom:20px; left:20px; z-index:9999; width:45px; height:45px; border-radius:50%; cursor:pointer; background:#9b804e; color:white; border:none; box-shadow:0 2px 10px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; font-size:20px;";
+        document.body.appendChild(btn);
+
+        if (localStorage.getItem('stf-contraste') === 'activo') {
+            document.body.classList.add('alto-contraste');
+        }
+
+        btn.addEventListener('click', () => {
+            document.body.classList.toggle('alto-contraste');
+            localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
+        });
+    };
+    inicializarAccesibilidad();
+
+    // --- 3. DETECCIÓN DE DISPOSITIVO ---
     function aplicarClaseSoporte() {
         const htmlElement = document.documentElement;
-        const anchoPantalla = window.innerWidth;
         htmlElement.classList.remove('media-xs', 'media-lg');
-        if (anchoPantalla < 768) {
-            htmlElement.classList.add('media-xs');
-        } else {
-            htmlElement.classList.add('media-lg');
-        }
+        if (window.innerWidth < 768) htmlElement.classList.add('media-xs');
+        else htmlElement.classList.add('media-lg');
     }
     aplicarClaseSoporte();
     window.addEventListener('resize', aplicarClaseSoporte);
     
-    // 3. SEO DINÁMICO
+    // --- 4. SEO DINÁMICO ---
     function setMetaTag(name, content, isProperty = false) {
-        let element = isProperty 
-            ? document.querySelector(`meta[property="${name}"]`)
-            : document.querySelector(`meta[name="${name}"]`);
+        let element = isProperty ? document.querySelector(`meta[property="${name}"]`) : document.querySelector(`meta[name="${name}"]`);
         if (!element) {
             element = document.createElement('meta');
             if (isProperty) element.setAttribute('property', name);
@@ -51,13 +67,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const desc = "Sistema Teológico Personal de Roberto Formigo. Un estudio profundo sobre la soberanía de Dios y las Escrituras.";
     setMetaTag('description', desc);
-    setMetaTag('keywords', "Teología Reformada, Roberto Formigo, Biblia, Gracia");
-    setMetaTag('author', "Roberto Formigo");
     setMetaTag('og:title', document.title, true);
     setMetaTag('og:description', desc, true);
 
-    // 4. COMPONENTES VISUALES (Menú, Header, Footer)
-    // Nota: Usamos ${rutaBase} para que los links funcionen siempre
+    // --- 5. COMPONENTES VISUALES ---
     const menuHTML = `
         <div id="menu-lateral" class="menu-lateral">
             <button id="cerrar-menu" class="btn-cerrar">&times;</button>
@@ -68,7 +81,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="separador-menu"></div>
                 <a href="${rutaBase}estudios/como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
                 <a href="${rutaBase}estudios/solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
-                <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html">III. La Armonía de los Evangelios</a>                <a href="${rutaBase}estudios/aprender-a-descansar.html">IV. Aprender a descansar</a>
+                <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html">III. La Armonía de los Evangelios</a>
+                <a href="${rutaBase}estudios/aprender-a-descansar.html">IV. Aprender a descansar</a>
                 <a href="${rutaBase}estudios/conocer-para-amar.html">V. Conocer para amar</a>
                 <a href="${rutaBase}estudios/de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
                 <a href="${rutaBase}estudios/un-mundo-roto.html">VII. Un mundo roto</a>
@@ -85,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <a href="${rutaBase}estudios/nuestro-dios-trino.html">XVIII. Nuestro Dios Trino</a>
                 <a href="${rutaBase}estudios/lo-que-esta-por-venir.html">XIX. Lo que está por venir</a>
                 <a href="${rutaBase}estudios/el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
-                <a href="${rutaBase}estudios/la-familia-de-dios.html">XXI. La familia de Dios</a>
+                <a href="${rutaBase}estudios/la-family-de-dios.html">XXI. La familia de Dios</a>
                 <a href="${rutaBase}estudios/usar-bien-lo-que-dios-me-da.html">XXII. Usar bien lo que Dios me da</a>
                 <a href="${rutaBase}estudios/la-guerra-en-mi-interior.html">XXIII. La guerra en mi interior</a>
                 <div class="separador-menu"></div>
@@ -115,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (hGlobal) hGlobal.innerHTML = headerHTML;
     if (fGlobal) fGlobal.innerHTML = footerHTML;
 
-    // LÓGICA DE BOTONES
+    // --- 6. LÓGICA DE INTERACCIÓN ---
     const btnAbrir = document.getElementById('abrir-menu');
     const btnCerrar = document.getElementById('cerrar-menu');
     const panel = document.getElementById('menu-lateral');
@@ -128,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const cerrarPanel = () => { if (panel) panel.style.right = '-100%'; };
-
     if (btnCerrar) btnCerrar.onclick = cerrarPanel;
 
     document.addEventListener('click', function(event) {
@@ -137,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // LÓGICA DE SCROLL PARA EL BOTÓN FLOTANTE
     window.addEventListener('scroll', function() {
         const btnMenu = document.getElementById('abrir-menu');
         if (btnMenu) {
