@@ -7,22 +7,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const esEstudio = window.location.pathname.includes('/estudios/');
     const rutaBase = esEstudio ? '../' : './';
 
-    // --- 1. INYECCIÓN DE METADATOS Y FAVICONS ---
-    // Esto asegura que los iconos aparezcan sin importar la profundidad de la carpeta
+ // --- 1. INYECCIÓN DE METADATOS Y FAVICON SVG ---
     const inyectarFaviconsYFuentes = () => {
         const head = document.head;
-        const favicons = [
-            { rel: 'apple-touch-icon', sizes: '180x180', href: `${rutaBase}apple-touch-icon.png` },
-            { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${rutaBase}favicon-32x32.png` },
-            { rel: 'icon', type: 'image/png', sizes: '16x16', href: `${rutaBase}favicon-16x16.png` },
-            { rel: 'manifest', href: `${rutaBase}site.webmanifest` }
-        ];
+        
+        // Creamos el enlace para el favicon SVG
+        const faviconSVG = document.createElement('link');
+        faviconSVG.rel = 'icon';
+        faviconSVG.type = 'image/svg+xml';
+        // Usamos rutaBase para que funcione en /estudios/ y en la raíz
+        faviconSVG.href = `${rutaBase}favicon.svg`; 
+        head.appendChild(faviconSVG);
 
-        favicons.forEach(config => {
-            const link = document.createElement('link');
-            Object.keys(config).forEach(key => link.setAttribute(key, config[key]));
-            head.appendChild(link);
-        });
+        // Opcional: Mantener compatibilidad con Apple
+        const appleIcon = document.createElement('link');
+        appleIcon.rel = 'apple-touch-icon';
+        appleIcon.href = `${rutaBase}apple-touch-icon.png`;
+        head.appendChild(appleIcon);
 
         // Meta Theme Color (Barra móvil)
         const metaTheme = document.createElement('meta');
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         metaTheme.content = '#1a1a1a';
         head.appendChild(metaTheme);
 
-        // FontAwesome (Iconos de la interfaz)
+        // FontAwesome (Necesario para los iconos ☰ y ✕ del menú)
         const fontAwesome = document.createElement('link');
         fontAwesome.rel = 'stylesheet';
         fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
@@ -294,8 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // --- 8. UTILIDADES Y ACCESIBILIDAD ---
+   // --- 8. UTILIDADES Y ACCESIBILIDAD (CON ADVERTENCIA) ---
     const inicializarUtilidades = () => {
+        // A. Copia con atribución automática
         document.addEventListener('copy', (e) => {
             const s = window.getSelection();
             if (s.toString().length < 50) return;
@@ -304,27 +306,57 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
         });
 
+        // B. Recordatorio de posición de lectura
         const id = window.location.pathname;
         const pos = localStorage.getItem(`scroll-pos-${id}`);
-        window.addEventListener('scroll', () => { if (window.scrollY > 500) localStorage.setItem(`scroll-pos-${id}`, window.scrollY); });
+        window.addEventListener('scroll', () => { 
+            if (window.scrollY > 500) localStorage.setItem(`scroll-pos-${id}`, window.scrollY); 
+        });
         if (pos && pos > 500) {
             const t = document.createElement('div');
-            t.style.cssText = "position:fixed; bottom:20px; right:20px; background:#1a1a1a; color:#fff; border:1px solid #9b804e; padding:15px; z-index:10002; font-family:'Montserrat'; font-size:0.7rem;";
-            t.innerHTML = `LECTURA PENDIENTE<br><button id='retomar' style='background:#9b804e; border:none; color:#fff; margin-top:10px; cursor:pointer; padding:5px 10px;'>RETOMAR</button>`;
+            t.style.cssText = "position:fixed; bottom:20px; right:20px; background:#1a1a1a; color:#fff; border:1px solid #9b804e; padding:15px; z-index:10002; font-family:'Montserrat'; font-size:0.7rem; box-shadow: 0 5px 20px rgba(0,0,0,0.5);";
+            t.innerHTML = `LECTURA PENDIENTE<br><button id='retomar' style='background:#9b804e; border:none; color:#fff; margin-top:10px; cursor:pointer; padding:5px 10px; font-size:10px;'>RETOMAR</button>`;
             document.body.appendChild(t);
             document.getElementById('retomar').onclick = () => { window.scrollTo({top: parseInt(pos), behavior:'smooth'}); t.remove(); };
-            setTimeout(() => t.remove(), 12000);
+            setTimeout(() => { if(t) t.remove(); }, 12000);
         }
 
+        // C. Botón de Accesibilidad (Contraste)
         const btnAcc = document.createElement('button');
         btnAcc.innerHTML = '◐';
-        btnAcc.style.cssText = "position:fixed; bottom:20px; left:20px; z-index:9999; width:45px; height:45px; border-radius:50%; background:#9b804e; color:#fff; border:none; cursor:pointer; font-size:20px;";
+        btnAcc.id = 'btn-contraste-float';
+        btnAcc.style.cssText = "position:fixed; bottom:20px; left:20px; z-index:9999; width:45px; height:45px; border-radius:50%; background:#9b804e; color:#fff; border:none; cursor:pointer; font-size:20px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);";
         document.body.appendChild(btnAcc);
+        
         if (localStorage.getItem('stf-contraste') === 'activo') document.body.classList.add('alto-contraste');
+        
         btnAcc.onclick = () => {
             document.body.classList.toggle('alto-contraste');
             localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
+            const advExistente = document.getElementById('advertencia-contraste');
+            if(advExistente) advExistente.remove(); // Si hace clic, quitamos el aviso
         };
+
+        // D. LA ADVERTENCIA (Aparece a los 10 segundos)
+        setTimeout(() => {
+            // Solo si el usuario aún no ha activado el contraste
+            if (localStorage.getItem('stf-contraste') !== 'activo') {
+                const adv = document.createElement('div');
+                adv.id = 'advertencia-contraste';
+                adv.style.cssText = "position:fixed; bottom:75px; left:20px; background:#1a1a1a; color:#9b804e; border:1px solid #9b804e; padding:12px; font-family:'Montserrat',sans-serif; font-size:10px; z-index:9998; letter-spacing:1px; border-radius:4px; box-shadow:0 10px 30px rgba(0,0,0,0.5);";
+                adv.innerHTML = "💡 PRUEBA EL MODO DE ALTO CONTRASTE AQUÍ";
+                document.body.appendChild(adv);
+
+                // Desaparece sola tras 10 segundos de mostrarse
+                setTimeout(() => {
+                    if (document.getElementById('advertencia-contraste')) {
+                        adv.style.transition = "opacity 1s ease";
+                        adv.style.opacity = "0";
+                        setTimeout(() => adv.remove(), 1000);
+                    }
+                }, 10000);
+            }
+        }, 10000); // 10000ms = 10 segundos de espera para salir
     };
 
     // --- 9. CONTROL DEL MENÚ ---
