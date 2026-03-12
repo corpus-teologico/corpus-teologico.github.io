@@ -1,4 +1,19 @@
 document.addEventListener("DOMContentLoaded", function() {
+
+    const crearBarraProgreso = () => {
+    const barra = document.createElement('div');
+    barra.id = 'progress-bar';
+    barra.style.cssText = "position:fixed; top:0; left:0; height:3px; background:var(--oro-profundo); z-index:10000; width:0%; transition: width 0.1s ease;";
+    document.body.appendChild(barra);
+
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        barra.style.width = scrolled + "%";
+    });
+};
+crearBarraProgreso();
     
     // --- 1. CONFIGURACIÓN DE RUTAS Y HEAD ---
     const head = document.head;
