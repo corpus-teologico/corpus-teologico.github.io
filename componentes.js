@@ -23,6 +23,60 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
     crearBarraProgreso();
+    // --- 10. GEMAS DE SABIDURÍA (Reflexión Final) ---
+const inyectarGemaSabiduria = () => {
+    const gemas = [
+        { texto: "La esencia de la fe es la seguridad; la esencia de la incredulidad es dudar.", autor: "Charles Spurgeon" },
+        { texto: "Nos hiciste, Señor, para ti, y nuestro corazón está inquieto hasta que descanse en ti.", autor: "Agustín de Hipona" },
+        { texto: "Nadie se conoce a sí mismo si primero no ha contemplado el rostro de Dios.", autor: "Juan Calvino" },
+        { texto: "La Biblia no es solo un libro para ser leído, sino un libro para ser vivido.", autor: "R.C. Sproul" },
+        { texto: "Un hombre con Dios siempre es la mayoría.", autor: "John Knox" },
+        { texto: "La oración es el aliento de la fe.", autor: "Martín Lutero" },
+        { texto: "Dios es más glorificado en nosotros cuando estamos más satisfechos en Él.", autor: "John Piper" },
+        { texto: "Porque de él, y por él, y para él, son todas las cosas. A él sea la gloria por los siglos.", autor: "Romanos 11:36" },
+        { texto: "Tu palabra es antorcha a mis pies y lumbrera a mi camino.", autor: "Salmo 119:105" }
+    ];
+
+    // Seleccionamos una gema aleatoria
+    const gemaSorteada = gemas[Math.floor(Math.random() * gemas.length)];
+
+    // Creamos el contenedor
+    const contenedorGema = document.createElement('div');
+    contenedorGema.id = 'gema-sabiduria';
+    contenedorGema.style.cssText = `
+        max-width: 600px; margin: 40px auto; padding: 30px;
+        text-align: center; border-top: 1px double #9b804e;
+        border-bottom: 1px double #9b804e; opacity: 0;
+        transition: opacity 2s ease-in-out;
+    `;
+
+    contenedorGema.innerHTML = `
+        <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: #fff; margin-bottom: 10px;">
+            "${gemaSorteada.texto}"
+        </p>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 3px; color: #9b804e; text-transform: uppercase;">
+            — ${gemaSorteada.autor} —
+        </p>
+    `;
+
+    // Lo inyectamos justo antes del footer global
+    const footer = document.getElementById('footer-global');
+    if (footer) {
+        footer.parentNode.insertBefore(contenedorGema, footer);
+    }
+
+    // Lógica para que aparezca solo cuando el usuario llegue al final
+    const observarFinal = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            contenedorGema.style.opacity = "1";
+            observarFinal.disconnect(); // Solo se activa una vez por sesión
+        }
+    }, { threshold: 0.1 });
+
+    observarFinal.observe(contenedorGema);
+};
+
+inyectarGemaSabiduria();
  // --- 9. MARCADOR DE LECTURA (Save State) ---
 const inicializarMarcadorLectura = () => {
     const idPagina = window.location.pathname; // Identificador único por tratado
