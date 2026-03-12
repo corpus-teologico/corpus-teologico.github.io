@@ -531,37 +531,4 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
 .media-xs .panel-tecnico {
     padding: 20px !important;
 }
-/* --- ESTILO DE LA BARRA DE SCROLL PARA EL MENÚ LATERAL --- */
 
-/* 1. Ancho de la barra */
-#menu-lateral::-webkit-scrollbar {
-    width: 8px;
-}
-
-/* 2. El fondo de la barra (Track) */
-#menu-lateral::-webkit-scrollbar-track {
-    background: #1a1a1a; /* Un negro ligeramente más claro que el fondo para dar profundidad */
-}
-
-/* 3. La parte deslizable (Thumb) en color Oro */
-#menu-lateral::-webkit-scrollbar-thumb {
-    background: #9b804e;
-    border-radius: 4px;
-    border: 2px solid #1a1a1a; /* Crea un pequeño margen para que se vea más refinado */
-}
-
-/* 4. Efecto al pasar el ratón por encima */
-#menu-lateral::-webkit-scrollbar-thumb:hover {
-    background: #c5a059; /* Un oro más brillante al interactuar */
-}
-
-/* Compatibilidad para Firefox */
-#menu-lateral {
-    scrollbar-width: thin;
-    scrollbar-color: #9b804e #1a1a1a;
-}
-.menu-lateral {
-    /* ... tus otras propiedades ... */
-    overflow-y: auto;    /* Permite el scroll vertical */
-    overflow-x: hidden;  /* Evita el scroll horizontal */
-}
