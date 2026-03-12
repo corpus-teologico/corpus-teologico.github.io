@@ -51,7 +51,7 @@ const inyectarGemaSabiduria = () => {
     `;
 
     contenedorGema.innerHTML = `
-        <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: #fff; margin-bottom: 10px;">
+        <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: #777; margin-bottom: 10px;">
             "${gemaSorteada.texto}"
         </p>
         <p style="font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 3px; color: #9b804e; text-transform: uppercase;">
