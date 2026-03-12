@@ -1,5 +1,33 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    const calcularLectura = () => {
+    const texto = document.querySelector('.pagina-libro')?.innerText || "";
+    const palabras = texto.split(/\s+/).length;
+    const minutos = Math.ceil(palabras / 200); // Promedio de 200 ppm
+    const info = document.querySelector('.subtitulo');
+    if (info) {
+        info.innerHTML += ` <br> <span style="letter-spacing:2px; opacity:0.7;">— Tiempo de estudio: ${minutos} min —</span>`;
+    }
+};
+calcularLectura();
+
+    let timerFocus;
+const elementosDistractores = ['#btn-access-float', '#abrir-menu'];
+
+window.addEventListener('mousemove', () => {
+    elementosDistractores.forEach(id => {
+        const el = document.querySelector(id);
+        if(el) el.style.opacity = "1";
+    });
+    clearTimeout(timerFocus);
+    timerFocus = setTimeout(() => {
+        elementosDistractores.forEach(id => {
+            const el = document.querySelector(id);
+            if(el) el.style.opacity = "0.1";
+        });
+    }, 5000); // 5 segundos de calma
+});
+
     const crearBarraProgreso = () => {
     const barra = document.createElement('div');
     barra.id = 'progress-bar';
