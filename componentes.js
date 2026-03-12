@@ -181,102 +181,18 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-// --- 5. COMPONENTES VISUALES: NEGRO ABSOLUTO Y JERARQUÍA CLARA ---
+// --- 5. COMPONENTES VISUALES (SIN ESTILOS INLINE) ---
     const setupVisuals = () => {
-        const styles = `
-            /* Fondo Negro Absoluto */
-            .menu-overlay { 
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: #000000; z-index: 10005; 
-                display: none; opacity: 0; 
-                transition: opacity 0.4s ease;
-            }
-
-            .menu-full-content { 
-                max-width: 1200px; margin: 0 auto; padding: 60px 40px;
-            }
-
-            .menu-header-area { text-align: center; margin-bottom: 50px; }
-
-            .menu-label-top {
-                font-family: 'Montserrat', sans-serif;
-                color: #9b804e; font-size: 0.6rem; letter-spacing: 12px;
-                text-transform: uppercase; opacity: 0.5;
-            }
-
-            /* GRID REFORZADO */
-            .nav-grid { 
-                display: grid; 
-                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-                gap: 50px; width: 100%;
-            }
-
-            /* SECCIONES: Más pequeñas y discretas para no distraer */
-            .nav-group-title {
-                font-family: 'Montserrat', sans-serif;
-                color: #333; font-size: 0.5rem; letter-spacing: 4px;
-                text-transform: uppercase; margin-bottom: 25px;
-                display: block; border-bottom: 1px solid #111; padding-bottom: 8px;
-            }
-
-            .nav-col { display: flex; flex-direction: column; gap: 12px; }
-
-            /* TÍTULOS: Ahora son los protagonistas (más grandes y claros) */
-            .nav-link-full { 
-                color: #e0e0e0; text-decoration: none; 
-                font-family: 'Cormorant Garamond', serif; 
-                font-size: 1.5rem; /* Aumentado para legibilidad */
-                transition: all 0.3s ease; line-height: 1.2;
-                font-weight: 400;
-            }
-
-            .nav-link-full:hover { 
-                color: #9b804e; transform: translateX(5px);
-            }
-
-            /* ESTADO ACTIVO */
-            .nav-link-full.active-page { 
-                color: #9b804e !important; 
-                border-left: 2px solid #9b804e; padding-left: 15px;
-            }
-
-            /* BOTÓN ÍNDICE: Visible pero elegante */
-            .btn-abrir-full { 
-                position: fixed; top: 30px; right: 30px; 
-                background: #000; color: #9b804e; 
-                border: 1px solid #9b804e; padding: 8px 16px;
-                font-family: 'Montserrat'; font-size: 0.65rem; 
-                letter-spacing: 4px; cursor: pointer; z-index: 9999;
-            }
-
-            .btn-cerrar-full { 
-                position: absolute; top: 30px; left: 40px; 
-                background: none; border: none; color: #fff; 
-                font-size: 1.8rem; cursor: pointer; opacity: 0.4;
-            }
-            .btn-cerrar-full:hover { opacity: 1; color: #9b804e; }
-
-            @media (max-width: 800px) {
-                .nav-grid { grid-template-columns: 1fr; }
-                .nav-link-full { font-size: 1.3rem; }
-            }
-        `;
-        const styleSheet = document.createElement("style");
-        styleSheet.innerText = styles;
-        document.head.appendChild(styleSheet);
-
         const menuHTML = `
             <div id="menu-fullscreen" class="menu-overlay">
-                <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
-                <div class="menu-full-content">
-                    <div class="menu-header-area">
-                        <p class="menu-label-top">Índice General</p>
-                    </div>
+                <div class="menu-card">
+                    <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
+                    <p class="menu-label-top">Sistema Teológico Formigo</p>
                     <div class="nav-grid">
                         <div class="nav-col">
-                            <span class="nav-group-title">Introducción</span>
-                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción al Corpus</a>
-                            <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario Maestro</a>
+                            <span class="nav-group-title">Navegación</span>
+                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción</a>
+                            <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario</a>
                             <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
                             <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">Bibliografía</a>
                         </div>
@@ -320,6 +236,8 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     };
+
+   
 
    
     // --- 6. GEMAS DE SABIDURÍA ---
@@ -375,27 +293,28 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
         };
     };
-  // --- 8. CONTROL DEL MENÚ (REPARADO) ---
+ // --- 8. CONTROL DEL MENÚ (LÓGICA SIMPLE) ---
     const inicializarMenu = () => {
         const btnAbrir = document.getElementById('abrir-menu');
         const btnCerrar = document.getElementById('cerrar-menu');
         const overlay = document.getElementById('menu-fullscreen');
+
         if(!btnAbrir || !overlay) return;
 
         btnAbrir.onclick = () => {
-            overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'; 
+            overlay.style.display = 'flex'; // Centrado por Flexbox
+            document.body.style.overflow = 'hidden';
             setTimeout(() => overlay.style.opacity = '1', 10);
         };
 
-        const cerrarProceso = () => {
+        const cerrar = () => {
             overlay.style.opacity = '0';
-            document.body.style.overflow = 'auto'; 
-            setTimeout(() => overlay.style.display = 'none', 400); 
+            document.body.style.overflow = 'auto';
+            setTimeout(() => overlay.style.display = 'none', 400);
         };
 
-        btnCerrar.onclick = cerrarProceso;
-        overlay.querySelectorAll('a').forEach(link => link.onclick = cerrarProceso);
+        btnCerrar.onclick = cerrar;
+        overlay.querySelectorAll('a').forEach(l => l.onclick = cerrar);
     };
 
     // --- EJECUCIÓN ---
