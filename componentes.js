@@ -293,28 +293,43 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
         };
     };
- // --- 8. CONTROL DEL MENÚ (LÓGICA SIMPLE) ---
+// --- 8. CONTROL DEL MENÚ (REPARADO Y ROBUSTO) ---
     const inicializarMenu = () => {
         const btnAbrir = document.getElementById('abrir-menu');
         const btnCerrar = document.getElementById('cerrar-menu');
         const overlay = document.getElementById('menu-fullscreen');
 
-        if(!btnAbrir || !overlay) return;
+        // Verificación de seguridad
+        if (!btnAbrir || !overlay) {
+            console.error("No se encontraron los elementos del menú");
+            return;
+        }
 
-        btnAbrir.onclick = () => {
-            overlay.style.display = 'flex'; // Centrado por Flexbox
+        // Función Abrir
+        btnAbrir.onclick = (e) => {
+            e.preventDefault();
+            overlay.classList.add('is-open');
             document.body.style.overflow = 'hidden';
-            setTimeout(() => overlay.style.opacity = '1', 10);
         };
 
-        const cerrar = () => {
-            overlay.style.opacity = '0';
+        // Función Cerrar
+        const cerrarMenu = () => {
+            overlay.classList.remove('is-open');
             document.body.style.overflow = 'auto';
-            setTimeout(() => overlay.style.display = 'none', 400);
         };
 
-        btnCerrar.onclick = cerrar;
-        overlay.querySelectorAll('a').forEach(l => l.onclick = cerrar);
+        if (btnCerrar) btnCerrar.onclick = cerrarMenu;
+
+        // Cerrar al hacer clic en cualquier enlace
+        const links = overlay.querySelectorAll('.nav-link-full');
+        links.forEach(link => {
+            link.onclick = cerrarMenu;
+        });
+
+        // Cerrar si hacen clic fuera del recuadro (en el fondo oscuro)
+        overlay.onclick = (e) => {
+            if (e.target === overlay) cerrarMenu();
+        };
     };
 
     // --- EJECUCIÓN ---
