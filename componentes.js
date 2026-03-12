@@ -181,20 +181,78 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-    // --- 5. CONFIGURACIÓN VISUAL Y MENÚ FULLSCREEN (POPOVER) ---
+  // --- 5. COMPONENTES VISUALES: EDICIÓN SOBRIA Y ELEGANTE ---
     const setupVisuals = () => {
-        // Inyectar Estilos Críticos para el Menú Fullscreen
         const styles = `
-            .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,10,0.98); z-index: 10005; display: none; opacity: 0; transition: opacity 0.4s ease; overflow-y: auto; }
-            .menu-full-content { display: flex; flex-direction: column; align-items: center; padding: 100px 20px; text-align: center; }
-            .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1100px; margin-top: 40px; }
-            .nav-col { display: flex; flex-direction: column; gap: 15px; }
-            .nav-link-full { color: #666; text-decoration: none; font-family: 'Cormorant Garamond'; font-size: 1.4rem; transition: 0.3s; padding: 5px 15px; border-left: 2px solid transparent; }
-            .nav-link-full:hover { color: #9b804e; transform: translateX(10px); }
-            .nav-link-full.active-page { color: #fff !important; border-left: 2px solid #9b804e; font-weight: bold; background: rgba(155,128,78,0.1); }
-            .btn-abrir-full { position: fixed; top: 25px; right: 25px; background: #1a1a1a; color: #9b804e; border: 1px solid #9b804e; padding: 10px 20px; font-family: 'Montserrat'; font-size: 0.7rem; letter-spacing: 2px; cursor: pointer; z-index: 9999; }
-            .btn-cerrar-full { position: absolute; top: 30px; right: 40px; background: none; border: none; color: #9b804e; font-size: 3rem; cursor: pointer; }
-            @media (max-width: 768px) { .nav-grid { grid-template-columns: 1fr; } .nav-link-full { font-size: 1.1rem; } }
+            /* Fondo: Negro Absoluto para máxima concentración */
+            .menu-overlay { 
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: #050505; z-index: 10005; display: none; opacity: 0; 
+                transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1); 
+                overflow-y: auto;
+            }
+
+            .menu-full-content { 
+                max-width: 1000px; margin: 0 auto; padding: 100px 40px;
+                display: flex; flex-direction: column; align-items: center;
+            }
+
+            /* Etiqueta minimalista */
+            .menu-label-top {
+                font-family: 'Montserrat', sans-serif;
+                color: #444; font-size: 0.6rem; letter-spacing: 8px;
+                text-transform: uppercase; margin-bottom: 80px;
+            }
+
+            /* Grid: Aire y Simetría */
+            .nav-grid { 
+                display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; 
+                width: 100%; border-top: 1px solid #1a1a1a; padding-top: 60px;
+            }
+
+            .nav-col { display: flex; flex-direction: column; gap: 22px; }
+
+            /* Enlaces: Tipografía Serif clásica */
+            .nav-link-full { 
+                color: #555; text-decoration: none; 
+                font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; 
+                transition: color 0.4s ease, padding 0.4s ease; 
+                border-left: 1px solid transparent; padding-left: 0;
+            }
+
+            .nav-link-full:hover { 
+                color: #9b804e; padding-left: 20px; 
+                border-left: 1px solid #9b804e; 
+            }
+
+            /* Estado Activo: Sin recuadros, solo una marca sutil */
+            .nav-link-full.active-page { 
+                color: #f0f0f0 !important;
+                padding-left: 20px; border-left: 1px solid #9b804e;
+            }
+
+            /* Botón Índice: Invisible, solo texto que respira */
+            .btn-abrir-full { 
+                position: fixed; top: 40px; right: 50px; 
+                background: none; color: #9b804e; border: none;
+                font-family: 'Montserrat'; font-size: 0.6rem; 
+                letter-spacing: 5px; cursor: pointer; z-index: 9999;
+                transition: 0.4s;
+            }
+            .btn-abrir-full:hover { color: #fff; letter-spacing: 8px; }
+
+            /* Botón Cerrar: Minimalista */
+            .btn-cerrar-full { 
+                position: absolute; top: 40px; left: 50px; 
+                background: none; border: none; color: #333; 
+                font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+            }
+            .btn-cerrar-full:hover { color: #9b804e; }
+
+            @media (max-width: 900px) { 
+                .nav-grid { grid-template-columns: 1fr; gap: 40px; } 
+                .menu-full-content { padding: 120px 30px; }
+            }
         `;
         const styleSheet = document.createElement("style");
         styleSheet.innerText = styles;
@@ -211,12 +269,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const menuHTML = `
             <div id="menu-fullscreen" class="menu-overlay">
-                <button id="cerrar-menu" class="btn-cerrar-full">&times;</button>
+                <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
                 <div class="menu-full-content">
-                    <h3 style="letter-spacing: 6px; color: #9b804e; font-size: 0.7rem; margin-bottom: 20px;">SISTEMA TEOLÓGICO FORMIGO</h3>
+                    <p class="menu-label-top">Índice del Corpus</p>
                     <div class="nav-grid">
                         <div class="nav-col">
-                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción al Corpus</a>
+                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción</a>
                             <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario Maestro</a>
                             <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
                             <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">Bibliografía</a>
@@ -249,24 +307,27 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </div>
             </div>
-            <button id="abrir-menu" class="btn-abrir-full">☰ ÍNDICE</button>
+            <button id="abrir-menu" class="btn-abrir-full">ÍNDICE</button>
         `;
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
 
-        // Resaltar Página Activa
         const pathActual = window.location.pathname.toLowerCase();
         document.querySelectorAll('.nav-link-full').forEach(link => {
-            const linkPath = link.getAttribute('data-path').toLowerCase();
-            if (pathActual.includes(linkPath)) {
+            const dataPath = link.getAttribute('data-path').toLowerCase();
+            if (pathActual.includes(dataPath)) {
                 link.classList.add('active-page');
             }
         });
 
-        // Headers y Footers
+        // Header Global Sobrio
         const hGlobal = document.getElementById('header-global');
-        const fGlobal = document.getElementById('footer-global');
-        if (hGlobal) hGlobal.innerHTML = `<header style="background-color:#151515; padding:70px 20px; text-align:center; border-bottom:1px solid #9b804e;"><h1 style="font-family:'Cormorant Garamond',serif; color:#fff; font-size:3rem; letter-spacing:8px; margin:0;">S T F</h1><p style="font-family:'Montserrat',sans-serif; color:#888; font-size:0.7rem; letter-spacing:5px; text-transform:uppercase; margin-top:15px;">Sistema Teológico Personal</p></header>`;
-        if (fGlobal) fGlobal.innerHTML = `<footer style="text-align:center; padding:50px 20px; margin-top:auto;"><p style="font-family:'Montserrat',sans-serif; font-size:0.75rem; color:#777; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px;">Roberto Formigo</p><p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem; color:#9b804e; margin:0;">Soli Deo Gloria</p></footer>`;
+        if (hGlobal) {
+            hGlobal.innerHTML = `
+                <header style="padding: 120px 20px; text-align: center;">
+                    <h1 style="font-family: 'Cormorant Garamond', serif; color: #1a1a1a; font-size: 4rem; letter-spacing: 15px; font-weight: 300; margin: 0;">S T F</h1>
+                    <div style="width: 30px; height: 1px; background: #9b804e; margin: 30px auto; opacity: 0.6;"></div>
+                </header>`;
+        }
     };
 
     // --- 6. GEMAS DE SABIDURÍA ---
@@ -323,7 +384,7 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     };
 
-    // --- 8. CONTROL DEL MENÚ FULLSCREEN ---
+   // --- 8. CONTROL DEL MENÚ FULLSCREEN (SINCRONIZADO) ---
     const inicializarMenu = () => {
         const btnAbrir = document.getElementById('abrir-menu');
         const btnCerrar = document.getElementById('cerrar-menu');
@@ -332,23 +393,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
         btnAbrir.onclick = () => {
             overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Bloquear scroll fondo
+            document.body.style.overflow = 'hidden'; 
             setTimeout(() => overlay.style.opacity = '1', 10);
         };
 
-        btnCerrar.onclick = () => {
+        const cerrarProceso = () => {
             overlay.style.opacity = '0';
-            document.body.style.overflow = 'auto'; // Restaurar scroll
-            setTimeout(() => overlay.style.display = 'none', 400);
+            document.body.style.overflow = 'auto'; 
+            // Esperamos 800ms (lo que dura el CSS) antes de quitar el display
+            setTimeout(() => overlay.style.display = 'none', 800); 
         };
+
+        btnCerrar.onclick = cerrarProceso;
         
-        // Cerrar al hacer click en un enlace
         overlay.querySelectorAll('a').forEach(link => {
-            link.onclick = () => {
-                overlay.style.opacity = '0';
-                document.body.style.overflow = 'auto';
-                setTimeout(() => overlay.style.display = 'none', 400);
-            };
+            link.onclick = cerrarProceso;
         });
     };
 
