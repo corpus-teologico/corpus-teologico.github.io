@@ -124,7 +124,7 @@ h2 {
 /* Título del Tratado */
 .titulo-estudio {
     display: block;
-    font-size: 2.3rem; /* Mucho más grande que la descripción */
+    font-size: 2.3rem;
     font-weight: 600;
     color: var(--texto-negro);
     text-decoration: none;
@@ -139,12 +139,12 @@ h2 {
 
 /* Descripción del Tratado */
 .descripcion-breve {
-    font-size: 1.15rem; /* Tamaño contenido y elegante */
+    font-size: 1.15rem;
     color: var(--texto-gris);
     line-height: 1.7;
     margin: 0 0 30px 0;
     text-align: justify;
-    font-style: italic; /* Toque de libro antiguo */
+    font-style: italic;
 }
 
 /* --- EL BOTÓN DE LECTURA SOLEMNE --- */
@@ -173,27 +173,6 @@ h2 {
 }
 
 /* --- MENÚ LATERAL (SISTEMA) --- */
-.btn-abrir {
-    position: fixed;
-    top: 40px;
-    right: 40px;
-    background: transparent;
-    color: white; /* Asumiendo que el header es negro */
-    border: 1px solid rgba(255,255,255,0.3);
-    padding: 12px 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 3px;
-    cursor: pointer;
-    z-index: 1000;
-    transition: 0.3s;
-}
-
-.btn-abrir:hover {
-    border-color: var(--oro-brillante);
-    color: var(--oro-brillante);
-}
-
 .menu-lateral {
     position: fixed;
     top: 0;
@@ -247,19 +226,7 @@ h2 {
     }
     h2 { font-size: 2.5rem; }
 }
-/* --- ESTADO DEL BOTÓN AL HACER SCROLL --- */
-.btn-abrir.scrolled {
-    background-color: rgba(26, 26, 26, 0.95); /* Negro casi opaco */
-    border-color: var(--oro-profundo);
-    color: var(--oro-brillante);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    padding: 10px 18px; /* Un poco más compacto */
-}
 
-/* Aseguramos que el botón original tenga una transición suave */
-.btn-abrir {
-    transition: all 0.4s ease-in-out;
-}
 /* Estilos para el Tratado Solemne */
 .panel-informativo {
     background: #ffffff;
@@ -378,7 +345,7 @@ h2 {
 
 .glifo-v, .glifo-eje {
     color: #9b804e;
-       float: left;
+        float: left;
     margin-right: 6px;
 }
 
@@ -399,11 +366,12 @@ h2 {
     margin-top: 40px;
     font-style: italic;
 }
+
 /* ESTILO DEL BOTÓN DE ÍNDICE (MAESTRO) */
 .btn-abrir {
     position: fixed;
     right: 47px;
-    top: 20px; /* Posición inicial arriba */
+    top: 20px;
     z-index: 1000;
     background-color: #151515;
     color: #fff;
@@ -413,19 +381,19 @@ h2 {
     font-size: 0.7rem;
     letter-spacing: 3px;
     cursor: pointer;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); /* Transición suave */
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0.8;
 }
 
 /* ESTADO CUANDO SE HACE SCROLL */
 .btn-abrir.scrolled {
-    top: 50%; /* Se mueve a la mitad de la pantalla */
-    transform: translateY(-50%); /* Centrado perfecto */
-    right: 30px; /* Un poco más separado del borde para ganar peso visual */
+    top: 50%;
+    transform: translateY(-50%);
+    right: 30px;
     opacity: 1;
     background-color: #1a1a1a;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    animation: latidoElegante 4s infinite ease-in-out; /* El efecto de latido */
+    animation: latidoElegante 4s infinite ease-in-out;
 }
 
 /* EFECTO DE LATIDO LIGERO Y ELEGANTE */
@@ -435,8 +403,8 @@ h2 {
         box-shadow: 0 0 0 0 rgba(155, 128, 78, 0);
     }
     50% {
-        transform: translateY(-50%) scale(1.03); /* Escala muy leve */
-        box-shadow: 0 0 15px 2px rgba(155, 128, 78, 0.2); /* Resplandor suave */
+        transform: translateY(-50%) scale(1.03);
+        box-shadow: 0 0 15px 2px rgba(155, 128, 78, 0.2);
     }
     100% {
         transform: translateY(-50%) scale(1);
@@ -448,13 +416,14 @@ h2 {
 .btn-abrir:hover {
     background-color: #9b804e;
     color: #ffffff;
-    letter-spacing: 5px; /* Efecto de expansión de texto */
+    letter-spacing: 5px;
 }
+
 /* Contenedor Grid */
 .grid-estudios {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-    gap: 30px; /* Espacio entre tarjetas */
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
     max-width: 1100px;
     margin: 40px auto;
 }
@@ -469,7 +438,7 @@ h2 {
     transition: all 0.3s ease;
     position: relative;
    background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 100%);
-box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interior */
+box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05);
 }
 
 .tarjeta-estudio:hover {
@@ -478,7 +447,6 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
     transform: translateY(-3px);
 }
 
-/* El número romano a la izquierda */
 .tarjeta-estudio .numero {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.5rem;
@@ -521,7 +489,6 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
    color:#fff;
 }
 
-/* Ajuste para Móviles (se vuelve a 1 columna automáticamente) */
 @media (max-width: 768px) {
     .grid-estudios {
         grid-template-columns: 1fr;
@@ -531,51 +498,41 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
 .media-xs .panel-tecnico {
     padding: 20px !important;
 }
+
 /* --- BARRA DE SCROLL GLOBAL DEL NAVEGADOR (ORO STF) --- */
-
-/* 1. Ancho y Estilo General */
 ::-webkit-scrollbar {
-    width: 12px; /* Un grosor elegante para escritorio */
+    width: 12px;
 }
-
-/* 2. Fondo de la barra (el carril por donde desliza) */
 ::-webkit-scrollbar-track {
-    background: #0a0a0a; /* Un negro profundo para que no distraiga */
+    background: #0a0a0a;
     border-left: 1px solid #1a1a1a;
 }
-
-/* 3. El tirador (la barra que se mueve) */
 ::-webkit-scrollbar-thumb {
-    background: #9b804e; /* Tu color Oro característico */
+    background: #9b804e;
     border-radius: 10px;
-    /* Creamos un borde del mismo color que el fondo para que la barra parezca "flotar" */
     border: 3px solid #0a0a0a; 
 }
-
-/* 4. Efecto al pasar el ratón */
 ::-webkit-scrollbar-thumb:hover {
-    background: #c5a059; /* Un oro más vivo al tocarlo */
+    background: #c5a059;
     cursor: pointer;
 }
-
-/* Soporte para Firefox (Propiedades estándar) */
 * {
     scrollbar-width: thin;
     scrollbar-color: #9b804e #0a0a0a;
 }
-/* --- TABLAS ELEGANTES ESTILO TRATADO --- */
 
+/* --- TABLAS ELEGANTES ESTILO TRATADO --- */
 .tabla-comparativa {
     width: 100%;
-    border-collapse: collapse; /* Une los bordes en una sola línea */
+    border-collapse: collapse;
     margin: 30px 0;
     font-family: 'Cormorant Garamond', serif;
     background-color: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(155, 128, 78, 0.3); /* Borde exterior tenue */
+    border: 1px solid rgba(155, 128, 78, 0.3);
 }
 
 .tabla-comparativa thead {
-    background-color: rgba(155, 128, 78, 0.1); /* Fondo oro muy sutil para la cabecera */
+    background-color: rgba(155, 128, 78, 0.1);
 }
 
 .tabla-comparativa th {
@@ -584,7 +541,7 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
     letter-spacing: 2px;
     font-size: 0.9rem;
     padding: 20px;
-    border-bottom: 2px solid var(--oro-profundo); /* Línea de honor bajo el título */
+    border-bottom: 2px solid var(--oro-profundo);
     text-align: left;
 }
 
@@ -593,31 +550,29 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
     color: #1a1a1a;
     line-height: 1.6;
     font-size: 1.1rem;
-    border-bottom: 1px solid rgba(155, 128, 78, 0.15); /* Líneas divisorias finas */
+    border-bottom: 1px solid rgba(155, 128, 78, 0.15);
     vertical-align: top;
 }
 
-/* Resaltado para la primera columna (Los Testigos) */
 .tabla-comparativa td:first-child {
     color: var(--oro-profundo);
     font-weight: bold;
     width: 20%;
 }
 
-/* Efecto al pasar el ratón para facilitar la lectura de filas largas */
 .tabla-comparativa tr:hover {
     background-color: rgba(155, 128, 78, 0.05);
 }
-/* --- AJUSTE DE LA TABLA DENTRO DEL CONTENEDOR --- */
+
 .media-xs .tabla-comparativa {
-    min-width: 650px; /* Garantiza que la estructura teológica no se colapse */
-    margin: 0; /* El margen lo maneja el contenedor .media-xs */
+    min-width: 650px;
+    margin: 0;
     background-color: var(--blanco-papel);
-    display: table; /* Asegura comportamiento de tabla estándar */
+    display: table;
 }
 
 .media-xs .tabla-comparativa th {
-    white-space: nowrap; /* Mantiene los encabezados en una sola línea */
+    white-space: nowrap;
     background-color: #fafafa;
 }
 
@@ -625,7 +580,7 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
     white-space: normal;
     word-wrap: break-word;
 }
-/* --- AJUSTES DE LEGIBILIDAD PARA MÓVILES --- */
+
 @media (max-width: 768px) {
     .introduccion-texto p, 
     .descripcion-breve, 
@@ -636,14 +591,14 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
         line-height: normal !important;
     }
 }
-/* --- MODO ACCESIBILIDAD (CORREGIDO) --- */
+
+/* --- MODO ACCESIBILIDAD --- */
 body.alto-contraste {
-    background-color: #ffffff !important; /* Quita el fondo crema f4f1ed */
+    background-color: #ffffff !important;
     --texto-negro: #000000;
-    --oro-profundo: #523c1c; /* Un tono mucho más oscuro para que sea legible */
+    --oro-profundo: #523c1c;
 }
 
-/* Forzar fondo blanco en el contenedor del libro */
 body.alto-contraste .pagina-libro {
     background: #ffffff !important;
     background-image: none !important;
@@ -651,7 +606,6 @@ body.alto-contraste .pagina-libro {
     box-shadow: none !important;
 }
 
-/* Forzar texto negro puro en todos los párrafos y elementos de texto */
 body.alto-contraste p, 
 body.alto-contraste li, 
 body.alto-contraste .descripcion-breve,
@@ -660,7 +614,6 @@ body.alto-contraste .contenido-estudio p {
     color: #000000 !important;
 }
 
-/* Ajuste de títulos para contraste máximo */
 body.alto-contraste h1, 
 body.alto-contraste h2, 
 body.alto-contraste h3,
@@ -668,7 +621,6 @@ body.alto-contraste .titulo-estudio {
     color: #000000 !important;
 }
 
-/* Paneles técnicos y tarjetas en blanco puro con borde negro */
 body.alto-contraste .panel-tecnico,
 body.alto-contraste .tarjeta-eje,
 body.alto-contraste .tarjeta-estudio,
@@ -676,10 +628,9 @@ body.alto-contraste .eje-card {
     background: #ffffff !important;
     border: 1px solid #000000 !important;
     box-shadow: none !important;
-    transform: none !important; /* Evitamos distracciones visuales */
+    transform: none !important;
 }
 
-/* Inversión de etiquetas de oro para que sean legibles */
 body.alto-contraste .label-oro, 
 body.alto-contraste .etiqueta-gold,
 body.alto-contraste .badge-status {
@@ -688,14 +639,12 @@ body.alto-contraste .badge-status {
     padding: 2px 8px !important;
 }
 
-/* Ajuste del botón flotante de accesibilidad para que resalte en este modo */
 body.alto-contraste #btn-access-float {
     background: #000000 !important;
     color: #ffffff !important;
     border: 2px solid #ffffff !important;
 }
 
-/* Separadores más visibles */
 body.alto-contraste .separador-seccion {
     border-bottom: 2px solid #000 !important;
 }
@@ -704,47 +653,52 @@ body.alto-contraste .separador-seccion span {
     color: #000 !important;
     font-weight: bold;
 }
+
+/* =========================================================
+   CONFIGURACIÓN DEL MENÚ FULLSCREEN (CORREGIDA)
+   ========================================================= */
+
 .menu-overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 10005;
-    display: none; /* Se activa con JS */
-    align-items: center;
-    justify-content: center;
+    display: none; 
     opacity: 0;
     transition: opacity 0.4s ease;
+    overflow-y: auto; /* Permite scroll si el contenido es largo */
+    -webkit-overflow-scrolling: touch;
+    align-items: center; /* Centra el cuadro en PC */
+    justify-content: center;
 }
-
 
 .menu-overlay.is-open {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto; /* Se activa al abrir */
+    pointer-events: auto;
 }
 
-/* EL RECUADRO CENTRAL: Pequeño y elegante */
 .menu-card {
     background: #000;
-    border: 1px solid #222; /* Borde sutil */
+    border: 1px solid #222;
     width: 90%;
-    max-width: 850px; /* Más pequeñito como pediste */
-    padding: 50px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    max-width: 900px;
+    margin: 40px auto; 
+    padding: 40px;
     position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
 }
 
 .menu-label-top {
     font-family: 'Montserrat', sans-serif;
     color: #9b804e;
-    font-size: 0.55rem;
+    font-size: 30px;
     letter-spacing: 8px;
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 40px;
     opacity: 1;
-    font-size: 30px;
 }
 
 /* --- GRID DE 3 COLUMNAS --- */
@@ -772,13 +726,12 @@ body.alto-contraste .separador-seccion span {
     gap: 10px;
 }
 
-/* --- ENLACES (FUENTES BAJADAS) --- */
+/* --- ENLACES --- */
 .nav-link-full {
-color: #ccc;
+    color: #ccc;
     text-decoration: none;
-    font-family: 'montserrat', serif;
+    font-family: 'Montserrat', serif;
     font-size: 0.95rem;
-    /* line-height: 1.2; */
     transition: color 0.3s ease;
 }
 
@@ -792,7 +745,7 @@ color: #ccc;
     padding-left: 10px;
 }
 
-/* --- BOTONES --- */
+/* --- BOTONES DEL MENÚ --- */
 .btn-abrir-full { 
     position: fixed; 
     top: 30px; 
@@ -805,7 +758,7 @@ color: #ccc;
     font-size: 0.65rem; 
     letter-spacing: 4px; 
     cursor: pointer; 
-    z-index: 10000; /* Por encima de todo */
+    z-index: 10000; 
     transition: all 0.3s ease;
 }
 
@@ -827,10 +780,38 @@ color: #ccc;
 
 .btn-cerrar-full:hover { color: #fff; }
 
+/* --- RESPONSIVE DEL MENÚ --- */
 @media (max-width: 850px) {
     .nav-grid { grid-template-columns: 1fr; }
     .menu-card { padding: 30px; }
 }
+
+@media (max-width: 768px) {
+    .menu-overlay { align-items: flex-start; } /* Vital para que el scroll empiece desde arriba en móvil */
+    .menu-card {
+        width: 100%;
+        margin: 0; 
+        padding: 60px 20px;
+        border: none;
+        min-height: 100vh;
+    }
+    
+    .nav-grid {
+        gap: 40px;
+    }
+
+    .nav-link-full {
+        font-size: 1.2rem; 
+        padding: 5px 0;
+    }
+
+    .btn-cerrar-full {
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+    }
+}
+
 /* Tooltip de accesibilidad profesional */
 .tooltip-contraste {
     position: absolute;
