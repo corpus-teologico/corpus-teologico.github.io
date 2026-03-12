@@ -181,87 +181,84 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-// --- 5. COMPONENTES VISUALES: ESTÉTICA EDITORIAL DE LUJO ---
+// --- 5. COMPONENTES VISUALES: NEGRO ABSOLUTO Y JERARQUÍA CLARA ---
     const setupVisuals = () => {
         const styles = `
+            /* Fondo Negro Absoluto */
             .menu-overlay { 
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(5, 5, 5, 0.98); z-index: 10005; 
+                background: #000000; z-index: 10005; 
                 display: none; opacity: 0; 
-                transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-                backdrop-filter: blur(15px);
+                transition: opacity 0.4s ease;
             }
 
             .menu-full-content { 
-                max-width: 1100px; margin: 0 auto; padding: 10vh 40px;
-                display: flex; flex-direction: column; height: 80vh;
+                max-width: 1200px; margin: 0 auto; padding: 60px 40px;
             }
 
-            .menu-header-area {
-                text-align: center; margin-bottom: 80px;
-            }
+            .menu-header-area { text-align: center; margin-bottom: 50px; }
 
             .menu-label-top {
                 font-family: 'Montserrat', sans-serif;
-                color: #9b804e; font-size: 0.65rem; letter-spacing: 12px;
-                text-transform: uppercase; margin-bottom: 15px; opacity: 0.6;
+                color: #9b804e; font-size: 0.6rem; letter-spacing: 12px;
+                text-transform: uppercase; opacity: 0.5;
             }
 
-            /* GRID EDITORIAL: 3 columnas con espaciado amplio */
+            /* GRID REFORZADO */
             .nav-grid { 
                 display: grid; 
-                grid-template-columns: 1fr 1.2fr 1.2fr; 
-                gap: 60px; width: 100%;
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+                gap: 50px; width: 100%;
             }
 
+            /* SECCIONES: Más pequeñas y discretas para no distraer */
             .nav-group-title {
                 font-family: 'Montserrat', sans-serif;
-                color: #444; font-size: 0.55rem; letter-spacing: 4px;
-                text-transform: uppercase; margin-bottom: 30px;
-                display: block; border-bottom: 1px solid #1a1a1a; padding-bottom: 12px;
+                color: #333; font-size: 0.5rem; letter-spacing: 4px;
+                text-transform: uppercase; margin-bottom: 25px;
+                display: block; border-bottom: 1px solid #111; padding-bottom: 8px;
             }
 
-            .nav-col { display: flex; flex-direction: column; gap: 18px; }
+            .nav-col { display: flex; flex-direction: column; gap: 12px; }
 
-            /* TIPOGRAFÍA: Elegancia en el trazo */
+            /* TÍTULOS: Ahora son los protagonistas (más grandes y claros) */
             .nav-link-full { 
-                color: #888; text-decoration: none; 
-                font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; 
-                transition: all 0.4s ease; line-height: 1.2;
-                font-weight: 300;
+                color: #e0e0e0; text-decoration: none; 
+                font-family: 'Cormorant Garamond', serif; 
+                font-size: 1.5rem; /* Aumentado para legibilidad */
+                transition: all 0.3s ease; line-height: 1.2;
+                font-weight: 400;
             }
 
             .nav-link-full:hover { 
-                color: #9b804e; padding-left: 10px;
+                color: #9b804e; transform: translateX(5px);
             }
 
-            /* ESTADO ACTIVO: Minimalismo absoluto */
+            /* ESTADO ACTIVO */
             .nav-link-full.active-page { 
-                color: #fff !important; font-style: italic;
-                padding-left: 15px; border-left: 1px solid #9b804e;
+                color: #9b804e !important; 
+                border-left: 2px solid #9b804e; padding-left: 15px;
             }
 
-            /* BOTÓN ÍNDICE: Estilo "Ghost Button" profesional */
+            /* BOTÓN ÍNDICE: Visible pero elegante */
             .btn-abrir-full { 
-                position: fixed; top: 40px; right: 50px; 
-                background: transparent; color: #9b804e; 
-                border: none; padding: 10px;
-                font-family: 'Montserrat'; font-size: 0.6rem; 
-                letter-spacing: 6px; cursor: pointer; z-index: 9999;
-                transition: 0.4s; opacity: 0.7;
+                position: fixed; top: 30px; right: 30px; 
+                background: #000; color: #9b804e; 
+                border: 1px solid #9b804e; padding: 8px 16px;
+                font-family: 'Montserrat'; font-size: 0.65rem; 
+                letter-spacing: 4px; cursor: pointer; z-index: 9999;
             }
-            .btn-abrir-full:hover { opacity: 1; letter-spacing: 8px; color: #fff; }
 
             .btn-cerrar-full { 
-                position: absolute; top: 40px; left: 50px; 
-                background: none; border: none; color: #333; 
-                font-size: 1.5rem; cursor: pointer; transition: 0.3s;
+                position: absolute; top: 30px; left: 40px; 
+                background: none; border: none; color: #fff; 
+                font-size: 1.8rem; cursor: pointer; opacity: 0.4;
             }
-            .btn-cerrar-full:hover { color: #9b804e; transform: rotate(90deg); }
+            .btn-cerrar-full:hover { opacity: 1; color: #9b804e; }
 
-            @media (max-width: 900px) {
-                .nav-grid { grid-template-columns: 1fr; gap: 40px; }
-                .menu-full-content { padding: 60px 30px; }
+            @media (max-width: 800px) {
+                .nav-grid { grid-template-columns: 1fr; }
+                .nav-link-full { font-size: 1.3rem; }
             }
         `;
         const styleSheet = document.createElement("style");
@@ -273,13 +270,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
                 <div class="menu-full-content">
                     <div class="menu-header-area">
-                        <p class="menu-label-top">Sistema Teológico Formigo</p>
-                        <div style="width: 40px; height: 1px; background: #9b804e; margin: 0 auto; opacity: 0.4;"></div>
+                        <p class="menu-label-top">Índice General</p>
                     </div>
                     <div class="nav-grid">
                         <div class="nav-col">
-                            <span class="nav-group-title">Navegación</span>
-                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción</a>
+                            <span class="nav-group-title">Introducción</span>
+                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción al Corpus</a>
                             <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario Maestro</a>
                             <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
                             <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">Bibliografía</a>
@@ -298,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link-full" data-path="el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
                         </div>
                         <div class="nav-col">
-                            <span class="nav-group-title">Tratados XI — XX</span>
+                            <span class="nav-group-title">Tratados XI — XXIII</span>
                             <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. Volver a Dios</a>
                             <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XII. Ser de una sola pieza</a>
                             <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link-full" data-path="mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
@@ -313,7 +309,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </div>
             </div>
-            <button id="abrir-menu" class="btn-abrir-full">ÍNDICE</button>
+            <button id="abrir-menu" class="btn-abrir-full">☰ ÍNDICE</button>
         `;
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
         
