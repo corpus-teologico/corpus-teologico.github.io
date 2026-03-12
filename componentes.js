@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-    // --- 5. COMPONENTES VISUALES Y MENÚ COMPLETO ---
+   // --- 5. COMPONENTES VISUALES Y MENÚ COMPLETO ---
     const setupVisuals = () => {
         if (!document.querySelector('link[rel="icon"]')) {
             const headContent = `
@@ -210,40 +210,55 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button id="cerrar-menu" class="btn-cerrar">&times;</button>
                 <div class="menu-contenido">
                     <h3>SISTEMA TEOLÓGICO</h3>
-                    <a href="${rutaBase}index.html" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
-                    <a href="${rutaBase}glosario.html" style="color: #9b804e; font-weight: bold;">Glosario Maestro</a>
-                    <a href="${rutaBase}carta-abierta.html" style="color: #9b804e;">Carta Abierta</a>
+                    <a href="${rutaBase}index.html" class="nav-link" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
+                    <a href="${rutaBase}glosario.html" class="nav-link" style="color: #9b804e; font-weight: bold;">Glosario Maestro</a>
+                    <a href="${rutaBase}carta-abierta.html" class="nav-link" style="color: #9b804e;">Carta Abierta</a>
                     <div class="separador-menu"></div>
-                    <a href="${rutaBase}estudios/como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
-                    <a href="${rutaBase}estudios/solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
-                    <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html">III. Armonía de los Evangelios</a>
-                    <a href="${rutaBase}estudios/aprender-a-descansar.html">IV. Aprender a descansar</a>
-                    <a href="${rutaBase}estudios/conocer-para-amar.html">V. Conocer para amar</a>
-                    <a href="${rutaBase}estudios/de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
-                    <a href="${rutaBase}estudios/un-mundo-roto.html">VII. Un mundo roto</a>
-                    <a href="${rutaBase}estudios/el-problema-del-pecado.html">VIII. El problema del pecado</a>
-                    <a href="${rutaBase}estudios/nuestra-oscuridad.html">IX. Nuestra oscuridad</a>
-                    <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
-                    <a href="${rutaBase}estudios/volver-a-dios.html">XI. Volver a Dios</a>
-                    <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html">XII. Ser de una sola pieza</a>
-                    <a href="${rutaBase}estudios/mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
-                    <a href="${rutaBase}estudios/el-matrimonio-ideal.html">XIV. El matrimonio ideal</a>
-                    <a href="${rutaBase}estudios/libertad-de-las-cadenas.html">XV. Libertad de las cadenas</a>
-                    <a href="${rutaBase}estudios/defendiendo-mi-fe.html">XVI. Defendiendo mi fe</a>
-                    <a href="${rutaBase}estudios/ciencia-y-fe.html">XVII. Ciencia y fe</a>
-                    <a href="${rutaBase}estudios/nuestro-dios-trino.html">XVIII. Nuestro Dios Trino</a>
-                    <a href="${rutaBase}estudios/lo-que-esta-por-venir.html">XIX. Lo que está por venir</a>
-                    <a href="${rutaBase}estudios/el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
-                    <a href="${rutaBase}estudios/la-familia-de-dios.html">XXI. La familia de Dios</a>
-                    <a href="${rutaBase}estudios/usar-bien-lo-que-dios-me-da.html">XXII. Usar bien lo que Dios me da</a>
-                    <a href="${rutaBase}estudios/la-guerra-en-mi-interior.html">XXIII. La guerra en mi interior</a>
+                    <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link">I. ¿Cómo nos habla Dios?</a>
+                    <a href="${rutaBase}estudios/solo-la-biblia-basta.html" class="nav-link">II. Sólo la Biblia basta</a>
+                    <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html" class="nav-link">III. Armonía de los Evangelios</a>
+                    <a href="${rutaBase}estudios/aprender-a-descansar.html" class="nav-link">IV. Aprender a descansar</a>
+                    <a href="${rutaBase}estudios/conocer-para-amar.html" class="nav-link">V. Conocer para amar</a>
+                    <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link">VI. ¿De dónde viene el mal?</a>
+                    <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link">VII. Un mundo roto</a>
+                    <a href="${rutaBase}estudios/el-problema-del-pecado.html" class="nav-link">VIII. El problema del pecado</a>
+                    <a href="${rutaBase}estudios/nuestra-oscuridad.html" class="nav-link">IX. Nuestra oscuridad</a>
+                    <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link">X. El Dios justo y amoroso</a>
+                    <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link">XI. Volver a Dios</a>
+                    <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link">XII. Ser de una sola pieza</a>
+                    <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link">XIII. Mi amistad con Dios</a>
+                    <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link">XIV. El matrimonio ideal</a>
+                    <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link">XV. Libertad de las cadenas</a>
+                    <a href="${rutaBase}estudios/defendiendo-mi-fe.html" class="nav-link">XVI. Defendiendo mi fe</a>
+                    <a href="${rutaBase}estudios/ciencia-y-fe.html" class="nav-link">XVII. Ciencia y fe</a>
+                    <a href="${rutaBase}estudios/nuestro-dios-trino.html" class="nav-link">XVIII. Nuestro Dios Trino</a>
+                    <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link">XIX. Lo que está por venir</a>
+                    <a href="${rutaBase}estudios/el-poder-del-espiritu.html" class="nav-link">XX. El poder del Espíritu</a>
+                    <a href="${rutaBase}estudios/la-familia-de-dios.html" class="nav-link">XXI. La familia de Dios</a>
+                    <a href="${rutaBase}estudios/usar-bien-lo-que-dios-me-da.html" class="nav-link">XXII. Usar bien lo que Dios me da</a>
+                    <a href="${rutaBase}estudios/la-guerra-en-mi-interior.html" class="nav-link">XXIII. La guerra en mi interior</a>
                     <div class="separador-menu"></div>
-                    <a href="${rutaBase}bibliografia.html" style="color: #777;">Bibliografía</a>
+                    <a href="${rutaBase}bibliografia.html" class="nav-link" style="color: #777;">Bibliografía</a>
                 </div>
             </div>
             <button id="abrir-menu" class="btn-abrir">☰ ÍNDICE</button>
         `;
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
+
+        // --- LÓGICA DE SELECCIÓN ACTIVA ---
+        const pathActual = window.location.pathname;
+        const linksMenu = document.querySelectorAll('.nav-link');
+        
+        linksMenu.forEach(link => {
+            // Si el href del enlace está contenido en la URL actual, es la página activa
+            if (pathActual.includes(link.getAttribute('href').replace('./', '').replace('../', ''))) {
+                link.style.color = "#ffffff";
+                link.style.borderLeft = "2px solid #9b804e";
+                link.style.paddingLeft = "15px";
+                link.style.fontWeight = "bold";
+                link.style.backgroundColor = "rgba(155, 128, 78, 0.05)";
+            }
+        });
 
         const hGlobal = document.getElementById('header-global');
         const fGlobal = document.getElementById('footer-global');
