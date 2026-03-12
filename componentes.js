@@ -375,15 +375,13 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
         };
     };
-  // --- 8. CONTROL DEL MENÚ FULLSCREEN (OPTIMIZADO) ---
+  // --- 8. CONTROL DEL MENÚ (REPARADO) ---
     const inicializarMenu = () => {
         const btnAbrir = document.getElementById('abrir-menu');
         const btnCerrar = document.getElementById('cerrar-menu');
         const overlay = document.getElementById('menu-fullscreen');
-        
         if(!btnAbrir || !overlay) return;
 
-        // Abrir: Fluido y bloquea el scroll del fondo
         btnAbrir.onclick = () => {
             overlay.style.display = 'block';
             document.body.style.overflow = 'hidden'; 
@@ -393,25 +391,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const cerrarProceso = () => {
             overlay.style.opacity = '0';
             document.body.style.overflow = 'auto'; 
-            // 500ms es lo ideal para la transición de 0.5s que pusimos en el CSS
-            setTimeout(() => overlay.style.display = 'none', 500); 
+            setTimeout(() => overlay.style.display = 'none', 400); 
         };
 
         btnCerrar.onclick = cerrarProceso;
-        
-        // Cerrar automáticamente al elegir un estudio
-        overlay.querySelectorAll('a').forEach(link => {
-            link.onclick = cerrarProceso;
-        });
-
-        // Cerrar si se pulsa la tecla ESC (Detalle de calidad profesional)
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape" && overlay.style.display === 'block') {
-                cerrarProceso();
-            }
-        });
+        overlay.querySelectorAll('a').forEach(link => link.onclick = cerrarProceso);
     };
-
 
     // --- EJECUCIÓN ---
     setupVisuals();
