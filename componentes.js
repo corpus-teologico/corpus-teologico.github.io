@@ -262,8 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </div>
             </div>
-            <button id="abrir-menu" class="btn-abrir-full">☰ ÍNDICE</button>
-        `;
+<button id="abrir-menu" style="position:fixed; top:20px; right:20px; z-index:10000; background:#1a1a1a; color:#9b804e; border:1px solid #9b804e; padding:10px 20px; font-family:'Montserrat',sans-serif; font-size:12px; letter-spacing:2px; cursor:pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">☰ ÍNDICE</button>        `;
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
         
         const pathActual = window.location.pathname.toLowerCase();
