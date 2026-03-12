@@ -748,7 +748,8 @@ body.alto-contraste .separador-seccion span {
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 40px;
-    opacity: 0.6;
+    opacity: 1;
+    font-size: 30px;
 }
 
 /* --- GRID DE 3 COLUMNAS --- */
@@ -759,9 +760,9 @@ body.alto-contraste .separador-seccion span {
 }
 
 .nav-group-title {
-    font-family: 'Montserrat', sans-serif;
-    color: #444;
-    font-size: 0.5rem;
+     font-family: 'Montserrat', sans-serif;
+    color: #9B804C;
+    font-size: 1.00rem;
     letter-spacing: 3px;
     text-transform: uppercase;
     margin-bottom: 15px;
@@ -778,11 +779,11 @@ body.alto-contraste .separador-seccion span {
 
 /* --- ENLACES (FUENTES BAJADAS) --- */
 .nav-link-full {
-    color: #ccc;
+color: #ccc;
     text-decoration: none;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem; /* Tamaño más pequeño y elegante */
-    line-height: 1.2;
+    font-family: 'montserrat', serif;
+    font-size: 0.95rem;
+    /* line-height: 1.2; */
     transition: color 0.3s ease;
 }
 
