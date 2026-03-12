@@ -194,104 +194,71 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
-   // --- 5. COMPONENTES VISUALES Y MENÚ COMPLETO ---
+  // --- 5. COMPONENTES VISUALES Y MENÚ COMPLETO ---
     const setupVisuals = () => {
-        if (!document.querySelector('link[rel="icon"]')) {
-            const headContent = `
-                <link rel="icon" type="image/svg+xml" href="${rutaBase}favicon.svg">
-                <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
-                <link rel="stylesheet" href="${rutaBase}style.css">
-            `;
-            head.insertAdjacentHTML('beforeend', headContent);
-        }
+        // ... (mantén el código anterior de los links de Google Fonts)
+
+        // Lógica para detectar página activa
+        const paginaActual = window.location.pathname.split("/").pop() || "index.html";
+
+        const links = [
+            { href: "index.html", text: "Introducción al Corpus", especial: "italic" },
+            { href: "glosario.html", text: "Glosario Maestro", especial: "bold" },
+            { href: "carta-abierta.html", text: "Carta Abierta" },
+            { separador: true },
+            { href: "estudios/como-nos-habla-dios.html", text: "I. ¿Cómo nos habla Dios?" },
+            { href: "estudios/solo-la-biblia-basta.html", text: "II. Sólo la Biblia basta" },
+            { href: "estudios/la-armonia-de-los-evangelios.html", text: "III. Armonía de los Evangelios" },
+            { href: "estudios/aprender-a-descansar.html", text: "IV. Aprender a descansar" },
+            { href: "estudios/conocer-para-amar.html", text: "V. Conocer para amar" },
+            { href: "estudios/de-donde-viene-el-mal.html", text: "VI. ¿De dónde viene el mal?" },
+            { href: "estudios/un-mundo-roto.html", text: "VII. Un mundo roto" },
+            { href: "estudios/el-problema-del-pecado.html", text: "VIII. El problema del pecado" },
+            { href: "estudios/nuestra-oscuridad.html", text: "IX. Nuestra oscuridad" },
+            { href: "estudios/el-dios-justo-y-amoroso.html", text: "X. El Dios justo y amoroso" },
+            { href: "estudios/volver-a-dios.html", text: "XI. Volver a Dios" },
+            { href: "estudios/ser-de-una-sola-pieza.html", text: "XII. Ser de una sola pieza" },
+            { href: "estudios/mi-amistad-con-dios.html", text: "XIII. Mi amistad con Dios" },
+            { href: "estudios/el-matrimonio-ideal.html", text: "XIV. El matrimonio ideal" },
+            { href: "estudios/libertad-de-las-cadenas.html", text: "XV. Libertad de las cadenas" },
+            { href: "estudios/defendiendo-mi-fe.html", text: "XVI. Defendiendo mi fe" },
+            { href: "estudios/ciencia-y-fe.html", text: "XVII. Ciencia y fe" },
+            { href: "estudios/nuestro-dios-trino.html", text: "XVIII. Nuestro Dios Trino" },
+            { href: "estudios/lo-que-esta-por-venir.html", text: "XIX. Lo que está por venir" },
+            { href: "estudios/el-poder-del-espiritu.html", text: "XX. El poder del Espíritu" },
+            { href: "estudios/la-familia-de-dios.html", text: "XXI. La familia de Dios" },
+            { href: "estudios/usar-bien-lo-que-dios-me-da.html", text: "XXII. Usar bien lo que Dios me da" },
+            { href: "estudios/la-guerra-en-mi-interior.html", text: "XXIII. La guerra en mi interior" },
+            { separador: true },
+            { href: "bibliografia.html", text: "Bibliografía", color: "#777" }
+        ];
+
+        let menuLinksHTML = "";
+        links.forEach(link => {
+            if (link.separador) {
+                menuLinksHTML += `<div class="separador-menu"></div>`;
+            } else {
+                const esActivo = link.href.includes(paginaActual);
+                const styleActivo = esActivo ? "color: #fff !important; font-weight: bold; border-left: 2px solid #9b804e; padding-left: 15px; background: rgba(155, 128, 78, 0.1);" : "";
+                const hrefFinal = esEstudio ? (link.href.includes('estudios/') ? link.href.replace('estudios/', './') : '../' + link.href) : (link.href.includes('estudios/') ? './' + link.href : link.href);
+
+                menuLinksHTML += `<a href="${hrefFinal}" style="${link.color ? 'color:'+link.color+';' : ''} ${link.especial === 'italic' ? 'font-style:italic;' : ''} ${styleActivo}">${link.text} ${esActivo ? ' ⮕' : ''}</a>`;
+            }
+        });
 
         const menuHTML = `
             <div id="menu-lateral" class="menu-lateral">
                 <button id="cerrar-menu" class="btn-cerrar">&times;</button>
-                <div class="menu-contenido" id="menu-scroll-container">
-                    <h3>SISTEMA TEOLÓGICO</h3>
-                    <a href="${rutaBase}index.html" class="nav-link" style="color: #9b804e; font-style: italic;">Introducción al Corpus</a>
-                    <a href="${rutaBase}glosario.html" class="nav-link" style="color: #9b804e; font-weight: bold;">Glosario Maestro</a>
-                    <a href="${rutaBase}carta-abierta.html" class="nav-link" style="color: #9b804e;">Carta Abierta</a>
-                    <div class="separador-menu"></div>
-                    <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link">I. ¿Cómo nos habla Dios?</a>
-                    <a href="${rutaBase}estudios/solo-la-biblia-basta.html" class="nav-link">II. Sólo la Biblia basta</a>
-                    <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html" class="nav-link">III. Armonía de los Evangelios</a>
-                    <a href="${rutaBase}estudios/aprender-a-descansar.html" class="nav-link">IV. Aprender a descansar</a>
-                    <a href="${rutaBase}estudios/conocer-para-amar.html" class="nav-link">V. Conocer para amar</a>
-                    <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link">VI. ¿De dónde viene el mal?</a>
-                    <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link">VII. Un mundo roto</a>
-                    <a href="${rutaBase}estudios/el-problema-del-pecado.html" class="nav-link">VIII. El problema del pecado</a>
-                    <a href="${rutaBase}estudios/nuestra-oscuridad.html" class="nav-link">IX. Nuestra oscuridad</a>
-                    <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link">X. El Dios justo y amoroso</a>
-                    <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link">XI. Volver a Dios</a>
-                    <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link">XII. Ser de una sola pieza</a>
-                    <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link">XIII. Mi amistad con Dios</a>
-                    <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link">XIV. El matrimonio ideal</a>
-                    <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link">XV. Libertad de las cadenas</a>
-                    <a href="${rutaBase}estudios/defendiendo-mi-fe.html" class="nav-link">XVI. Defendiendo mi fe</a>
-                    <a href="${rutaBase}estudios/ciencia-y-fe.html" class="nav-link">XVII. Ciencia y fe</a>
-                    <a href="${rutaBase}estudios/nuestro-dios-trino.html" class="nav-link">XVIII. Nuestro Dios Trino</a>
-                    <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link">XIX. Lo que está por venir</a>
-                    <a href="${rutaBase}estudios/el-poder-del-espiritu.html" class="nav-link">XX. El poder del Espíritu</a>
-                    <a href="${rutaBase}estudios/la-familia-de-dios.html" class="nav-link">XXI. La familia de Dios</a>
-                    <a href="${rutaBase}estudios/usar-bien-lo-que-dios-me-da.html" class="nav-link">XXII. Usar bien lo que Dios me da</a>
-                    <a href="${rutaBase}estudios/la-guerra-en-mi-interior.html" class="nav-link">XXIII. La guerra en mi interior</a>
-                    <div class="separador-menu"></div>
-                    <a href="${rutaBase}bibliografia.html" class="nav-link" style="color: #777;">Bibliografía</a>
+                <div class="menu-contenido">
+                    <h3 style="letter-spacing: 4px; font-size: 0.7rem; color: #555; margin-bottom: 20px;">SISTEMA TEOLÓGICO</h3>
+                    ${menuLinksHTML}
                 </div>
             </div>
             <button id="abrir-menu" class="btn-abrir">☰ ÍNDICE</button>
         `;
         document.body.insertAdjacentHTML('afterbegin', menuHTML);
-
-        // --- LÓGICA DE SELECCIÓN ACTIVA REFORZADA ---
-        const pathActual = window.location.pathname.toLowerCase();
-        const linksMenu = document.querySelectorAll('.nav-link');
         
-        linksMenu.forEach(link => {
-            // Obtenemos la URL absoluta del enlace para comparar peras con peras
-            const linkPath = new URL(link.href).pathname.toLowerCase();
-            
-            if (pathActual === linkPath || (pathActual.endsWith('/') && linkPath.endsWith('index.html'))) {
-                link.style.color = "#ffffff";
-                link.style.borderLeft = "3px solid #9b804e";
-                link.style.paddingLeft = "20px";
-                link.style.fontWeight = "600";
-                link.style.backgroundColor = "rgba(155, 128, 78, 0.15)";
-                
-                // Hacer scroll automático hacia el elemento activo dentro del menú
-                setTimeout(() => {
-                    link.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 500);
-            }
-        });
-
-const hGlobal = document.getElementById('header-global');
-        const fGlobal = document.getElementById('footer-global');
-        if (hGlobal) hGlobal.innerHTML = `<header style="background-color:#151515; padding:70px 20px; text-align:center; border-bottom:1px solid #9b804e;"><h1 style="font-family:'Cormorant Garamond',serif; color:#fff; font-size:3rem; letter-spacing:8px; margin:0;">S T F</h1><p style="font-family:'Montserrat',sans-serif; color:#888; font-size:0.7rem; letter-spacing:5px; text-transform:uppercase; margin-top:15px;">Sistema Teológico Personal</p></header>`;
-        if (fGlobal) fGlobal.innerHTML = `<footer style="text-align:center; padding:50px 20px; margin-top:auto;"><p style="font-family:'Montserrat',sans-serif; font-size:0.75rem; color:#777; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px;">Roberto Formigo</p><p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem; color:#9b804e; margin:0;">Soli Deo Gloria</p></footer>`;
-    };
-
-        // --- LÓGICA DE SELECCIÓN ACTIVA ---
-        const pathActual = window.location.pathname;
-        const linksMenu = document.querySelectorAll('.nav-link');
-        
-        linksMenu.forEach(link => {
-            // Si el href del enlace está contenido en la URL actual, es la página activa
-            if (pathActual.includes(link.getAttribute('href').replace('./', '').replace('../', ''))) {
-                link.style.color = "#ffffff";
-                link.style.borderLeft = "2px solid #9b804e";
-                link.style.paddingLeft = "15px";
-                link.style.fontWeight = "bold";
-                link.style.backgroundColor = "rgba(155, 128, 78, 0.05)";
-            }
-        });
-
-        const hGlobal = document.getElementById('header-global');
-        const fGlobal = document.getElementById('footer-global');
-        if (hGlobal) hGlobal.innerHTML = `<header style="background-color:#151515; padding:70px 20px; text-align:center; border-bottom:1px solid #9b804e;"><h1 style="font-family:'Cormorant Garamond',serif; color:#fff; font-size:3rem; letter-spacing:8px; margin:0;">S T F</h1><p style="font-family:'Montserrat',sans-serif; color:#888; font-size:0.7rem; letter-spacing:5px; text-transform:uppercase; margin-top:15px;">Sistema Teológico Personal</p></header>`;
-        if (fGlobal) fGlobal.innerHTML = `<footer style="text-align:center; padding:50px 20px; margin-top:auto;"><p style="font-family:'Montserrat',sans-serif; font-size:0.75rem; color:#777; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px;">Roberto Formigo</p><p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem; color:#9b804e; margin:0;">Soli Deo Gloria</p></footer>`;
+        // ... (resto de headers y footers)
     };
 
     // --- 6. GEMAS DE SABIDURÍA ---
