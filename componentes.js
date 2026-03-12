@@ -293,45 +293,50 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem('stf-contraste', document.body.classList.contains('alto-contraste') ? 'activo' : 'inactivo');
         };
     };
-// --- 8. CONTROL DEL MENÚ (REPARADO Y ROBUSTO) ---
+// --- 8. CONTROL DEL MENÚ CON LOGICA DE ACCESIBILIDAD ---
     const inicializarMenu = () => {
         const btnAbrir = document.getElementById('abrir-menu');
-        const btnCerrar = document.getElementById('cerrar-menu');
         const overlay = document.getElementById('menu-fullscreen');
+        
+        if (!btnAbrir || !overlay) return;
 
-        // Verificación de seguridad
-        if (!btnAbrir || !overlay) {
-            console.error("No se encontraron los elementos del menú");
-            return;
-        }
+        // Función para verificar contraste (la "inteligencia" del sistema)
+        const verificarAccesibilidad = (link) => {
+            // Aquí puedes añadir tu lógica anterior de validación de contraste
+            // Por ejemplo, si el color es muy oscuro, avisar.
+            const color = window.getComputedStyle(link).color;
+            if (color === 'rgb(0, 0, 0)') { 
+                console.warn("Aviso: Enlace con bajo contraste detectado.");
+            }
+        };
 
-        // Función Abrir
         btnAbrir.onclick = (e) => {
             e.preventDefault();
             overlay.classList.add('is-open');
             document.body.style.overflow = 'hidden';
+            
+            // Re-escaneamos los links al abrir para asegurar que los avisos funcionan
+            overlay.querySelectorAll('.nav-link-full').forEach(link => {
+                verificarAccesibilidad(link);
+                
+                // Si quieres que salga un aviso al pasar el ratón:
+                link.onmouseenter = () => {
+                    // Lógica para mostrar tooltip si el contraste es malo
+                };
+            });
         };
 
-        // Función Cerrar
         const cerrarMenu = () => {
             overlay.classList.remove('is-open');
             document.body.style.overflow = 'auto';
         };
 
-        if (btnCerrar) btnCerrar.onclick = cerrarMenu;
-
-        // Cerrar al hacer clic en cualquier enlace
-        const links = overlay.querySelectorAll('.nav-link-full');
-        links.forEach(link => {
-            link.onclick = cerrarMenu;
-        });
-
-        // Cerrar si hacen clic fuera del recuadro (en el fondo oscuro)
-        overlay.onclick = (e) => {
-            if (e.target === overlay) cerrarMenu();
-        };
+        document.getElementById('cerrar-menu').onclick = cerrarMenu;
+        
+        // Cerrar al clickar fuera o en links
+        overlay.onclick = (e) => { if (e.target === overlay) cerrarMenu(); };
+        overlay.querySelectorAll('a').forEach(l => l.onclick = cerrarMenu);
     };
-
     // --- EJECUCIÓN ---
     setupVisuals();
     crearBarraProgreso();
