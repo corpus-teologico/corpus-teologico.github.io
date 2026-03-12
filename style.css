@@ -636,27 +636,71 @@ box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05); /* Sutil resplandor interio
         line-height: normal !important;
     }
 }
-/* --- MODO ACCESIBILIDAD --- */
+/* --- MODO ACCESIBILIDAD (CORREGIDO) --- */
 body.alto-contraste {
-    --fondo-pagina: #ffffff; /* Blanco puro para máximo contraste */
+    background-color: #ffffff !important; /* Quita el fondo crema f4f1ed */
     --texto-negro: #000000;
-    --oro-profundo: #7a5a2a; /* Dorado oscurecido para legibilidad */
-    --oro-brillante: #5d451b;
+    --oro-profundo: #523c1c; /* Un tono mucho más oscuro para que sea legible */
 }
 
+/* Forzar fondo blanco en el contenedor del libro */
 body.alto-contraste .pagina-libro {
     background: #ffffff !important;
-    box-shadow: none;
+    background-image: none !important;
+    border: 2px solid #000000 !important;
+    box-shadow: none !important;
 }
 
+/* Forzar texto negro puro en todos los párrafos y elementos de texto */
 body.alto-contraste p, 
-body.alto-contraste li {
+body.alto-contraste li, 
+body.alto-contraste .descripcion-breve,
+body.alto-contraste .introduccion-texto p,
+body.alto-contraste .contenido-estudio p {
     color: #000000 !important;
-    font-weight: 450; /* Un poco más de grosor para la lectura */
 }
 
+/* Ajuste de títulos para contraste máximo */
+body.alto-contraste h1, 
+body.alto-contraste h2, 
+body.alto-contraste h3,
+body.alto-contraste .titulo-estudio {
+    color: #000000 !important;
+}
+
+/* Paneles técnicos y tarjetas en blanco puro con borde negro */
+body.alto-contraste .panel-tecnico,
+body.alto-contraste .tarjeta-eje,
+body.alto-contraste .tarjeta-estudio,
+body.alto-contraste .eje-card {
+    background: #ffffff !important;
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+    transform: none !important; /* Evitamos distracciones visuales */
+}
+
+/* Inversión de etiquetas de oro para que sean legibles */
 body.alto-contraste .label-oro, 
-body.alto-contraste .etiqueta-gold {
-    background: #000 !important;
-    color: #fff !important;
+body.alto-contraste .etiqueta-gold,
+body.alto-contraste .badge-status {
+    background: #000000 !important;
+    color: #ffffff !important;
+    padding: 2px 8px !important;
+}
+
+/* Ajuste del botón flotante de accesibilidad para que resalte en este modo */
+body.alto-contraste #btn-access-float {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+}
+
+/* Separadores más visibles */
+body.alto-contraste .separador-seccion {
+    border-bottom: 2px solid #000 !important;
+}
+body.alto-contraste .separador-seccion span {
+    background: #fff !important;
+    color: #000 !important;
+    font-weight: bold;
 }
