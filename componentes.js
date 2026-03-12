@@ -78,103 +78,120 @@ const inyectarGemaSabiduria = () => {
 
 inyectarGemaSabiduria();
 
-// --- 11. DICCIONARIO TEOLÓGICO INTEGRAL (STF) ---
+// --- 11. DICCIONARIO TEOLÓGICO INTEGRAL (STF) - VERSIÓN CORREGIDA ---
 const inicializarDiccionarioPropio = () => {
     const diccionarioSTF = {
-        // --- BIBLIOLOGÍA (La Palabra) ---
-        "inerrancia": "La convicción de que las Escrituras, en sus documentos originales, están libres de error en todo lo que afirman.",
-        "infalibilidad": "La incapacidad de la Biblia para fallar en su propósito de revelar la verdad salvadora de Dios.",
-        "sola scriptura": "Principio reformado que establece la Biblia como la única autoridad final e infalible para la fe.",
-        "canon": "La colección cerrada de 66 libros inspirados que constituyen la regla de fe del creyente.",
-        "iluminación": "La obra del Espíritu Santo que permite al lector comprender y aplicar la verdad espiritual de la Biblia.",
-        "revelación": "El acto de Dios de comunicarse a la humanidad, ya sea de forma general (creación) o especial (Escrituras).",
+    // --- BIBLIOLOGÍA (La Palabra) ---
+    "inerrancia": "La convicción de que las Escrituras, en sus documentos originales, están libres de error en todo lo que afirman.",
+    "infalibilidad": "La incapacidad de la Biblia para fallar en su propósito de revelar la verdad salvadora de Dios.",
+    "sola scriptura": "Principio reformado que establece la Biblia como la única autoridad final e infalible para la fe.",
+    "canon": "La colección cerrada de 66 libros inspirados que constituyen la regla de fe del creyente.",
+    "iluminación": "La obra del Espíritu Santo que permite al lector comprender y aplicar la verdad espiritual de la Biblia.",
+    "revelación": "El acto de Dios de comunicarse a la humanidad, ya sea de forma general (creación) o especial (Escrituras).",
+    "inspiración": "La influencia sobrenatural del Espíritu Santo sobre los autores bíblicos para que escribieran exactamente lo que Dios quería.",
+    "hermenéutica": "La ciencia y el arte de interpretar correctamente el significado de los textos bíblicos.",
 
-        // --- TEONTOLOGÍA (Atributos de Dios) ---
-        "soberanía": "El gobierno absoluto de Dios sobre toda la creación, ejecutando Su voluntad eterna sin impedimentos.",
-        "providencia": "El cuidado continuo por el cual Dios sostiene, dirige y gobierna todas las criaturas y eventos.",
-        "omnisciencia": "Atributo por el cual Dios posee conocimiento perfecto y total de todas las cosas: pasadas, presentes, futuras y posibles.",
-        "omnipotencia": "El poder ilimitado de Dios para realizar todo lo que es conforme a Su carácter santo.",
-        "omnipresencia": "La presencia total de Dios en todo lugar y tiempo con toda Su plenitud.",
-        "aseidad": "La cualidad de Dios de existir por Sí mismo, sin depender de ninguna causa externa.",
-        "inmutabilidad": "La perfección de Dios por la cual Él no cambia en Su ser, perfecciones, propósitos o promesas.",
-        "trinidad": "Un solo Dios en tres personas distintas, coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
-        "santidad": "La trascendencia y pureza absoluta de Dios, que lo separa de toda criatura y pecado.",
+    // --- TEONTOLOGÍA (Atributos de Dios) ---
+    "soberanía": "El gobierno absoluto de Dios sobre toda la creación, ejecutando Su voluntad eterna sin impedimentos.",
+    "providencia": "El cuidado continuo por el cual Dios sostiene, dirige y gobierna todas las criaturas y eventos.",
+    "omnisciencia": "Atributo por el cual Dios posee conocimiento perfecto y total de todas las cosas: pasadas, presentes, futuras y posibles.",
+    "omnipotencia": "El poder ilimitado de Dios para realizar todo lo que es conforme a Su carácter santo.",
+    "omnipresencia": "La presencia total de Dios en todo lugar y tiempo con toda Su plenitud.",
+    "aseidad": "La cualidad de Dios de existir por Sí mismo, sin depender de ninguna causa externa.",
+    "trinidad": "Un solo Dios en tres personas distintas, coeternas y consustanciales: Padre, Hijo y Espíritu Santo.",
+    "inmutabilidad": "La perfección de Dios por la cual Él no cambia en Su ser, propósitos o promesas.",
+    "santidad": "La separación absoluta de Dios de toda maldad y Su pureza infinita que lo distingue de todo lo creado.",
+    "trascendencia": "La existencia de Dios por encima y más allá de los límites del universo creado.",
+    "inmanencia": "La presencia y participación activa de Dios dentro de Su creación sin mezclarse con ella.",
 
-        // --- CRISTOLOGÍA (Cristo) ---
-        "encarnación": "El acto por el cual el Hijo eterno de Dios asumió una naturaleza humana completa sin dejar de ser Dios.",
-        "unión hipostática": "La unión de las dos naturalezas (divina y humana) en la única persona de Jesucristo.",
-        "propiciación": "El sacrificio de Cristo que aplaca la ira justa de Dios contra el pecado.",
-        "expiación": "La obra de Cristo en la cruz para cancelar la deuda del pecado y reconciliar al hombre con Dios.",
-        "imputación": "El acto legal donde Dios acredita la justicia de Cristo al creyente y el pecado del creyente a Cristo.",
+    // --- CRISTOLOGÍA Y PNEUMATOLOGÍA ---
+    "encarnación": "El acto por el cual el Hijo eterno de Dios asumió una naturaleza humana completa sin dejar de ser Dios.",
+    "unión hipostática": "La unión misteriosa de las naturalezas divina y humana en la única persona de Jesucristo.",
+    "pneumatología": "El estudio teológico de la persona y la obra del Espíritu Santo.",
+    "paráclito": "Término para el Espíritu Santo como Consolador, Abogado o Ayudador enviado por el Padre.",
+    "cristocentrismo": "El enfoque teológico que coloca a Jesucristo como el centro de toda la revelación y la historia.",
 
-        // --- ANTROPOLOGÍA Y HAMARTIOLOGÍA (El Hombre y el Mal) ---
-        "depravación": "La corrupción total del hombre tras la caída, afectando intelecto, voluntad y emociones.",
-        "imago dei": "La creación del ser humano 'a imagen de Dios', dotado de capacidades morales y espirituales.",
-        "caída": "La desobediencia histórica de Adán que sumergió a la humanidad en un estado de pecado y muerte.",
-        "maldad": "La privación o corrupción del bien; no una sustancia, sino un desvío del orden divino.",
-        "concupiscencia": "La inclinación desordenada hacia el pecado que reside en el corazón del hombre caído.",
+    // --- ANTROPOLOGÍA Y HAMARTIOLOGÍA (Hombre y Pecado) ---
+    "depravación": "La corrupción radical del hombre tras la caída, afectando su voluntad, mente y corazón.",
+    "imago dei": "La condición del ser humano creado a 'imagen de Dios', dotado de capacidades morales y espirituales.",
+    "caída": "La desobediencia histórica de Adán que introdujo el pecado y la muerte en la experiencia humana.",
+    "concupiscencia": "La inclinación desordenada y persistente hacia el pecado en la naturaleza humana caída.",
+    "pecado": "Cualquier falta de conformidad con la ley de Dios o la transgresión de la misma.",
 
-        // --- SOTERIOLOGÍA (Salvación) ---
-        "gracia": "El favor inmerecido de Dios; Su amor activo hacia quienes solo merecen castigo.",
-        "justificación": "Acto judicial donde Dios declara justo al pecador sobre la base de la fe en Cristo.",
-        "regeneración": "El 'nuevo nacimiento'; la obra soberana del Espíritu que da vida espiritual al muerto.",
-        "arrepentimiento": "Cambio radical de mente y dirección respecto al pecado y hacia Dios.",
-        "adopción": "El acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia.",
-        "santificación": "El proceso progresivo de crecimiento en santidad por el cual el creyente es conformado a Cristo.",
-        "perseverancia": "La seguridad de que aquellos que Dios ha salvado serán sostenidos por Él hasta el fin.",
+    // --- SOTERIOLOGÍA (Salvación) ---
+    "justificación": "Acto judicial donde Dios declara justo al pecador sobre la base de la fe en la justicia de Cristo.",
+    "gracia": "El favor inmerecido de Dios; Su amor activo hacia quienes solo merecen Su juicio.",
+    "redención": "El rescate del pecador de la esclavitud del pecado mediante el pago del sacrificio de Cristo.",
+    "propiciación": "El sacrificio de Cristo que satisface la justicia de Dios y aplaca Su ira contra el pecado.",
+    "expiación": "La obra de Cristo en la cruz para cubrir el pecado y reconciliar al hombre con Dios.",
+    "regeneración": "El acto soberano del Espíritu Santo que imparte nueva vida espiritual al corazón del hombre (nuevo nacimiento).",
+    "adopción": "El acto de gracia por el cual Dios recibe al creyente como hijo legítimo en Su familia celestial.",
+    "santificación": "El proceso progresivo de crecimiento en santidad por el cual el creyente es conformado a Cristo.",
+    "imputación": "El acto legal donde la justicia de Cristo es acreditada a la cuenta del creyente.",
 
-        // --- TÉRMINOS TÉCNICOS Y OTROS ---
-        "exégesis": "La extracción objetiva del sentido original de un texto bíblico.",
-        "hermenéutica": "La ciencia y el arte de interpretar correctamente los textos sagrados.",
-        "escatalogía": "El estudio de las últimas cosas: el retorno de Cristo, el juicio final y la eternidad.",
-        "parusía": "El término técnico para la segunda venida gloriosa de Jesucristo.",
-        "pneumatología": "El estudio teológico de la persona y obra del Espíritu Santo.",
-        "soli deo gloria": "El principio de que todo el propósito de la existencia es la gloria de Dios.",
-        "eclesiología": "La doctrina sobre la naturaleza, misión y estructura de la Iglesia."
+    // --- ESCATOLOGÍA Y OTROS ---
+    "escatología": "El estudio teológico de las últimas cosas: el fin del tiempo, el juicio y la eternidad.",
+    "parusía": "El término técnico para la segunda venida gloriosa de Jesucristo al final de la historia.",
+    "exégesis": "La extracción objetiva del sentido original de un texto bíblico.",
+    "soli deo gloria": "El principio de que todo el propósito de la existencia es la gloria de Dios.",
+    "eclesiología": "El estudio de la naturaleza, misión y estructura de la Iglesia como cuerpo de Cristo."
+};
+
+    let box = document.getElementById('exegesis-box');
+    if (!box) {
+        box = document.createElement('div');
+        box.id = 'exegesis-box';
+        box.style.cssText = "position:absolute; display:none; background:#1a1a1a; color:#fff; border:1px solid #9b804e; border-radius:4px; padding:18px; font-size:14px; z-index:10001; box-shadow:0 10px 40px rgba(0,0,0,0.7); max-width:320px; line-height:1.6; font-family:'Montserrat',sans-serif;";
+        document.body.appendChild(box);
+    }
+
+    // Función auxiliar para buscar en Google
+    window.buscarEnGoogleSTF = (termino) => {
+        const url = `https://www.google.com/search?q=${encodeURIComponent(termino + " teología cristiana")}`;
+        window.open(url, '_blank');
+        box.style.display = 'none';
     };
 
-    const btnExegesis = document.createElement('div');
-    btnExegesis.id = 'exegesis-box';
-    btnExegesis.style.cssText = "position:absolute; display:none; background:#1a1a1a; color:#fff; border:1px solid #9b804e; border-radius:4px; padding:18px; font-size:14px; z-index:10001; box-shadow:0 10px 40px rgba(0,0,0,0.7); max-width:320px; line-height:1.6; font-family:'Montserrat',sans-serif;";
-    document.body.appendChild(btnExegesis);
-
     document.addEventListener('mouseup', (e) => {
-        let rawSelection = window.getSelection().toString().trim();
-        let seleccion = rawSelection.toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quita tildes para búsqueda
+        const rawSelection = window.getSelection().toString().trim();
+        if (rawSelection.length < 3) return;
 
-        // Diccionario con llaves sin tildes para búsqueda fácil
-        const keys = Object.keys(diccionarioSTF).map(k => k.normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
-        const index = keys.indexOf(seleccion.endsWith('s') && seleccion.length > 5 ? seleccion.slice(0, -1) : seleccion);
-
-        if (rawSelection.length > 3) {
-            if (index !== -1) {
-                const termReal = Object.keys(diccionarioSTF)[index];
-                btnExegesis.innerHTML = `
-                    <div style="color:#9b804e; font-weight:bold; text-transform:uppercase; font-size:0.65rem; letter-spacing:2px; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">Definición del Sistema</div>
-                    <div style="font-family:'Cormorant Garamond', serif; font-size:1.15rem; color:#eee;">
-                        <b style="color:#fff; text-transform:capitalize;">${termReal}:</b> "${diccionarioSTF[termReal]}"
-                    </div>
-                `;
-            } else {
-                btnExegesis.innerHTML = `
-                    <button id="search-external" style="background:transparent; color:#9b804e; border:none; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:10px; font-family:'Montserrat'; font-weight:500;">
-                        <span style="font-size:18px;">✍</span> Investigar "${rawSelection}"
-                    </button>
-                `;
-                document.getElementById('search-external').onclick = () => {
-                    window.open(`https://www.google.com/search?q=${encodeURIComponent(rawSelection + " teología cristiana")}`, '_blank');
-                };
-            }
-
-            btnExegesis.style.left = `${e.pageX + 10}px`;
-            btnExegesis.style.top = `${e.pageY - 100}px`;
-            btnExegesis.style.display = 'block';
+        let seleccionNorm = rawSelection.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        
+        // Manejo de plurales simple
+        if (seleccionNorm.endsWith('s') && !diccionarioSTF[seleccionNorm]) {
+            let singular = seleccionNorm.slice(0, -1);
+            if (diccionarioSTF[singular]) seleccionNorm = singular;
         }
+
+        const keys = Object.keys(diccionarioSTF).map(k => k.normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+        const index = keys.indexOf(seleccionNorm);
+
+        if (index !== -1) {
+            const termReal = Object.keys(diccionarioSTF)[index];
+            box.innerHTML = `
+                <div style="color:#9b804e; font-weight:bold; text-transform:uppercase; font-size:0.65rem; letter-spacing:2px; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">Definición del Sistema</div>
+                <div style="font-family:'Cormorant Garamond', serif; font-size:1.15rem; color:#eee;">
+                    <b style="color:#fff; text-transform:capitalize;">${termReal}:</b> "${diccionarioSTF[termReal]}"
+                </div>
+            `;
+        } else {
+            // AQUÍ LA CORRECCIÓN: Usamos un atributo onclick directo en el HTML inyectado
+            box.innerHTML = `
+                <div onclick="buscarEnGoogleSTF('${rawSelection.replace(/'/g, "\\'")}')" style="color:#9b804e; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:10px; font-family:'Montserrat'; font-weight:500;">
+                    <span style="font-size:18px;">✍</span> Investigar "${rawSelection}"
+                </div>
+            `;
+        }
+
+        // Posicionamiento
+        box.style.left = `${e.pageX + 10}px`;
+        box.style.top = `${e.pageY - 100}px`;
+        box.style.display = 'block';
     });
 
     document.addEventListener('mousedown', (e) => {
-        if (!btnExegesis.contains(e.target)) btnExegesis.style.display = 'none';
+        if (!box.contains(e.target)) box.style.display = 'none';
     });
 };
 
