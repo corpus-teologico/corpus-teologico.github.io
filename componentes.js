@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <div id="menu-fullscreen" class="menu-overlay">
                 <div class="menu-card">
                     <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
-                    <p class="menu-label-top">Sistema Teológico Formigo</p>
+                    <p class="menu-label-top">Sistema Teológico Personal</p>
                     <div class="nav-grid">
                         <div class="nav-col">
                             <span class="nav-group-title">Navegación</span>
