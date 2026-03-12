@@ -101,6 +101,47 @@ const inyectarGemaSabiduria = () => {
 
 inyectarGemaSabiduria();
 
+    // --- 13. GENERADOR DE PÁGINA DE GLOSARIO ---
+const generarPaginaGlosario = () => {
+    const contenedor = document.getElementById('glosario-dinamico');
+    const navAlfabeto = document.getElementById('alfabeto-nav');
+    if (!contenedor) return;
+
+    // Obtener y ordenar las llaves del diccionarioSTF
+    const terminosOrdenados = Object.keys(diccionarioSTF).sort((a, b) => a.localeCompare(b));
+    
+    let htmlGlosario = "";
+    let letrasUsadas = new Set();
+
+    terminosOrdenados.forEach(termino => {
+        const primeraLetra = termino[0].toUpperCase();
+        
+        // Añadir ancla por letra si es nueva
+        if (!letrasUsadas.has(primeraLetra)) {
+            htmlGlosario += `<h2 id="letra-${primeraLetra}" style="color:#9b804e; border-bottom:1px solid #333; margin-top:50px; font-family:'Cormorant Garamond'; font-size:2.5rem;">${primeraLetra}</h2>`;
+            letrasUsadas.add(primeraLetra);
+            
+            // Añadir al menú de navegación superior
+            const linkLetra = document.createElement('a');
+            linkLetra.href = `#letra-${primeraLetra}`;
+            linkLetra.innerText = primeraLetra;
+            linkLetra.style.margin = "0 10px";
+            linkLetra.style.textDecoration = "none";
+            linkLetra.style.color = "#9b804e";
+            navAlfabeto.appendChild(linkLetra);
+        }
+
+        htmlGlosario += `
+            <div class="entrada-glosario" style="margin:20px 0; padding-left:20px; border-left:2px solid #1a1a1a;">
+                <h3 style="text-transform:capitalize; color:#fff; font-family:'Montserrat'; font-size:1rem; letter-spacing:1px;">${termino}</h3>
+                <p style="font-family:'Cormorant Garamond'; font-style:italic; font-size:1.2rem; color:#888;">${diccionarioSTF[termino]}</p>
+            </div>
+        `;
+    });
+
+    contenedor.innerHTML = htmlGlosario;
+};
+    
 // --- 11. DICCIONARIO TEOLÓGICO INTEGRAL (STF) - VERSIÓN CORREGIDA ---
 const inicializarDiccionarioPropio = () => {
     const diccionarioSTF = {
