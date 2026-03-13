@@ -410,7 +410,45 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.onclick = (e) => { if (e.target === overlay) cerrar(); };
         overlay.querySelectorAll('a').forEach(l => l.onclick = cerrar);
     };
+// --- 10. INYECCIÓN DE FOOTER INSTITUCIONAL (EDICIÓN AUTOR) ---
+    const inyectarFooterEstudio = () => {
+        const footerContainer = document.getElementById('footer-global');
+        if (!footerContainer) return;
 
+        footerContainer.innerHTML = `
+            <div style="margin-top: 100px; padding: 60px 40px; border-top: 1px solid #9b804e; background-color: rgba(255, 255, 255, 0.02);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.8;">
+                    
+                    <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
+                        <p style="font-weight: 800; color: #9b804e; margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 3px;">AUTORÍA Y PROPIEDAD</p>
+                        <p style="font-size: 0.9rem; color: #1a1a1a; margin-bottom: 5px;"><strong>ROBERTO FORMIGO</strong></p>
+                        <p>Director del Sistema Teológico Formigo (STF)</p>
+                        <p>© Edición Académica 2026</p>
+                    </div>
+
+                    <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
+                        <p style="font-weight: 800; color: #9b804e; margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 3px;">CATALOGACIÓN</p>
+                        <p><strong>SERIE:</strong> Antropología y Ética Cristiana</p>
+                        <p><strong>TRATADO XV:</strong> La Adicción: Esclavitud e Idolatría</p>
+                        <p><strong>ESTADO:</strong> Documento Doctrinal Firme</p>
+                    </div>
+
+                    <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
+                        <p style="font-weight: 800; color: #9b804e; margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 3px;">SUFICIENCIA BÍBLICA</p>
+                        <p style="font-style: italic; font-family: 'Cormorant Garamond'; text-transform: none; font-size: 1.1rem; color: #333;">
+                            "Toda la Escritura es inspirada por Dios, y útil para enseñar, para redargüir, para corregir, para instruir en justicia."
+                        </p>
+                        <p style="margin-top: 5px; font-weight: bold;">2 Timoteo 3:16</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid #eee; opacity: 0.6;">
+                    <p style="font-size: 0.6rem; letter-spacing: 5px; font-weight: 500;">SOLI DEO GLORIA</p>
+                    <p style="font-size: 0.55rem; margin-top: 15px; color: #888;">PROHIBIDA LA ALTERACIÓN DE ESTE TEXTO SIN CONSENTIMIENTO EXPRESO DEL AUTOR</p>
+                </div>
+            </div>
+        `;
+    };
     // --- EJECUCIÓN MAESTRA ---
     inyectarFaviconsYFuentes();
     setupVisuals();
@@ -420,4 +458,5 @@ document.addEventListener("DOMContentLoaded", () => {
     inyectarGemaSabiduria();
     inicializarUtilidades();
     inicializarMenu();
+   inyectarFooterEstudio();
 });
