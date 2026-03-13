@@ -1,0 +1,73 @@
+/* Layout y Secciones */
+.seccion-tratado {
+    margin-top: 60px;
+}
+
+.panel-tecnico {
+    background-color: var(--blanco-papel);
+    border: 1px solid var(--linea-divisoria);
+    padding: 50px;
+    position: relative;
+}
+
+/* Cabecera del Panel */
+.panel-header {
+    text-align: center; 
+    margin-bottom: 35px;
+}
+
+.label-oro-custom {
+    letter-spacing: 4px; 
+    font-size: 0.8rem;
+}
+
+.panel-titulo {
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 2.5rem; 
+    color: var(--texto-negro); 
+    margin-top: 15px; 
+    font-style: italic;
+}
+
+/* Cuerpo de texto del Panel */
+.panel-contenido {
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.25rem; 
+    line-height: 1.8; 
+    color: var(--texto-negro); 
+    max-width: 800px; 
+    margin: 0 auto; 
+    text-align: justify;
+}
+
+.panel-contenido p {
+    margin-top: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Pie del Panel / Citas */
+.panel-footer {
+    margin-top: 40px; 
+    text-align: center; 
+    border-top: 1px solid var(--linea-divisoria); 
+    padding-top: 30px;
+}
+
+.cita-texto {
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 0.75rem; 
+    letter-spacing: 3px; 
+    color: var(--oro-profundo); 
+    text-transform: uppercase; 
+    font-weight: 700;
+}
+
+.cita-referencia {
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 0.9rem; 
+    color: var(--texto-gris); 
+    margin-top: 5px;
+}
