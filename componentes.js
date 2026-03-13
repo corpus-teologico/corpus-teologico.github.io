@@ -410,27 +410,31 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.onclick = (e) => { if (e.target === overlay) cerrar(); };
         overlay.querySelectorAll('a').forEach(l => l.onclick = cerrar);
     };
-// --- 10. INYECCIÓN DE FOOTER INSTITUCIONAL (EDICIÓN AUTOR) ---
+// --- 10. INYECCIÓN DE FOOTER INSTITUCIONAL GLOBAL (DINÁMICO) ---
     const inyectarFooterEstudio = () => {
         const footerContainer = document.getElementById('footer-global');
         if (!footerContainer) return;
 
+        // Extraemos el título del estudio actual dinámicamente
+        const tituloEstudio = document.title.replace(" - STF", ""); 
+        const añoActual = new Date().getFullYear();
+
         footerContainer.innerHTML = `
-            <div style="margin-top: 100px; padding: 60px 40px; border-top: 1px solid #9b804e; background-color: rgba(255, 255, 255, 0.02);">
+            <div style="margin-top: 100px; padding: 60px 40px; border-top: 1px solid #9b804e; background-color: rgba(255, 255, 255, 0.02); clear: both;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.8;">
                     
                     <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
                         <p style="font-weight: 800; color: #9b804e; margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 3px;">AUTORÍA Y PROPIEDAD</p>
                         <p style="font-size: 0.9rem; color: #1a1a1a; margin-bottom: 5px;"><strong>ROBERTO FORMIGO</strong></p>
                         <p>Director del Sistema Teológico Formigo (STF)</p>
-                        <p>© Edición Académica 2026</p>
+                        <p>© Edición Académica ${añoActual}</p>
                     </div>
 
                     <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
-                        <p style="font-weight: 800; color: #9b804e; margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 3px;">CATALOGACIÓN</p>
-                        <p><strong>SERIE:</strong> Antropología y Ética Cristiana</p>
-                        <p><strong>TRATADO XV:</strong> La Adicción: Esclavitud e Idolatría</p>
-                        <p><strong>ESTADO:</strong> Documento Doctrinal Firme</p>
+                        <p style="font-weight: 800; color: #9b804e; margin-bottom: 10px; font-size: 0.8rem; letter-spacing: 3px;">DOCUMENTO ACTUAL</p>
+                        <p><strong>ESTUDIO:</strong> ${tituloEstudio}</p>
+                        <p><strong>SERIE:</strong> Corpus Teológico Institucional</p>
+                        <p><strong>ESTADO:</strong> Versión Firme y Autorizada</p>
                     </div>
 
                     <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
