@@ -410,41 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.onclick = (e) => { if (e.target === overlay) cerrar(); };
         overlay.querySelectorAll('a').forEach(l => l.onclick = cerrar);
     };
-// --- 10. INYECCIÓN DE FOOTER INSTITUCIONAL (BLINDADO) ---
-    const inyectarFooterEstudio = () => {
-        const footerContainer = document.getElementById('footer-global');
-        if (!footerContainer) return;
 
-        footerContainer.innerHTML = `
-            <div style="margin-top: 80px; padding: 40px; border-top: 1px solid #9b804e; background-color: rgba(155, 128, 78, 0.02); border-radius: 8px 8px 0 0;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.6;">
-                    
-                    <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
-                        <p style="font-weight: bold; color: #9b804e; margin-bottom: 12px; font-size: 0.75rem;">Protocolo de Instrucción</p>
-                        <p>Basado en la suficiencia de las Escrituras y la Teología Reformada. Documento para uso exclusivo en Discipulado y Consejería Bíblica Institucional.</p>
-                    </div>
-
-                    <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
-                        <p style="font-weight: bold; color: #9b804e; margin-bottom: 12px; font-size: 0.75rem;">Referencia Académica</p>
-                        <p>Serie: Antropología Bíblica y Ética Cristiana<br>
-                        SISTEMA TEOLÓGICO FORMIGO (STF)<br>
-                        © 2026 Academic Press | Roberto Formigo</p>
-                    </div>
-
-                    <div style="border-left: 2px solid #9b804e; padding-left: 20px;">
-                        <p style="font-weight: bold; color: #9b804e; margin-bottom: 12px; font-size: 0.75rem;">Sello de Veracidad</p>
-                        <p style="font-style: italic;">"Toda la Escritura es inspirada por Dios, y útil para enseñar, para redargüir, para corregir, para instruir en justicia."</p>
-                        <strong style="color: #444;">— 2 Timoteo 3:16</strong>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; opacity: 0.5;">
-                    <p style="font-size: 0.6rem; letter-spacing: 4px;">LA REPRODUCCIÓN DE ESTE MATERIAL DEBE MANTENER LA INTEGRIDAD LITERAL DEL TEXTO.</p>
-                    <p style="font-size: 0.7rem; margin-top: 10px; font-weight: bold; color: #9b804e;">SOLI DEO GLORIA</p>
-                </div>
-            </div>
-        `;
-    };
     // --- EJECUCIÓN MAESTRA ---
     inyectarFaviconsYFuentes();
     setupVisuals();
