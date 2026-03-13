@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <a href="${rutaBase}estudios/aprender-a-descansar.html" class="nav-link-full" data-path="aprender-a-descansar.html">IV. Aprender a descansar</a>
                             <a href="${rutaBase}estudios/conocer-para-amar.html" class="nav-link-full" data-path="conocer-para-amar.html">V. Conocer para amar</a>
                             <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link-full" data-path="de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
-                            <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VII. Un mundo roto</a>
+                            <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VII. El Origen del Mal</a>
                         </div>
                         <div class="nav-col">
                             <span class="nav-group-title">Tratados VIII — XV</span>
@@ -246,10 +246,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             <a href="${rutaBase}estudios/nuestra-oscuridad.html" class="nav-link-full" data-path="nuestra-oscuridad.html">IX. Nuestra oscuridad</a>
                             <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link-full" data-path="el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
                             <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. Volver a Dios</a>
-                            <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XII. Ser de una sola pieza</a>
+                            <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XII. La Integridad</a>
                             <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link-full" data-path="mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
                             <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link-full" data-path="el-matrimonio-ideal.html">XIV. El matrimonio ideal</a>
-                            <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link-full" data-path="libertad-de-las-cadenas.html">XV. Libertad de las cadenas</a>
+                            <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link-full" data-path="libertad-de-las-cadenas.html">XV. La Adicción: Esclavitud e Idolatría</a>
                         </div>
                         <div class="nav-col">
                             <span class="nav-group-title">Tratados XVI — XXIII</span>
