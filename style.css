@@ -1,5 +1,5 @@
 /* =========================================================
-   SISTEMA TEOLÓGICO FORMIGO - HOJA MAESTRA INTEGRAL (FIJADA)
+   SISTEMA TEOLÓGICO FORMIGO - HOJA MAESTRA INTEGRAL
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500;700&display=swap');
@@ -14,7 +14,7 @@
     --blanco-papel: #ffffff;
 }
 
-/* --- BASE Y RESET --- */
+/* --- 1. BASE Y ESTRUCTURA TIPO LIBRO --- */
 body {
     background-color: var(--fondo-fuera);
     margin: 0; padding: 0;
@@ -23,13 +23,6 @@ body {
     line-height: 1.6;
 }
 
-/* IMPORTANTE: Tu sistema usa JS para inyectar el header. 
-   Si el header se ve "roto" arriba, es porque necesita sus estilos de posicionamiento. */
-#header-global {
-    display: block; 
-}
-
-/* --- CONTENEDOR TIPO LIBRO --- */
 .pagina-libro {
     background: var(--blanco-papel);
     max-width: 850px;
@@ -38,179 +31,122 @@ body {
     border: 1px solid var(--linea-divisoria);
     box-shadow: 0 30px 60px rgba(0,0,0,0.05);
     position: relative;
+    z-index: 1;
 }
 
-/* --- CABECERAS --- */
-h2 {
-    color: var(--oro-profundo);
-    font-weight: 300;
-    font-size: 3.5rem;
-    text-align: center;
-    margin-bottom: 10px;
-    letter-spacing: -1px;
-}
+/* --- 2. CABECERAS Y TEXTO --- */
+h2 { color: var(--oro-profundo); font-weight: 300; font-size: 3.5rem; text-align: center; margin-bottom: 10px; letter-spacing: -1px; }
+.subtitulo { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 7px; text-transform: uppercase; text-align: center; color: #a0a0a0; margin-bottom: 60px; display: block; }
+.introduccion-texto p { font-size: 1.3rem; line-height: 1.9; color: #333; text-align: justify; margin-bottom: 30px; }
 
-.subtitulo {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 7px;
-    text-transform: uppercase;
-    text-align: center;
-    color: #a0a0a0;
-    margin-bottom: 60px;
-    display: block;
-}
-
-/* --- PANELES TÉCNICOS --- */
-.panel-tecnico {
-    background: #ffffff;
-    border: 1px solid #d4cbb3;
-    padding: 50px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-    margin: 40px 0;
-}
-
-.panel-header { text-align: center; margin-bottom: 35px; }
-.panel-titulo { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--texto-negro); margin-top: 15px; }
-.panel-tecnico-cuerpo { text-align: justify; line-height: 1.8; }
-.panel-footer-estudio { margin-top: 40px; text-align: center; border-top: 1px solid var(--linea-divisoria); padding-top: 30px; }
-
-/* --- COMPONENTES DE ESTUDIO --- */
-.tarjeta-eje {
-    background: #fcfaf5;
-    padding: 20px;
-    border-left: 2px solid var(--oro-profundo);
-    margin-bottom: 15px;
-    display: flex; gap: 15px;
-}
-
-.nota-rigor {
-    background: rgba(155, 128, 78, 0.05);
-    padding: 20px;
-    border-left: 3px solid var(--oro-profundo);
-    margin: 20px 0;
-}
-
-.reflexion-grande {
-    font-size: 1.4rem; font-style: italic;
-    border-left: 3px solid var(--oro-profundo);
-    padding-left: 30px; margin: 40px 0;
-}
-
-.cita-recuadro {
-    margin-top: 25px; padding: 20px;
-    border: 1px double var(--linea-divisoria);
-    background: #fdfbf7;
-}
-
-.salmo-final {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem; text-align: center;
-    color: #1a1a1a; margin-top: 40px; font-style: italic;
-}
-
-.separador-seccion {
-    text-align: center; border-bottom: 1px solid var(--linea-divisoria);
-    line-height: 0.1em; margin: 80px 0 60px;
-}
-.separador-seccion span { background: var(--blanco-papel); padding: 0 30px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 4px; color: #999; }
-
-/* --- INDEX: GRID DE ESTUDIOS --- */
-.grid-estudios {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    max-width: 1100px;
-    margin: 40px auto;
-}
-
-.tarjeta-estudio {
-    display: flex; align-items: flex-start; padding: 25px;
-    background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 100%);
-    border: 1px solid var(--linea-divisoria);
-    transition: all 0.3s ease;
-    box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05);
-}
-.tarjeta-estudio:hover { border-color: var(--oro-profundo); transform: translateY(-3px); }
-.tarjeta-estudio .numero { font-size: 1.5rem; color: var(--oro-profundo); font-weight: 600; margin-right: 20px; min-width: 40px; }
-
-/* --- BOTONES Y ENLACES --- */
-.link-leer {
-    display: inline-flex; align-items: center; font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px;
-    color: var(--oro-profundo); text-decoration: none;
-    padding: 10px 20px; border: 1px solid var(--oro-brillante);
-    transition: all 0.4s ease;
-}
-.link-leer:hover { background: var(--oro-profundo); color: white; }
-
-/* --- CONFIGURACIÓN DEL MENÚ FULLSCREEN (RECONSTRUIDA) --- */
+/* --- 3. MENÚ FULLSCREEN (FIJADO) --- */
 .menu-overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.98);
     z-index: 10005;
-    display: none; 
+    display: none; /* JS lo cambia a flex */
     opacity: 0;
     transition: opacity 0.4s ease;
     overflow-y: auto;
     align-items: center;
     justify-content: center;
-}
-
-.menu-overlay.is-open {
-    display: flex;
-    opacity: 1;
+    backdrop-filter: blur(10px);
 }
 
 .menu-card {
     background: #000;
     border: 1px solid #222;
     width: 90%;
-    max-width: 900px;
-    margin: 40px auto; 
-    padding: 40px;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 60px 40px;
     position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
 }
 
-.nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.nav-link-full { color: #ccc; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; }
-.nav-link-full:hover { color: #9b804e; }
-
-.btn-abrir-full, .btn-menu-flotante { 
-    position: fixed; top: 30px; right: 30px;
-    background: #000; color: #9b804e; border: 1px solid #9b804e;
-    padding: 10px 20px; font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem; letter-spacing: 4px; cursor: pointer; z-index: 10000;
+.menu-label-top {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--oro-profundo);
+    font-size: 1.2rem;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 50px;
 }
 
-/* --- ACCESIBILIDAD --- */
-body.alto-contraste { background-color: #fff !important; color: #000 !important; }
-body.alto-contraste .pagina-libro { border: 2px solid #000; box-shadow: none; }
+.nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.nav-col { display: flex; flex-direction: column; gap: 12px; }
+.nav-group-title { font-family: 'Montserrat', sans-serif; color: var(--oro-brillante); font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 8px; }
+.nav-link-full { color: #888; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; transition: 0.3s; }
+.nav-link-full:hover, .nav-link-full.active-page { color: #fff; padding-left: 5px; }
+.nav-link-full.active-page { border-left: 2px solid var(--oro-profundo); padding-left: 10px; }
 
-/* --- UTILIDADES (CERO INLINE STYLES) --- */
+.btn-cerrar-full {
+    position: absolute; top: 20px; right: 30px;
+    background: none; border: none; color: #555; font-size: 2rem; cursor: pointer; transition: 0.3s;
+}
+.btn-cerrar-full:hover { color: #fff; }
+
+/* --- 4. COMPONENTES DINÁMICOS (JS) --- */
+#progress-bar { transition: width 0.1s ease; }
+#exegesis-box { transition: opacity 0.3s ease; }
+
+.entrada-glosario-maestra strong {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    color: var(--oro-profundo);
+    display: block;
+    margin-bottom: 12px;
+    letter-spacing: 3px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/* --- 5. PANELES Y CAJAS DE ESTUDIO --- */
+.panel-tecnico { background: #fff; border: 1px solid #d4cbb3; padding: 50px; margin: 40px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+.tarjeta-eje { background: #fcfaf5; padding: 20px; border-left: 2px solid var(--oro-profundo); margin-bottom: 15px; display: flex; gap: 15px; }
+.nota-rigor { background: rgba(155, 128, 78, 0.05); padding: 20px; border-left: 3px solid var(--oro-profundo); margin: 20px 0; }
+.reflexion-grande { font-size: 1.4rem; font-style: italic; border-left: 3px solid var(--oro-profundo); padding-left: 30px; margin: 40px 0; }
+.cita-recuadro { margin-top: 25px; padding: 20px; border: 1px double var(--linea-divisoria); background: #fdfbf7; }
+
+/* --- 6. INDEX Y TARJETAS --- */
+.grid-estudios { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px auto; }
+.tarjeta-estudio { display: flex; align-items: flex-start; padding: 25px; background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 100%); border: 1px solid var(--linea-divisoria); transition: 0.3s; }
+.tarjeta-estudio:hover { border-color: var(--oro-profundo); transform: translateY(-3px); }
+.tarjeta-estudio .numero { font-size: 1.5rem; color: var(--oro-profundo); font-weight: 600; margin-right: 20px; min-width: 40px; }
+.descripcion-breve { font-size: 0.95rem; color: var(--texto-gris); font-style: italic; }
+
+/* --- 7. BOTONES Y UTILIDADES --- */
+.link-leer { display: inline-flex; align-items: center; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--oro-profundo); text-decoration: none; padding: 10px 20px; border: 1px solid var(--oro-brillante); transition: 0.4s; }
+.link-leer:hover { background: var(--oro-profundo); color: white; }
+
+.separador-seccion { text-align: center; border-bottom: 1px solid var(--linea-divisoria); line-height: 0.1em; margin: 80px 0 60px; }
+.separador-seccion span { background: var(--blanco-papel); padding: 0 30px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 4px; color: #999; }
+
 .center { text-align: center; }
 .justify { text-align: justify; }
 .italic { font-style: italic; }
 .bold { font-weight: bold; }
-.block { display: block; }
-.mt-10 { margin-top: 10px; }
 .mt-20 { margin-top: 20px; }
 .mt-40 { margin-top: 40px; }
 .mt-60 { margin-top: 60px; }
-.mb-8 { margin-bottom: 8px; }
-.mb-10 { margin-bottom: 10px; }
-.mb-15 { margin-bottom: 15px; }
 .mb-40 { margin-bottom: 40px; }
 .no-margin { margin: 0; }
-.flex-between { display: flex; justify-content: space-between; align-items: center; }
-.label-oro { color: #9b804e; font-family: 'Montserrat', sans-serif; letter-spacing: 3px; font-weight: 700; text-transform: uppercase; }
-.glifo-v { color: var(--oro-profundo); margin-right: 8px; }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .pagina-libro { padding: 40px 20px; margin: 10px; }
+/* --- 8. ACCESIBILIDAD Y RESPONSIVE --- */
+body.alto-contraste { background-color: #fff !important; color: #000 !important; }
+body.alto-contraste .pagina-libro { border: 2px solid #000; box-shadow: none; }
+
+@media (max-width: 850px) {
+    .pagina-libro { padding: 40px 25px; margin: 20px; }
     .grid-estudios, .nav-grid { grid-template-columns: 1fr; }
     h2 { font-size: 2.5rem; }
+    .panel-tecnico { padding: 25px; }
 }
+
+/* Scrollbar Oro */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: var(--oro-profundo); border-radius: 10px; border: 2px solid #0a0a0a; }
