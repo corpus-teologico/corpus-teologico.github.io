@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <a href="${rutaBase}estudios/defendiendo-mi-fe.html" class="nav-link-full" data-path="defendiendo-mi-fe.html">XVI. Defendiendo mi fe</a>
                             <a href="${rutaBase}estudios/ciencia-y-fe.html" class="nav-link-full" data-path="ciencia-y-fe.html">XVII. Ciencia y fe</a>
                             <a href="${rutaBase}estudios/nuestro-dios-trino.html" class="nav-link-full" data-path="nuestro-dios-trino.html">XVIII. Nuestro Dios Trino</a>
-                            <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XIX. Lo que está por venir</a>
+                            <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XIX. La esperanza de la gloria</a>
                             <a href="${rutaBase}estudios/el-poder-del-espiritu.html" class="nav-link-full" data-path="el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
                             <a href="${rutaBase}estudios/la-iglesia-de-cristo.html" class="nav-link-full" data-path="la-iglesia-de-cristo.html">XXI. La Iglesia de Cristo</a>
                             <a href="${rutaBase}estudios/el-bautismo-biblico.html" class="nav-link-full" data-path="el-bautismo-biblico.html">XXII. El bautismo bíblico</a>
