@@ -906,3 +906,34 @@ body.alto-contraste .separador-seccion span {
 .center { text-align: center; }
 .mt-15 { margin-top: 15px; }
 .mb-40 { margin-bottom: 40px; }
+/* --- COMPONENTES ESPECÍFICOS DE TRATADOS --- */
+
+/* Citas grandes con borde lateral (Declaraciones de Principio) */
+.reflexion-grande {
+    font-size: 1.4rem; 
+    font-style: italic; 
+    border-left: 3px solid var(--oro-profundo); 
+    padding-left: 30px;
+    margin: 40px 0;
+}
+
+/* Recuadros de Confesiones o Documentos Históricos */
+.cita-recuadro {
+    margin-top: 25px; 
+    padding: 20px; 
+    border: 1px double var(--linea-divisoria);
+    background: #fdfbf7;
+}
+
+/* Citas dentro de bloques beige (como la de Calvino) */
+.nota-rigor-cita {
+    font-style: italic;
+    color: var(--texto-negro);
+    padding: 10px 0;
+}
+
+/* Ejes de estudio con glifos específicos */
+.eje-card-texto {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
