@@ -572,3 +572,125 @@ body.alto-contraste .pagina-libro { background: #ffffff !important; border: 2px 
     h2 { font-size: 2.5rem; }
     .introduccion-texto p, .descripcion-breve, .panel-tecnico p { text-align: left !important; line-height: normal !important; }
 }
+/* =========================================================
+   SISTEMA DE MENÚ FULLSCREEN (FIJADO)
+   ========================================================= */
+
+/* Botón de apertura (Estado inicial) */
+#abrir-menu {
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 10000; 
+    background: #1a1a1a; 
+    color: #9b804e; 
+    border: 1px solid #9b804e; 
+    padding: 10px 20px; 
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 12px; 
+    letter-spacing: 2px; 
+    cursor: pointer; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* El menú ocupa toda la pantalla */
+.menu-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10005;
+    display: none; /* Controlado por JS (flex) */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenedor central del menú */
+.menu-card {
+    background: #000;
+    border: 1px solid #222;
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto; 
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+
+.menu-label-top {
+    font-family: 'Montserrat', sans-serif;
+    color: #9b804e;
+    font-size: 30px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Rejilla de enlaces */
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.nav-group-title {
+    font-family: 'Montserrat', sans-serif;
+    color: #9B804C;
+    font-size: 1.00rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #111;
+    padding-bottom: 5px;
+    display: block;
+}
+
+.nav-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-link-full {
+    color: #ccc;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link-full:hover {
+    color: #9b804e;
+}
+
+.nav-link-full.active-page {
+    color: #fff !important;
+    border-left: 1px solid #9b804e;
+    padding-left: 10px;
+}
+
+/* Botón cerrar */
+.btn-cerrar-full {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.btn-cerrar-full:hover { color: #fff; }
+
+/* Responsive del menú */
+@media (max-width: 768px) {
+    .nav-grid { grid-template-columns: 1fr; gap: 40px; }
+    .menu-card { padding: 60px 20px; width: 100%; border: none; }
+    .menu-label-top { font-size: 20px; }
+}
