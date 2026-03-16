@@ -937,3 +937,22 @@ body.alto-contraste .separador-seccion span {
     font-size: 0.95rem;
     line-height: 1.6;
 }
+/* --- UTILIDADES MAESTRAS (PARA CERO ESTILOS EN HTML) --- */
+.mt-20 { margin-top: 20px; }
+.mt-40 { margin-top: 40px; }
+.mt-60 { margin-top: 60px; }
+.mt-80 { margin-top: 80px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-40 { margin-bottom: 40px; }
+
+.italic { font-style: italic; }
+.font-2-5 { font-size: 2.5rem; }
+.max-800 { max-width: 800px; margin-left: auto; margin-right: auto; }
+
+.bg-papel { background-color: var(--blanco-papel); }
+.bg-gradient-soft { background: linear-gradient(to bottom, #ffffff, #fdfbf7); }
+.bg-soft-gold { background-color: rgba(155, 128, 78, 0.05); }
+
+.border-gold-top { border-top: 3px solid var(--oro-profundo); }
+.border-double-gold { border-top: 1px double var(--oro-profundo); }
+.no-border { border: none; }
