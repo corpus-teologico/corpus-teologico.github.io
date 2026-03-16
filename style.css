@@ -1,5 +1,5 @@
 /* =========================================================
-   SISTEMA TEOLÓGICO FORMIGO - HOJA MAESTRA INTEGRAL
+   SISTEMA TEOLÓGICO FORMIGO - HOJA MAESTRA INTEGRAL (FIJADA)
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500;700&display=swap');
@@ -14,15 +14,19 @@
     --blanco-papel: #ffffff;
 }
 
-/* --- RESET Y BASE --- */
-div#header-global { display: none; }
-
+/* --- BASE Y RESET --- */
 body {
     background-color: var(--fondo-fuera);
     margin: 0; padding: 0;
     font-family: 'Cormorant Garamond', serif;
     color: var(--texto-negro);
     line-height: 1.6;
+}
+
+/* IMPORTANTE: Tu sistema usa JS para inyectar el header. 
+   Si el header se ve "roto" arriba, es porque necesita sus estilos de posicionamiento. */
+#header-global {
+    display: block; 
 }
 
 /* --- CONTENEDOR TIPO LIBRO --- */
@@ -57,14 +61,6 @@ h2 {
     display: block;
 }
 
-.introduccion-texto p {
-    font-size: 1.3rem;
-    line-height: 1.9;
-    color: #333;
-    text-align: justify;
-    margin-bottom: 30px;
-}
-
 /* --- PANELES TÉCNICOS --- */
 .panel-tecnico {
     background: #ffffff;
@@ -79,95 +75,45 @@ h2 {
 .panel-tecnico-cuerpo { text-align: justify; line-height: 1.8; }
 .panel-footer-estudio { margin-top: 40px; text-align: center; border-top: 1px solid var(--linea-divisoria); padding-top: 30px; }
 
-/* --- TARJETAS Y EJES --- */
+/* --- COMPONENTES DE ESTUDIO --- */
 .tarjeta-eje {
     background: #fcfaf5;
     padding: 20px;
-    border-left: 2px solid #9b804e;
+    border-left: 2px solid var(--oro-profundo);
     margin-bottom: 15px;
-    display: flex;
-    gap: 15px;
-    transition: transform 0.3s ease;
-}
-.tarjeta-eje:hover { transform: translateX(10px); }
-
-.grid-ejes {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 20px;
+    display: flex; gap: 15px;
 }
 
-.eje-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    padding: 15px;
-    background: #fdfbf7;
-    border-radius: 4px;
-}
-
-/* --- ELEMENTOS DE DISEÑO --- */
-.label-oro {
-    color: #9b804e;
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: 3px;
-    font-weight: 700;
-    font-size: 0.95rem;
-}
-
-.glifo-v, .glifo-eje, .glifo {
-    color: #9b804e;
-    float: left;
-    margin-right: 6px;
-}
-
-.separador-seccion {
-    text-align: center;
-    border-bottom: 1px solid var(--linea-divisoria);
-    line-height: 0.1em;
-    margin: 80px 0 60px;
-}
-.separador-seccion span {
-    background: var(--blanco-papel);
-    padding: 0 30px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 4px;
-    color: #999;
-}
-
-/* --- BLOQUES DE ESTUDIO --- */
 .nota-rigor {
     background: rgba(155, 128, 78, 0.05);
     padding: 20px;
     border-left: 3px solid var(--oro-profundo);
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 .reflexion-grande {
-    font-size: 1.4rem;
-    font-style: italic;
+    font-size: 1.4rem; font-style: italic;
     border-left: 3px solid var(--oro-profundo);
-    padding-left: 30px;
-    margin: 40px 0;
+    padding-left: 30px; margin: 40px 0;
 }
 
 .cita-recuadro {
-    margin-top: 25px;
-    padding: 20px;
+    margin-top: 25px; padding: 20px;
     border: 1px double var(--linea-divisoria);
     background: #fdfbf7;
 }
 
 .salmo-final {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    text-align: center;
-    color: #1a1a1a;
-    margin-top: 40px;
-    font-style: italic;
+    font-size: 1.6rem; text-align: center;
+    color: #1a1a1a; margin-top: 40px; font-style: italic;
 }
+
+.separador-seccion {
+    text-align: center; border-bottom: 1px solid var(--linea-divisoria);
+    line-height: 0.1em; margin: 80px 0 60px;
+}
+.separador-seccion span { background: var(--blanco-papel); padding: 0 30px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 4px; color: #999; }
 
 /* --- INDEX: GRID DE ESTUDIOS --- */
 .grid-estudios {
@@ -179,47 +125,71 @@ h2 {
 }
 
 .tarjeta-estudio {
-    display: flex;
-    align-items: flex-start;
-    padding: 25px;
+    display: flex; align-items: flex-start; padding: 25px;
     background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 100%);
     border: 1px solid var(--linea-divisoria);
     transition: all 0.3s ease;
     box-shadow: inset 0 0 15px rgba(155, 128, 78, 0.05);
 }
-.tarjeta-estudio:hover {
-    border-color: var(--oro-profundo);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transform: translateY(-3px);
-}
-
-.tarjeta-estudio .numero {
-    font-size: 1.5rem;
-    color: var(--oro-profundo);
-    font-weight: 600;
-    margin-right: 20px;
-    min-width: 40px;
-}
+.tarjeta-estudio:hover { border-color: var(--oro-profundo); transform: translateY(-3px); }
+.tarjeta-estudio .numero { font-size: 1.5rem; color: var(--oro-profundo); font-weight: 600; margin-right: 20px; min-width: 40px; }
 
 /* --- BOTONES Y ENLACES --- */
 .link-leer {
-    display: inline-flex;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--oro-profundo);
-    text-decoration: none;
-    padding: 10px 20px;
-    border: 1px solid var(--oro-brillante);
+    display: inline-flex; align-items: center; font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px;
+    color: var(--oro-profundo); text-decoration: none;
+    padding: 10px 20px; border: 1px solid var(--oro-brillante);
     transition: all 0.4s ease;
 }
 .link-leer:hover { background: var(--oro-profundo); color: white; }
 
-.link-doctrinal { color: var(--oro-profundo); text-decoration: none; font-weight: bold; }
+/* --- CONFIGURACIÓN DEL MENÚ FULLSCREEN (RECONSTRUIDA) --- */
+.menu-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10005;
+    display: none; 
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+}
 
-/* --- UTILIDADES MAESTRAS (CLAVE PARA HTML LIMPIO) --- */
+.menu-overlay.is-open {
+    display: flex;
+    opacity: 1;
+}
+
+.menu-card {
+    background: #000;
+    border: 1px solid #222;
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto; 
+    padding: 40px;
+    position: relative;
+}
+
+.nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.nav-link-full { color: #ccc; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; }
+.nav-link-full:hover { color: #9b804e; }
+
+.btn-abrir-full, .btn-menu-flotante { 
+    position: fixed; top: 30px; right: 30px;
+    background: #000; color: #9b804e; border: 1px solid #9b804e;
+    padding: 10px 20px; font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem; letter-spacing: 4px; cursor: pointer; z-index: 10000;
+}
+
+/* --- ACCESIBILIDAD --- */
+body.alto-contraste { background-color: #fff !important; color: #000 !important; }
+body.alto-contraste .pagina-libro { border: 2px solid #000; box-shadow: none; }
+
+/* --- UTILIDADES (CERO INLINE STYLES) --- */
 .center { text-align: center; }
 .justify { text-align: justify; }
 .italic { font-style: italic; }
@@ -229,29 +199,18 @@ h2 {
 .mt-20 { margin-top: 20px; }
 .mt-40 { margin-top: 40px; }
 .mt-60 { margin-top: 60px; }
-.mt-80 { margin-top: 80px; }
+.mb-8 { margin-bottom: 8px; }
 .mb-10 { margin-bottom: 10px; }
-.mb-20 { margin-bottom: 20px; }
+.mb-15 { margin-bottom: 15px; }
 .mb-40 { margin-bottom: 40px; }
-.pt-40 { padding-top: 40px; }
 .no-margin { margin: 0; }
-.max-800 { max-width: 800px; margin: 0 auto; }
-.font-2-5 { font-size: 2.5rem; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
-.bg-fuera { background-color: var(--fondo-fuera); }
-.bg-papel { background-color: var(--blanco-papel); }
-.bg-soft-gold { background-color: rgba(155, 128, 78, 0.05); }
-
-/* --- SCROLLBAR --- */
-::-webkit-scrollbar { width: 12px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: #9b804e; border-radius: 10px; border: 3px solid #0a0a0a; }
+.label-oro { color: #9b804e; font-family: 'Montserrat', sans-serif; letter-spacing: 3px; font-weight: 700; text-transform: uppercase; }
+.glifo-v { color: var(--oro-profundo); margin-right: 8px; }
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-    .pagina-libro { padding: 50px 30px; margin: 20px; }
-    .grid-estudios { grid-template-columns: 1fr; }
+    .pagina-libro { padding: 40px 20px; margin: 10px; }
+    .grid-estudios, .nav-grid { grid-template-columns: 1fr; }
     h2 { font-size: 2.5rem; }
 }
-
-/* [Aquí irían tus estilos de MENÚ OVERLAY y ACCESIBILIDAD que ya tienes configurados] */
