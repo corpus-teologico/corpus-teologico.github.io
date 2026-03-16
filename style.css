@@ -860,3 +860,49 @@ body.alto-contraste .separador-seccion span {
     text-orientation: mixed;
     box-shadow: -5px 0 15px rgba(0,0,0,0.5);
 }
+/* --- EXTENSIONES PARA TRATADOS (SISTEMA DE CLASES) --- */
+
+/* Texto de introducción centrado (debajo del H2) */
+.intro-bajada {
+    text-align: center; 
+    font-style: italic; 
+    color: var(--oro-profundo); 
+    margin-top: -20px;
+    font-size: 1.1rem;
+}
+
+/* Contenedores de información técnica (Fuentes, Ejes) */
+.info-tecnica-bloque { margin-bottom: 40px; }
+.info-tecnica-texto { font-size: 1.1rem; margin-top: 5px; font-weight: 500; }
+
+/* Cajas de "Rigor" o Notas de Estudio */
+.nota-rigor {
+    background: rgba(155, 128, 78, 0.05); 
+    padding: 20px; 
+    border-left: 3px solid var(--oro-profundo); 
+    margin-top: 20px;
+}
+
+/* Cajas de Reflexión (Las que eran negras, ahora coherentes) */
+.reflexion-box {
+    margin-top: 40px; 
+    text-align: center; 
+    border: 1px solid var(--oro-profundo); 
+    padding: 25px; 
+    background: #fdfbf7; 
+    color: #2c2c2c;
+    border-radius: 2px;
+}
+
+.reflexion-box p {
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.35rem; 
+    font-style: italic;
+    margin: 0;
+}
+
+/* Utilidades de espaciado y alineación */
+.justify { text-align: justify; }
+.center { text-align: center; }
+.mt-15 { margin-top: 15px; }
+.mb-40 { margin-bottom: 40px; }
