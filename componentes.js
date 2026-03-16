@@ -450,14 +450,80 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         `;
     };
-    // --- EJECUCIÓN MAESTRA ---
+   // --- 11. SISTEMA DE EXPORTACIÓN A PDF (MÓDULO DINÁMICO) ---
+const inicializarExportacionPDF = () => {
+    // Solo actuamos si es una página de estudio
+    const esEstudio = window.location.pathname.includes('/estudios/');
+    if (!esEstudio) return;
+
+    // 1. Inyectar librería html2pdf.js dinámicamente
+    const scriptLib = document.createElement('script');
+    scriptLib.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    document.head.appendChild(scriptLib);
+
+    // 2. Inyectar CSS de impresión para evitar saltos de página feos en cuadros técnicos
+    const stylePrint = document.createElement('style');
+    stylePrint.innerHTML = `
+        @media print {
+            .panel-tecnico, .tarjeta-eje, .entrada-glosario-maestra { page-break-inside: avoid; }
+            .contenedor-descarga-pdf, #abrir-menu, #progress-bar { display: none !important; }
+        }
+    `;
+    document.head.appendChild(stylePrint);
+
+    // 3. Crear el botón de descarga e inyectarlo antes del footer o al final del contenido
+    const contenedorBoton = document.createElement('div');
+    contenedorBoton.className = 'contenedor-descarga-pdf';
+    contenedorBoton.style.cssText = "display:flex; justify-content:center; margin: 60px 0; padding: 20px; border-top: 1px double #9b804e;";
+    
+    const btn = document.createElement('button');
+    btn.innerHTML = `<i class="fa-solid fa-file-pdf" style="margin-right:10px;"></i> DESCARGAR TRATADO EN PDF`;
+    btn.style.cssText = "background:transparent; border:1px solid #9b804e; color:#9b804e; padding:15px 30px; font-family:'Montserrat'; font-size:10px; letter-spacing:3px; cursor:pointer; transition:all 0.3s ease;";
+    
+    btn.onmouseover = () => { btn.style.background = "#9b804e"; btn.style.color = "#fff"; };
+    btn.onmouseout = () => { btn.style.background = "transparent"; btn.style.color = "#9b804e"; };
+    
+    btn.onclick = () => {
+        const elemento = document.querySelector('.pagina-libro') || document.body;
+        const opt = {
+            margin:       10,
+            filename:     `${document.title.replace(/\s+/g, '_')}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        
+        // Efecto visual de carga
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "GENERANDO ARCHIVO...";
+        btn.disabled = true;
+
+        html2pdf().set(opt).from(elemento).save().then(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    };
+
+    contenedorBoton.appendChild(btn);
+    
+    // Inyectar antes del footer institucional
+    const footer = document.getElementById('footer-global');
+    if (footer) {
+        footer.parentNode.insertBefore(contenedorBoton, footer);
+    }
+};
+
+// --- CIERRE DE LA FUNCIÓN DOMContentLoaded ---
+// Asegúrate de llamar a todas las funciones al final de tu script original:
+
     inyectarFaviconsYFuentes();
-    setupVisuals();
     crearBarraProgreso();
     inicializarDiccionarioPropio();
     generarPaginaGlosario();
+    setupVisuals();
     inyectarGemaSabiduria();
     inicializarUtilidades();
     inicializarMenu();
-   inyectarFooterEstudio();
+    inyectarFooterEstudio();
+    inicializarExportacionPDF(); // <--- Llamada al nuevo sistema
 });
