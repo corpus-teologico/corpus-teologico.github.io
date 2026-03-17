@@ -260,8 +260,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XIX. La esperanza de la gloria</a>
                             <a href="${rutaBase}estudios/el-poder-del-espiritu.html" class="nav-link-full" data-path="el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
                             <a href="${rutaBase}estudios/la-iglesia-de-cristo.html" class="nav-link-full" data-path="la-iglesia-de-cristo.html">XXI. La Iglesia de Cristo</a>
-                            <a href="${rutaBase}estudios/el-bautismo-biblico.html" class="nav-link-full" data-path="el-bautismo-biblico.html">XXII. El bautismo bíblico</a>
-                            <a href="${rutaBase}estudios/la-gran-comision.html" class="nav-link-full" data-path="la-gran-comision.html">XXIII. La gran comisión</a>
+                            <a href="${rutaBase}estudios/el-bautismo-biblico.html" class="nav-link-full" data-path="el-bautismo-biblico.html">XXII. La Mayordomía y el Trabajo</a>
+                            <a href="${rutaBase}estudios/la-gran-comision.html" class="nav-link-full" data-path="la-gran-comision.html">XXIII. La Tentación</a>
                             <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html" style="margin-top:10px; opacity:0.6">Bibliografía Final</a>
                         </div>
                     </div>
