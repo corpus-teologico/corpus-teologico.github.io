@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <a href="${rutaBase}estudios/el-problema-del-pecado.html" class="nav-link-full" data-path="el-problema-del-pecado.html">VIII. El problema del pecado</a>
                             <a href="${rutaBase}estudios/nuestra-oscuridad.html" class="nav-link-full" data-path="nuestra-oscuridad.html">IX. Nuestra oscuridad</a>
                             <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link-full" data-path="el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
-                            <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. Volver a Dios</a>
+                            <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. El Arrepentimiento</a>
                             <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XII. La Integridad</a>
                             <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link-full" data-path="mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
                             <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link-full" data-path="el-matrimonio-ideal.html">XIV. El matrimonio ideal</a>
