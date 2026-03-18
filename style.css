@@ -956,3 +956,136 @@ body.alto-contraste .separador-seccion span {
 .border-gold-top { border-top: 3px solid var(--oro-profundo); }
 .border-double-gold { border-top: 1px double var(--oro-profundo); }
 .no-border { border: none; }
+/* =========================================================
+   SOLUCIÓN GLOBAL PARA MÓVIL (SISTEMA FORMIGO)
+   ========================================================= */
+
+/* 1. Corrección de desbordes globales (Pegar al inicio o final) */
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. Bloque Responsive Maestro */
+@media (max-width: 768px) {
+    
+    /* --- Contenedor Principal (El "Libro") --- */
+    .pagina-libro {
+        padding: 40px 20px !important; /* Adiós a los 120px que rompían el layout */
+        margin: 10px !important;
+        width: auto !important;
+        max-width: calc(100% - 20px) !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    /* --- Tipografías y Textos --- */
+    h2 { 
+        font-size: 2.2rem !important; 
+        letter-spacing: -1px !important;
+    }
+    
+    .titulo-solemne {
+        font-size: 1.8rem !important;
+    }
+
+    .introduccion-texto p, 
+    .descripcion-breve, 
+    .panel-tecnico p, 
+    p {
+        text-align: left !important; /* El justificado en móvil crea huecos blancos feos */
+        font-size: 1.1rem !important;
+        line-height: 1.6 !important;
+    }
+
+    /* --- Paneles y Tarjetas (Grids) --- */
+    .panel-tecnico, .panel-informativo {
+        padding: 25px 15px !important;
+        margin: 20px 0 !important;
+        width: 100% !important;
+    }
+
+    .grid-ejes, .grid-estudios, .nav-grid {
+        grid-template-columns: 1fr !important; /* Una sola columna para que nada se encime */
+        gap: 15px !important;
+    }
+
+    .fila-estudio {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 30px 0 !important;
+    }
+
+    .tarjeta-eje, .eje-card {
+        flex-direction: column !important;
+        gap: 10px !important;
+        transform: none !important; /* Evitamos el translate en móvil */
+    }
+
+    /* --- Separadores --- */
+    .separador-seccion {
+        margin: 40px 0 30px !important;
+    }
+    .separador-seccion span {
+        padding: 0 10px !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 2px !important;
+    }
+
+    /* --- Tablas (Scroll Horizontal Interno) --- */
+    .tabla-comparativa {
+        display: block !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .media-xs .tabla-comparativa {
+        min-width: 600px; /* Forzamos scroll en lugar de encoger */
+    }
+
+    /* --- Elementos de Interfaz --- */
+    .btn-abrir, .btn-menu-flotante, .btn-abrir-full {
+        right: 15px !important;
+        padding: 8px 12px !important;
+        font-size: 10px !important;
+    }
+
+    .btn-menu-flotante.scrolled {
+        padding: 12px 6px !important;
+        font-size: 9px !important;
+    }
+
+    /* --- Menú Fullscreen --- */
+    .menu-card {
+        width: 100% !important;
+        padding: 60px 20px !important;
+        margin: 0 !important;
+        min-height: 100vh !important;
+    }
+    
+    .menu-label-top {
+        font-size: 18px !important;
+        letter-spacing: 4px !important;
+    }
+
+    .nav-link-full {
+        font-size: 1.1rem !important;
+        padding: 10px 0 !important;
+    }
+}
+
+/* Ajustes para pantallas extra pequeñas (iPhone SE, etc) */
+@media (max-width: 480px) {
+    .titulo-estudio {
+        font-size: 1.4rem !important;
+    }
+    .pagina-libro {
+        padding: 30px 15px !important;
+    }
+}
