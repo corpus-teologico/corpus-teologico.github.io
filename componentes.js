@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <a href="${rutaBase}estudios/la-iglesia-de-cristo.html" class="nav-link-full" data-path="la-iglesia-de-cristo.html">XXI. La Iglesia de Cristo</a>
                             <a href="${rutaBase}estudios/el-bautismo-biblico.html" class="nav-link-full" data-path="el-bautismo-biblico.html">XXII. La Mayordomía y el Trabajo</a>
                             <a href="${rutaBase}estudios/la-gran-comision.html" class="nav-link-full" data-path="la-gran-comision.html">XXIII. La Tentación</a>
-                            <a href="${rutaBase}estudios/el-adulterio.html" class="nav-link-full" data-path="el-adulterio.html">XXIII. La Tentación</a>
+                            <a href="${rutaBase}estudios/el-adulterio.html" class="nav-link-full" data-path="el-adulterio.html">XIV. El Adulterio</a>
                         </div>
                     </div>
                 </div>
