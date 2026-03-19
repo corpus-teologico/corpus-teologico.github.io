@@ -513,9 +513,74 @@ const inicializarExportacionPDF = () => {
     }
 };
 
-// --- CIERRE DE LA FUNCIÓN DOMContentLoaded ---
-// Asegúrate de llamar a todas las funciones al final de tu script original:
+// --- 11. MOTOR DE SEO DINÁMICO (SISTEMA DE INDEXACIÓN) ---
+    const inicializarSEO = () => {
+        // 1. Extracción de datos del DOM
+        const tituloHT = document.querySelector('h1')?.innerText || document.title;
+        const metaDescExistente = document.querySelector('meta[name="description"]');
+        
+        // Buscamos el primer párrafo con contenido real para la descripción
+        const primerParrafo = document.querySelector('.cuerpo-texto p, article p')?.innerText.substring(0, 160).replace(/\s+/g, ' ') + "..." 
+                              || "Estudio profundo perteneciente al Sistema Teológico Formigo.";
 
+        // 2. Construcción de Datos Estructurados (JSON-LD)
+        const datosSchema = {
+            "@context": "https://schema.org",
+            "@type": tituloHT.toLowerCase().includes("tratado") ? "ScholarlyArticle" : "Article",
+            "headline": tituloHT,
+            "description": primerParrafo,
+            "author": {
+                "@type": "Person",
+                "name": "Roberto Formigo",
+                "url": window.location.origin
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Sistema Teológico Formigo",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": `${window.location.origin}/favicon.svg` // O tu ruta de logo real
+                }
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": window.location.href
+            },
+            "inLanguage": "es-ES",
+            "copyrightHolder": "Roberto Formigo"
+        };
+
+        // Inyección del Script de Google
+        const scriptSEO = document.createElement('script');
+        scriptSEO.type = 'application/ld+json';
+        scriptSEO.text = JSON.stringify(datosSchema);
+        document.head.appendChild(scriptSEO);
+
+        // 3. Blindaje de Meta-Tags (SEO & Social)
+        const gestionarMeta = (nombre, contenido, esProperty = false) => {
+            const selector = esProperty ? `meta[property="${nombre}"]` : `meta[name="${nombre}"]`;
+            let el = document.querySelector(selector);
+            if (!el) {
+                el = document.createElement('meta');
+                if (esProperty) el.setAttribute('property', nombre);
+                else el.name = nombre;
+                document.head.appendChild(el);
+            }
+            el.content = contenido;
+        };
+
+        // Aplicar Metadatos
+        gestionarMeta("description", primerParrafo);
+        gestionarMeta("og:title", tituloHT, true);
+        gestionarMeta("og:description", primerParrafo, true);
+        gestionarMeta("og:type", "article", true);
+        gestionarMeta("og:site_name", "Sistema Teológico Formigo", true);
+        gestionarMeta("twitter:card", "summary_large_image");
+
+        console.log(`%c SEO %c Indexación optimizada para: ${tituloHT} `, "background:#9b804e; color:#fff; font-weight:bold;", "color:#9b804e;");
+    };
+
+    // --- EJECUCIÓN INICIAL DE COMPONENTES ---
     inyectarFaviconsYFuentes();
     crearBarraProgreso();
     inicializarDiccionarioPropio();
@@ -525,5 +590,6 @@ const inicializarExportacionPDF = () => {
     inicializarUtilidades();
     inicializarMenu();
     inyectarFooterEstudio();
-    inicializarExportacionPDF(); // <--- Llamada al nuevo sistema
-});
+    inicializarSEO(); // <--- Llamada al nuevo motor de SEO
+
+}); // Cierre del DOMContentLoaded
