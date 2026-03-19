@@ -517,11 +517,11 @@ const inicializarExportacionPDF = () => {
     const inicializarSEO = () => {
         // 1. Extracción de datos del DOM
         const tituloHT = document.querySelector('h1')?.innerText || document.title;
-        const metaDescExistente = document.querySelector('meta[name="description"]');
         
-        // Buscamos el primer párrafo con contenido real para la descripción
-        const primerParrafo = document.querySelector('.cuerpo-texto p, article p')?.innerText.substring(0, 160).replace(/\s+/g, ' ') + "..." 
-                              || "Estudio profundo perteneciente al Sistema Teológico Formigo.";
+        // Buscamos el primer párrafo significativo
+        const primerParrafo = document.querySelector('.cuerpo-texto p, article p, .panel-tecnico p')?.innerText
+                                .substring(0, 160).replace(/\s+/g, ' ') + "..." 
+                                || "Estudio profundo perteneciente al Sistema Teológico Formigo.";
 
         // 2. Construcción de Datos Estructurados (JSON-LD)
         const datosSchema = {
@@ -539,7 +539,7 @@ const inicializarExportacionPDF = () => {
                 "name": "Sistema Teológico Formigo",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": `${window.location.origin}/favicon.svg` // O tu ruta de logo real
+                    "url": `${window.location.origin}/favicon.svg`
                 }
             },
             "mainEntityOfPage": {
@@ -550,7 +550,6 @@ const inicializarExportacionPDF = () => {
             "copyrightHolder": "Roberto Formigo"
         };
 
-        // Inyección del Script de Google
         const scriptSEO = document.createElement('script');
         scriptSEO.type = 'application/ld+json';
         scriptSEO.text = JSON.stringify(datosSchema);
@@ -569,7 +568,6 @@ const inicializarExportacionPDF = () => {
             el.content = contenido;
         };
 
-        // Aplicar Metadatos
         gestionarMeta("description", primerParrafo);
         gestionarMeta("og:title", tituloHT, true);
         gestionarMeta("og:description", primerParrafo, true);
@@ -577,19 +575,46 @@ const inicializarExportacionPDF = () => {
         gestionarMeta("og:site_name", "Sistema Teológico Formigo", true);
         gestionarMeta("twitter:card", "summary_large_image");
 
+        // --- INTEGRACIÓN DE TIEMPO DE LECTURA ---
+        calcularTiempoLectura(); 
+
         console.log(`%c SEO %c Indexación optimizada para: ${tituloHT} `, "background:#9b804e; color:#fff; font-weight:bold;", "color:#9b804e;");
     };
 
-    // --- EJECUCIÓN INICIAL DE COMPONENTES ---
-    inyectarFaviconsYFuentes();
-    crearBarraProgreso();
-    inicializarDiccionarioPropio();
-    generarPaginaGlosario();
-    setupVisuals();
-    inyectarGemaSabiduria();
-    inicializarUtilidades();
-    inicializarMenu();
-    inyectarFooterEstudio();
-    inicializarSEO(); // <--- Llamada al nuevo motor de SEO
+    const calcularTiempoLectura = () => {
+        const contenedor = document.querySelector('.panel-tecnico') || document.body;
+        const texto = contenedor.innerText || "";
+        const palabras = texto.trim().split(/\s+/).length;
+        const tiempo = Math.ceil(palabras / 200); // Promedio de 200 ppm
+        
+        const h1 = document.querySelector('h1');
+        if (h1 && tiempo > 0 && !document.getElementById('lectura-estimada')) {
+            const span = document.createElement('span');
+            span.id = 'lectura-estimada';
+            span.style.cssText = "display:block; font-family:'Montserrat', sans-serif; font-size:0.65rem; color:#9b804e; margin-top:12px; letter-spacing:2px; font-weight:500; text-transform:uppercase;";
+            span.innerHTML = `<i class="fa-regular fa-clock" style="margin-right:5px;"></i> Lectura estimada: ${tiempo} min.`;
+            h1.appendChild(span);
+        }
+    };
+
+ // --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
+    const iniciarSistema = () => {
+        inyectarFaviconsYFuentes();
+        crearBarraProgreso();
+        setupVisuals();
+        inicializarMenu();
+        inicializarSEO();
+
+        // Componentes que pueden esperar al scroll o carga completa
+        window.addEventListener('load', () => {
+            inicializarDiccionarioPropio();
+            inyectarFooterEstudio();
+            inyectarGemaSabiduria();
+            inicializarUtilidades();
+            if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
+        });
+    };
+
+    iniciarSistema();
 
 }); // Cierre del DOMContentLoaded
