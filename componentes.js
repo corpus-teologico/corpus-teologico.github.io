@@ -591,7 +591,7 @@ const inicializarExportacionPDF = () => {
         if (h1 && tiempo > 0 && !document.getElementById('lectura-estimada')) {
             const span = document.createElement('span');
             span.id = 'lectura-estimada';
-            span.style.cssText = "display:block; font-family:'Montserrat', sans-serif; font-size:0.65rem; color:#9b804e; margin-top:12px; letter-spacing:2px; font-weight:500; text-transform:uppercase;";
+            span.style.cssText = "display:block; font-family:'Montserrat', sans-serif; font-size:0.65rem;margin-bottom: 30px;color:#000; margin-top:12px; letter-spacing:2px; font-weight:500; text-transform:uppercase;";
             span.innerHTML = `<i class="fa-regular fa-clock" style="margin-right:5px;"></i> Lectura estimada: ${tiempo} min.`;
             h1.appendChild(span);
         }
