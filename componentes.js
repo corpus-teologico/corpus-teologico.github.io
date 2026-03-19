@@ -587,7 +587,7 @@ const inicializarExportacionPDF = () => {
         const palabras = texto.trim().split(/\s+/).length;
         const tiempo = Math.ceil(palabras / 200); // Promedio de 200 ppm
         
-        const h1 = document.querySelector('h1');
+        const h1 = document.querySelector('h2');
         if (h1 && tiempo > 0 && !document.getElementById('lectura-estimada')) {
             const span = document.createElement('span');
             span.id = 'lectura-estimada';
