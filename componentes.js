@@ -585,7 +585,7 @@ const inicializarExportacionPDF = () => {
         const contenedor = document.querySelector('.panel-tecnico') || document.body;
         const texto = contenedor.innerText || "";
         const palabras = texto.trim().split(/\s+/).length;
-        const tiempo = Math.ceil(palabras / 100); // Promedio de 200 ppm
+        const tiempo = Math.ceil(palabras / 40); // Promedio de 200 ppm
         
         const h1 = document.querySelector('h2');
         if (h1 && tiempo > 0 && !document.getElementById('lectura-estimada')) {
