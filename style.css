@@ -150,6 +150,7 @@ h2 {
 /* --- EL BOTÓN DE LECTURA SOLEMNE --- */
 .link-leer {
     display: inline-flex;
+   display:none;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.65rem;
