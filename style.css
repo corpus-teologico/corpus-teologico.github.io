@@ -957,4 +957,7 @@ body.alto-contraste .separador-seccion span {
 .border-gold-top { border-top: 3px solid var(--oro-profundo); }
 .border-double-gold { border-top: 1px double var(--oro-profundo); }
 .no-border { border: none; }
+.tarjeta-estudio .link-leer {
+    display: inline-flex !important;
+}
 
