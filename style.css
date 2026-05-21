@@ -961,3 +961,6 @@ body.alto-contraste .separador-seccion span {
     display: inline-flex !important;
 }
 
+div#footer-global {
+    background: var(--blanco-papel);
+}
