@@ -712,22 +712,28 @@ const inicializarScrollTop = () => {
         });
     });
 };
-   // --- CONFIGURACIÓN DEL MOTIVO EDITORIAL LUXURY (MICROPUNTO) ---
-const aplicarMotivoFondo = () => {
+// --- CONFIGURACIÓN DE TEXTURA PARA LA PÁGINA DEL LIBRO ---
+const aplicarMotivoLibro = () => {
     if (!esEstudio) return;
 
-    // 1. Aplicamos los puntos matemáticos al fondo del body
-    Object.assign(document.body.style, {
-        backgroundColor: '#fdfbf7', 
-        backgroundImage: 'radial-gradient(rgba(155, 128, 78, 0.05) 1px, transparent 0)',
-        backgroundSize: '12px 12px',     // Distancia respetuosa entre cada micropunto
-        backgroundAttachment: 'fixed'
-    });
-
-    // 2. Forzamos transparencia en el contenedor principal
-    const mainContent = document.querySelector('main') || document.querySelector('.contenido-estudio');
-    if (mainContent) {
-        mainContent.style.backgroundColor = 'transparent';
+    // Buscamos tu contenedor específico del libro
+    const paginaLibro = document.querySelector('.pagina-libro');
+    
+    if (paginaLibro) {
+        Object.assign(paginaLibro.style, {
+            // 1. Color base crema y textura de papel artesanal sutil
+            backgroundColor: '#fdfbf7', 
+            backgroundImage: "url('https://www.transparenttextures.com/patterns/handmade-paper.png')",
+            backgroundRepeat: 'repeat',
+            backgroundBlendMode: 'multiply', // Funde la textura con tu color crema
+            
+            // 2. Sombra perimetral interna ultra-suave para dar volumen de papel real
+            boxShadow: 'inset 0 0 40px rgba(155, 128, 78, 0.04), 0 10px 30px rgba(0, 0, 0, 0.02)',
+            
+            // 3. Suavizado de bordes para mantener la estética premium
+            borderRadius: '4px',
+            border: '1px solid rgba(155, 128, 78, 0.15)'
+        });
     }
 };
 // --- 11. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
@@ -782,7 +788,7 @@ const iniciarSistema = () => {
     setupVisuals();
     inicializarMenu();
     inicializarSEO();
-   aplicarMotivoFondo();
+   aplicarMotivoLibro();
 
   // Componentes que pueden esperar al scroll o carga completa
     window.addEventListener('load', () => {
