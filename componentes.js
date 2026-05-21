@@ -606,28 +606,41 @@ const inicializarExportacionPDF = () => {
 const repararEnlacesInternos = () => {
     if (!esEstudio) return;
 
-    // Diccionario de equivalencias: "Enlace viejo": "Enlace nuevo"
-    const correcciones = {
-        "la-armonia-de-la-revelacion.html": "como-nos-habla-dios.html",
-        "teologia-del-pecado.html": "el-problema-del-pecado.html",
-        "manual-refutacion.html": "defendiendo-mi-fe.html"
-    };
+    // Tu lista oficial e inmutable de tratados reales
+    const ordenTratados = [
+        "como-nos-habla-dios", "solo-la-biblia-basta", "la-armonia-de-los-evangelios",
+        "conocer-para-amar", "nuestro-dios-trino", "el-dios-justo-y-amoroso",
+        "de-donde-viene-el-mal", "un-mundo-roto", "el-problema-del-pecado",
+        "nuestra-oscuridad", "volver-a-dios", "el-poder-del-espiritu",
+        "mi-amistad-con-dios", "ayuno", "aprender-a-descansar",
+        "ser-de-una-sola-pieza", "la-gran-comision", "libertad-de-las-cadenas",
+        "el-matrimonio-ideal", "el-adulterio", "el-bautismo-biblico",
+        "defendiendo-mi-fe", "ciencia-y-fe", "la-iglesia-de-cristo",
+        "lo-que-esta-por-venir"
+    ];
 
-    // Buscamos absolutamente TODOS los enlaces de la página
+    // Escaneamos todos los enlaces de la página
     const enlaces = document.querySelectorAll('a');
-    
+
     enlaces.forEach(enlace => {
         const hrefActual = enlace.getAttribute('href');
-        if (!hrefActual) return;
+        if (!hrefActual || hrefActual.startsWith('http') || hrefActual.startsWith('#')) return;
 
-        // Extraemos solo el nombre del archivo final
-        const nombreArchivo = hrefActual.split('/').pop();
-        
-        // Si coincide con un enlace viejo, lo reescribimos a la fuerza
-        if (correcciones[nombreArchivo]) {
-            const rutaLimpia = hrefActual.replace(nombreArchivo, correcciones[nombreArchivo]);
-            enlace.setAttribute('href', rutaLimpia);
-            console.log(`Enlace reparado: ${nombreArchivo} -> ${correcciones[nombreArchivo]}`);
+        // Pasamos el texto del enlace a minúsculas y limpiamos acentos/signos
+        const textoEnlace = enlace.textContent.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quita acentos
+            .replace(/[^a-z0-8\s-]/g, ""); // Quita corchetes, números aislados y símbolos
+
+        // Buscamos si alguna palabra clave de tus tratados reales coincide con el texto escrito
+        const tratadoEncontrado = ordenTratados.find(tratado => {
+            const palabrasClave = tratado.split('-');
+            // Si el texto del enlace contiene palabras clave importantes, es match
+            return palabrasClave.some(palabra => palabra.length > 3 && textoEnlace.includes(palabra));
+        });
+
+        // Si encontramos una coincidencia en el texto, reescribimos el enlace a su archivo real
+        if (tratadoEncontrado) {
+            enlace.setAttribute('href', `${tratadoEncontrado}.html`);
         }
     });
 };
