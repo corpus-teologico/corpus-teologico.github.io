@@ -712,6 +712,24 @@ const inicializarScrollTop = () => {
         });
     });
 };
+   // --- CONFIGURACIÓN DEL MOTIVO EDITORIAL LUXURY (MICROPUNTO) ---
+const aplicarMotivoFondo = () => {
+    if (!esEstudio) return;
+
+    // 1. Aplicamos los puntos matemáticos al fondo del body
+    Object.assign(document.body.style, {
+        backgroundColor: '#fdfbf7', 
+        backgroundImage: 'radial-gradient(rgba(155, 128, 78, 0.05) 1px, transparent 0)',
+        backgroundSize: '12px 12px',     // Distancia respetuosa entre cada micropunto
+        backgroundAttachment: 'fixed'
+    });
+
+    // 2. Forzamos transparencia en el contenedor principal
+    const mainContent = document.querySelector('main') || document.querySelector('.contenido-estudio');
+    if (mainContent) {
+        mainContent.style.backgroundColor = 'transparent';
+    }
+};
 // --- 11. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
 const setupTratadosNavigation = () => {
     if (!esEstudio) return; // 1º Comprobamos contexto obligatorio
@@ -764,6 +782,7 @@ const iniciarSistema = () => {
     setupVisuals();
     inicializarMenu();
     inicializarSEO();
+   aplicarMotivoFondo();
 
   // Componentes que pueden esperar al scroll o carga completa
     window.addEventListener('load', () => {
