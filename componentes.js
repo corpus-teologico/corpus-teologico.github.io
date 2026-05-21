@@ -1080,7 +1080,7 @@ const iniciarSistema = () => {
         setupTratadosNavigation();
         inyectarGemaSabiduria();
         inicializarUtilidades();
-       inyectarEnlacesReferencia();   // 2. ¡LLAMAMOS AQUÍ a tus referencias inteligentes! (Quedan dentro del libro)
+      // inyectarEnlacesReferencia();   // 2. ¡LLAMAMOS AQUÍ a tus referencias inteligentes! (Quedan dentro del libro)
         if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
     });
 };
