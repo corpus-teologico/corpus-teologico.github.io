@@ -836,6 +836,152 @@ const arreglarPiePagina = () => {
         }
     }
 };
+   // --- SECCIÓN DE ENLACES DE REFERENCIA INTELIGENTES Y RIGOR DOCTRINAL ---
+const inyectarEnlacesReferencia = () => {
+    // 1. Si estamos en la index/portada, NO inyectamos nada
+    const esIndex = !window.location.pathname.includes('/estudios/');
+    if (esIndex) return; 
+
+    const paginaLibro = document.querySelector('.pagina-libro');
+    if (!paginaLibro || document.getElementById('bloque-referencias-rigor')) return;
+
+    // 2. DETECTOR DE TRATADOS: Definimos qué enlaces sugerir según la página actual
+    const urlActual = window.location.pathname;
+    let enlacesHTML = '';
+
+    // Mapeamos las referencias según el tratado donde se encuentre el estudiante
+    if (urlActual.includes('aprender-a-descansar')) {
+        enlacesHTML = `
+            <a href="/estudios/como-nos-habla-dios.html" class="link-referencia-item">
+                <span class="ref-catego">PROLEGÓMENOS:</span> ¿Cómo nos habla Dios? (La Revelación) <span>→</span>
+            </a>
+            <a href="/estudios/solo-la-biblia-basta.html" class="link-referencia-item">
+                <span class="ref-catego">BIBLIOLOGÍA:</span> Sólo la Biblia basta (La Inerrancia) <span>→</span>
+            </a>
+        `;
+    } else if (urlActual.includes('nuestro-dios-trino')) {
+        enlacesHTML = `
+            <a href="/estudios/solo-la-biblia-basta.html" class="link-referencia-item">
+                <span class="ref-catego">BIBLIOLOGÍA:</span> Sólo la Biblia basta (Fundamento del Dogma) <span>→</span>
+            </a>
+            <a href="/estudios/conocer-para-amar.html" class="link-referencia-item">
+                <span class="ref-catego">TEOLOGÍA PROPIA:</span> Conocer para amar <span>→</span>
+            </a>
+        `;
+    } else if (urlActual.includes('el-problema-del-pecado') || urlActual.includes('de-donde-viene-el-mal')) {
+        enlacesHTML = `
+            <a href="/estudios/un-mundo-roto.html" class="link-referencia-item">
+                <span class="ref-catego">HAMARTIOLOGÍA:</span> Consecuencias de la caída <span>→</span>
+            </a>
+            <a href="/estudios/nuestra-oscuridad.html" class="link-referencia-item">
+                <span class="ref-catego">ANTROPOLOGÍA:</span> Nuestra oscuridad (Depravación Total) <span>→</span>
+            </a>
+        `;
+    } else {
+        // Enlaces por defecto para cualquier otro tratado que no hayamos mapeado aún
+        enlacesHTML = `
+            <a href="/estudios/como-nos-habla-dios.html" class="link-referencia-item">
+                <span class="ref-catego">PROLEGÓMENOS:</span> ¿Cómo nos habla Dios? <span>→</span>
+            </a>
+            <a href="/estudios/solo-la-biblia-basta.html" class="link-referencia-item">
+                <span class="ref-catego">BIBLIOLOGÍA:</span> Sólo la Biblia basta <span>→</span>
+            </a>
+        `;
+    }
+
+    // 3. Creamos e inyectamos el contenedor formal
+    const contenedorRef = document.createElement('section');
+    contenedorRef.id = 'bloque-referencias-rigor';
+    
+    contenedorRef.innerHTML = `
+        <div class="separador-seccion">
+            <span>DOCUMENTACIÓN Y REFERENCIAS</span>
+        </div>
+        
+        <div class="caja-rigor">
+            <div class="icono-balanza">⚖</div>
+            <div class="contenido-rigor">
+                <span class="titulo-rigor">INSTRUCCIÓN DE RIGOR</span>
+                <p class="texto-rigor">
+                    "El conocimiento no es una acumulación de datos, sino un edificio. Si usted intenta estudiar la <strong>Soteriología</strong> (salvación) o la <strong>Hamartiología</strong> (pecado) sin haber consolidado primero la <strong>Inerrancia</strong> de este estudio, estará edificando sobre arena. Consulte siempre los enlaces de referencia."
+                </p>
+            </div>
+        </div>
+
+        <div class="lista-referencias-links">
+            ${enlacesHTML}
+        </div>
+    `;
+
+    // --- ESTILOS VISUALES (Se mantienen intactos y solemnes) ---
+    Object.assign(contenedorRef.style, { marginTop: '60px', padding: '0 40px' });
+
+    const cajaRigor = contenedorRef.querySelector('.caja-rigor');
+    Object.assign(cajaRigor.style, {
+        backgroundColor: '#faf7f0',
+        borderLeft: '3px solid #9b804e',
+        padding: '24px',
+        margin: '30px 0',
+        display: 'flex',
+        gap: '20px',
+        alignItems: 'flex-start',
+        borderRadius: '0 4px 4px 0'
+    });
+
+    const icono = contenedorRef.querySelector('.icono-balanza');
+    if (icono) icono.style.fontSize = '24px';
+    if (icono) icono.style.color = '#9b804e';
+    if (icono) icono.style.lineHeight = '1';
+
+    const tituloRigor = contenedorRef.querySelector('.titulo-rigor');
+    Object.assign(tituloRigor.style, {
+        display: 'block',
+        fontFamily: "'Montserrat', sans-serif",
+        fontSize: '11px',
+        letterSpacing: '1.5px',
+        fontWeight: '700',
+        color: '#9b804e',
+        marginBottom: '8px'
+    });
+
+    const textoRigor = contenedorRef.querySelector('.texto-rigor');
+    Object.assign(textoRigor.style, {
+        fontStyle: 'italic', fontSize: '14px', lineHeight: '1.6', color: '#4a4a4a', margin: '0'
+    });
+
+    const listaLinks = contenedorRef.querySelector('.lista-referencias-links');
+    Object.assign(listaLinks.style, { display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' });
+
+    const itemsLinks = contenedorRef.querySelectorAll('.link-referencia-item');
+    itemsLinks.forEach(link => {
+        Object.assign(link.style, {
+            display: 'flex', justifyContent: 'space-between', padding: '14px 18px',
+            backgroundColor: '#ffffff', border: '1px solid rgba(155, 128, 78, 0.15)',
+            borderRadius: '4px', textDecoration: 'none', color: '#2c2c2c',
+            fontSize: '13px', fontFamily: "var(--font-serif, 'Georgia', serif)",
+            transition: 'all 0.3s ease'
+        });
+
+        const catego = link.querySelector('.ref-catego');
+        Object.assign(catego.style, {
+            fontFamily: "'Montserrat', sans-serif", fontSize: '10px', fontWeight: '700',
+            color: '#9b804e', marginRight: '8px', letterSpacing: '0.5px'
+        });
+
+        link.addEventListener('mouseenter', () => {
+            link.style.borderColor = '#9b804e';
+            link.style.backgroundColor = '#fdfbf7';
+            link.style.transform = 'translateX(4px)';
+        });
+        link.addEventListener('mouseleave', () => {
+            link.style.borderColor = 'rgba(155, 128, 78, 0.15)';
+            link.style.backgroundColor = '#ffffff';
+            link.style.transform = 'translateX(0)';
+        });
+    });
+
+    paginaLibro.appendChild(contenedorRef);
+};
 // --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
 const iniciarSistema = () => {
     inyectarFaviconsYFuentes();
@@ -858,6 +1004,7 @@ const iniciarSistema = () => {
         setupTratadosNavigation();
         inyectarGemaSabiduria();
         inicializarUtilidades();
+       inyectarEnlacesReferencia();   // 2. ¡LLAMAMOS AQUÍ a tus referencias inteligentes! (Quedan dentro del libro)
         if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
     });
 };
