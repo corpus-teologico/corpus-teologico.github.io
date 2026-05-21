@@ -355,7 +355,7 @@ const setupVisuals = () => {
         });
         if (pos && pos > 500) {
             const t = document.createElement('div');
-            t.style.cssText = "position:fixed; bottom:20px; right:20px; background:#1a1a1a; color:#fff; border:1px solid #9b804e; padding:15px; z-index:10002; font-family:'Montserrat'; font-size:0.7rem; box-shadow: 0 5px 20px rgba(0,0,0,0.5);";
+            t.style.cssText = "position:fixed; bottom:100px; right:20px; background:#1a1a1a; color:#fff; border:1px solid #9b804e; padding:15px; z-index:10002; font-family:'Montserrat'; font-size:0.7rem; box-shadow: 0 5px 20px rgba(0,0,0,0.5);";
             t.innerHTML = `LECTURA PENDIENTE<br><button id='retomar' style='background:#9b804e; border:none; color:#fff; margin-top:10px; cursor:pointer; padding:5px 10px; font-size:10px;'>RETOMAR</button>`;
             document.body.appendChild(t);
             document.getElementById('retomar').onclick = () => { window.scrollTo({top: parseInt(pos), behavior:'smooth'}); t.remove(); };
