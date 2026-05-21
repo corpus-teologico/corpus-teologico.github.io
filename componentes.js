@@ -790,7 +790,7 @@ const iniciarSistema = () => {
     setupVisuals();
     inicializarMenu();
     inicializarSEO();
-   aplicarMotivoFondoExterior();
+ //  aplicarMotivoFondoExterior();
 
   // Componentes que pueden esperar al scroll o carga completa
     window.addEventListener('load', () => {
