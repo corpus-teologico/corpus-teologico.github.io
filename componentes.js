@@ -218,56 +218,61 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // --- 6. COMPONENTES VISUALES (BOTÓN ELEGANTE) ---
-    const setupVisuals = () => {
-        const menuHTML = `
-           <div id="menu-fullscreen" class="menu-overlay">
-                <div class="menu-card">
-                    <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
-                    <p class="menu-label-top">Sistema Teológico Formigo</p>
-                    <div class="nav-grid">
-                        <div class="nav-col">
-                            <span class="nav-group-title">Fundamentos</span>
-                            <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción</a>
-                            <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario</a>
-                            <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
-                            <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">BibliografÍa</a>
-                            <span class="nav-group-title" style="margin-top:20px">Tratados I — VII</span>
-                            <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link-full" data-path="como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
-                            <a href="${rutaBase}estudios/solo-la-biblia-basta.html" class="nav-link-full" data-path="solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
-                            <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html" class="nav-link-full" data-path="la-armonia-de-los-evangelios.html">III. Armonía de los Evangelios</a>
-                            <a href="${rutaBase}estudios/aprender-a-descansar.html" class="nav-link-full" data-path="aprender-a-descansar.html">IV. Aprender a descansar</a>
-                            <a href="${rutaBase}estudios/conocer-para-amar.html" class="nav-link-full" data-path="conocer-para-amar.html">V. Conocer para amar</a>
-                            <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link-full" data-path="de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
-                            <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VII. Consecuencias de la caída</a>
-                        </div>
-                        <div class="nav-col">
-                            <span class="nav-group-title">Tratados VIII — XV</span>
-                            <a href="${rutaBase}estudios/el-problema-del-pecado.html" class="nav-link-full" data-path="el-problema-del-pecado.html">VIII. El problema del pecado</a>
-                            <a href="${rutaBase}estudios/nuestra-oscuridad.html" class="nav-link-full" data-path="nuestra-oscuridad.html">IX. Nuestra oscuridad</a>
-                            <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link-full" data-path="el-dios-justo-y-amoroso.html">X. El Dios justo y amoroso</a>
-                            <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. El Arrepentimiento</a>
-                            <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XII. La Integridad</a>
-                            <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link-full" data-path="mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
-                            <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link-full" data-path="el-matrimonio-ideal.html">XIV. El matrimonio ideal</a>
-                            <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link-full" data-path="libertad-de-las-cadenas.html">XV. La Adicción: Esclavitud e Idolatría</a>
-                        </div>
-                        <div class="nav-col">
-                            <span class="nav-group-title">Tratados XVI — XXV</span>
-                            <a href="${rutaBase}estudios/defendiendo-mi-fe.html" class="nav-link-full" data-path="defendiendo-mi-fe.html">XVI. Defendiendo mi fe</a>
-                            <a href="${rutaBase}estudios/ciencia-y-fe.html" class="nav-link-full" data-path="ciencia-y-fe.html">XVII. Ciencia y fe</a>
-                            <a href="${rutaBase}estudios/nuestro-dios-trino.html" class="nav-link-full" data-path="nuestro-dios-trino.html">XVIII. Nuestro Dios Trino</a>
-                            <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XIX. La esperanza de la gloria</a>
-                            <a href="${rutaBase}estudios/el-poder-del-espiritu.html" class="nav-link-full" data-path="el-poder-del-espiritu.html">XX. El poder del Espíritu</a>
-                            <a href="${rutaBase}estudios/la-iglesia-de-cristo.html" class="nav-link-full" data-path="la-iglesia-de-cristo.html">XXI. La Iglesia de Cristo</a>
-                            <a href="${rutaBase}estudios/el-bautismo-biblico.html" class="nav-link-full" data-path="el-bautismo-biblico.html">XXII. La Mayordomía y el Trabajo</a>
-                            <a href="${rutaBase}estudios/la-gran-comision.html" class="nav-link-full" data-path="la-gran-comision.html">XXIII. La Tentación</a>
-                            <a href="${rutaBase}estudios/el-adulterio.html" class="nav-link-full" data-path="el-adulterio.html">XIV. El Adulterio</a>
-                            <a href="${rutaBase}estudios/ayuno.html" class="nav-link-full" data-path="ayuno.html">XV. El Ayuno</a>
-                        </div>
+   // --- 6. COMPONENTES VISUALES (BOTÓN ELEGANTE) ---
+const setupVisuals = () => {
+    const menuHTML = `
+       <div id="menu-fullscreen" class="menu-overlay">
+            <div class="menu-card">
+                <button id="cerrar-menu" class="btn-cerrar-full">✕</button>
+                <p class="menu-label-top">Sistema Teológico Formigo</p>
+                <div class="nav-grid">
+                    
+                    <div class="nav-col">
+                        <span class="nav-group-title">Fundamentos</span>
+                        <a href="${rutaBase}index.html" class="nav-link-full" data-path="index.html">Introducción</a>
+                        <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario</a>
+                        <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
+                        <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">Bibliografía</a>
+                        
+                        <span class="nav-group-title" style="margin-top:20px">Tratados I — VIII</span>
+                        <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link-full" data-path="como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
+                        <a href="${rutaBase}estudios/solo-la-biblia-basta.html" class="nav-link-full" data-path="solo-la-biblia-basta.html">II. Sólo la Biblia basta</a>
+                        <a href="${rutaBase}estudios/la-armonia-de-los-evangelios.html" class="nav-link-full" data-path="la-armonia-de-los-evangelios.html">III. Armonía de los Evangelios</a>
+                        <a href="${rutaBase}estudios/conocer-para-amar.html" class="nav-link-full" data-path="conocer-para-amar.html">IV. Conocer para amar</a>
+                        <a href="${rutaBase}estudios/nuestro-dios-trino.html" class="nav-link-full" data-path="nuestro-dios-trino.html">V. Nuestro Dios Trino</a>
+                        <a href="${rutaBase}estudios/el-dios-justo-y-amoroso.html" class="nav-link-full" data-path="el-dios-justo-y-amoroso.html">VI. El Dios justo y amoroso</a>
+                        <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link-full" data-path="de-donde-viene-el-mal.html">VII. ¿De dónde viene el mal?</a>
+                        <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VIII. Consecuencias de la caída</a>
                     </div>
+                    
+                    <div class="nav-col">
+                        <span class="nav-group-title">Tratados IX — XVII</span>
+                        <a href="${rutaBase}estudios/el-problema-del-pecado.html" class="nav-link-full" data-path="el-problema-del-pecado.html">IX. El problema del pecado</a>
+                        <a href="${rutaBase}estudios/nuestra-oscuridad.html" class="nav-link-full" data-path="nuestra-oscuridad.html">X. Nuestra oscuridad</a>
+                        <a href="${rutaBase}estudios/volver-a-dios.html" class="nav-link-full" data-path="volver-a-dios.html">XI. El Arrepentimiento</a>
+                        <a href="${rutaBase}estudios/el-poder-del-espiritu.html" class="nav-link-full" data-path="el-poder-del-espiritu.html">XII. El poder del Espíritu</a>
+                        <a href="${rutaBase}estudios/mi-amistad-con-dios.html" class="nav-link-full" data-path="mi-amistad-con-dios.html">XIII. Mi amistad con Dios</a>
+                        <a href="${rutaBase}estudios/ayuno.html" class="nav-link-full" data-path="ayuno.html">XIV. El Ayuno</a>
+                        <a href="${rutaBase}estudios/aprender-a-descansar.html" class="nav-link-full" data-path="aprender-a-descansar.html">XV. Aprender a descansar</a>
+                        <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XVI. La Integridad</a>
+                        <a href="${rutaBase}estudios/la-guerra-en-mi-interior.html" class="nav-link-full" data-path="la-guerra-en-mi-interior.html">XVII. La Tentación</a>
+                    </div>
+                    
+                    <div class="nav-col">
+                        <span class="nav-group-title">Tratados XVIII — XXV</span>
+                        <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link-full" data-path="libertad-de-las-cadenas.html">XVIII. La Adicción</a>
+                        <a href="${rutaBase}estudios/el-matrimonio-ideal.html" class="nav-link-full" data-path="el-matrimonio-ideal.html">XIX. El matrimonio ideal</a>
+                        <a href="${rutaBase}estudios/el-adulterio.html" class="nav-link-full" data-path="el-adulterio.html">XX. El Adulterio</a>
+                        <a href="${rutaBase}estudios/usar-bien-lo-que-dios-me-da.html" class="nav-link-full" data-path="usar-bien-lo-que-dios-me-da.html">XXI. La Mayordomía y el Trabajo</a>
+                        <a href="${rutaBase}estudios/defendiendo-mi-fe.html" class="nav-link-full" data-path="defendiendo-mi-fe.html">XXII. Defendiendo mi fe</a>
+                        <a href="${rutaBase}estudios/ciencia-y-fe.html" class="nav-link-full" data-path="ciencia-y-fe.html">XXIII. Ciencia y fe</a>
+                        <a href="${rutaBase}estudios/la-iglesia-de-cristo.html" class="nav-link-full" data-path="la-iglesia-de-cristo.html">XXIV. La Iglesia de Cristo</a>
+                        <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XXV. La esperanza de la gloria</a>
+                    </div>
+                    
                 </div>
             </div>
+       </div>
             <button id="abrir-menu" style="
                 position: fixed; 
                 top: 20px; 
