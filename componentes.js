@@ -602,6 +602,38 @@ const inicializarExportacionPDF = () => {
             h1.appendChild(span);
         }
     };
+// --- 10.5. REPARADOR OPERATIVO DE ENLACES DOCTRINALES ---
+const repararEnlacesInternos = () => {
+    if (!esEstudio) return;
+
+    // Buscamos el panel técnico de la sección de rutas
+    const panelTecnico = document.querySelector('.panel-tecnico');
+    if (!panelTecnico) return;
+
+    // Diccionario de equivalencias: "Enlace viejo": "Enlace nuevo"
+    const correcciones = {
+        "la-armonia-de-la-revelacion.html": "como-nos-habla-dios.html",
+        "teologia-del-pecado.html": "el-problema-del-pecado.html",
+        "manual-refutacion.html": "defendiendo-mi-fe.html"
+    };
+
+    // Buscamos todos los enlaces dentro de ese panel
+    const enlaces = panelTecnico.querySelectorAll('a');
+    
+    enlaces.forEach(enlace => {
+        const hrefActual = enlace.getAttribute('href');
+        if (!hrefActual) return;
+
+        // ESTO ES LO NUEVO: Aísla el nombre del archivo sin importar las carpetas previas
+        const nombreArchivo = hrefActual.split('/').pop();
+        
+        // Si el nombre del archivo es viejo, lo cambia manteniendo intacta la ruta de carpetas
+        if (correcciones[nombreArchivo]) {
+            const rutaLimpia = hrefActual.replace(nombreArchivo, correcciones[nombreArchivo]);
+            enlace.setAttribute('href', rutaLimpia);
+        }
+    });
+};
 // --- 11. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
 const setupTratadosNavigation = () => {
     if (!esEstudio) return; // 1º Comprobamos contexto obligatorio
@@ -655,12 +687,15 @@ const iniciarSistema = () => {
     inicializarMenu();
     inicializarSEO();
 
-    // Componentes que pueden esperar al scroll o carga completa
+  // Componentes que pueden esperar al scroll o carga completa
     window.addEventListener('load', () => {
         inyectarFaviconsYFuentes();
         inicializarDiccionarioPropio();
-        inyectarFooterEstudio(); // <-- Primero se inyecta el footer...
-        setupTratadosNavigation(); // <-- ...y justo después se mete la navegación antes de ese footer.
+        
+        repararEnlacesInternos(); // <--- ¡AÑADE ESTA LÍNEA AQUÍ!
+        
+        inyectarFooterEstudio();
+        setupTratadosNavigation();
         inyectarGemaSabiduria();
         inicializarUtilidades();
         if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
