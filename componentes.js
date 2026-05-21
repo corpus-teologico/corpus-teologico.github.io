@@ -718,7 +718,7 @@ const aplicarMotivoFondoExterior = () => {
 
     // 1. Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior (lo naranja)
     Object.assign(document.body.style, {
-   backgroundColor: '#ebdcb9', // Tu color crema/oro base
+   backgroundColor: '#fdfaf4', // Tu color crema/oro base
         backgroundImage: "url('../images/white-patterned-wallpaper.jpg')", 
         backgroundRepeat: 'repeat',
         backgroundAttachment: 'fixed', // La textura se queda estática dando empaque premium
