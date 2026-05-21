@@ -843,7 +843,7 @@ const iniciarSistema = () => {
     setupVisuals();
     inicializarMenu();
     inicializarSEO();
-    aplicarMotivoFondoExterior(); // Se ejecuta al principio para pintar el fondo rápido
+    //aplicarMotivoFondoExterior(); // Se ejecuta al principio para pintar el fondo rápido
 
     // Componentes que esperan a que el HTML esté completamente parseado e inyectado
     window.addEventListener('load', () => {
@@ -853,7 +853,7 @@ const iniciarSistema = () => {
         inicializarScrollTop();
         
         inyectarFooterEstudio();   // 1. Primero se crea e inyecta el footer en el HTML...
-        arreglarPiePagina();       // 2. ¡Y justo después lo estilizamos y maquetamos de lujo!
+        //arreglarPiePagina();       // 2. ¡Y justo después lo estilizamos y maquetamos de lujo!
         
         setupTratadosNavigation();
         inyectarGemaSabiduria();
