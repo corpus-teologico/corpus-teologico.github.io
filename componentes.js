@@ -851,6 +851,167 @@ const ocultarRutaEstudioGlobal = () => {
         }
     });
 };
+   // --- SISTEMA DINÁMICO DE RUTA DE ESTUDIO Y DEPENDENCIAS ---
+const inyectarEnlacesReferencia = () => {
+    // 1. Si estamos en la index/portada, no aplica la ruta de dependencia
+    const esIndex = !window.location.pathname.includes('/estudios/');
+    if (esIndex) return; 
+
+    const paginaLibro = document.querySelector('.pagina-libro');
+    if (!paginaLibro || document.getElementById('bloque-referencias-rigor')) return;
+
+    // Detectamos la URL actual en minúsculas
+    const urlActual = window.location.pathname.toLowerCase();
+    
+    // Variables dinámicas que cambiarán según el tratado
+    let fraseContexto = '';
+    let prerrequisitoHTML = '';
+    let ampliacionHTML = '';
+    let instruccionCita = '';
+
+    // 2. MAPEO DE DEPENDENCIAS LOGICOTEOLÓGICAS
+    if (urlActual.includes('volver-a-dios')) {
+        fraseContexto = "Para comprender que el arrepentimiento es una respuesta a la inmutabilidad de Dios, siga este mapa:";
+        
+        prerrequisitoHTML = `
+            <strong>Usted debe haber estudiado:</strong> <br>
+            <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a><br>
+            <em>Razonamiento:</em> Solo aceptando la inerrancia y autoridad de las Escrituras se comprende que Dios no puede "negociar" Su estándar moral absoluto.
+        `;
+        
+        ampliacionHTML = `
+            <p><span class="glifo-eje">❧</span> <strong>Para profundizar en la raíz del engaño del pecado:</strong> <a href="/estudios/el-problema-del-pecado.html" class="link-dependencia-stf">[09_El problema del pecado]</a></p>
+            <p><span class="glifo-eje">❧</span> <strong>Sobre la condición espiritual previa a la gracia:</strong> <a href="/estudios/nuestra-oscuridad.html" class="link-dependencia-stf">[10_Nuestra oscuridad]</a></p>
+        `;
+        
+        instruccionCita = `"La 'inflexibilidad' de Dios es, en realidad, el ancla que evita que naufraguemos en las arenas movedizas de nuestras propias pasiones. No busque que Dios baje a Su nivel; arrepiéntase y suba usted al de Él a través de Cristo."`;
+
+    } else if (urlActual.includes('nuestro-dios-trino')) {
+        fraseContexto = "Para asimilar el misterio de la Divinidad sin caer en herejías históricas, consolide este orden:";
+        
+        prerrequisitoHTML = `
+            <strong>Usted debe haber estudiado:</strong> <br>
+            <a href="/estudios/como-nos-habla-dios.html" class="link-dependencia-stf">[01_¿Cómo nos habla Dios?]</a><br>
+            <em>Razonamiento:</em> La Trinidad es un dogma de Revelación pura, no de razón natural. Si no asienta la Revelación Especial, intentará racionalizar la esencia divina y errará.
+        `;
+        
+        ampliacionHTML = `
+            <p><span class="glifo-eje">❧</span> <strong>La justicia y el amor operando en las Personas divinas:</strong> <a href="/estudios/el-dios-justo-y-amoroso.html" class="link-dependencia-stf">[06_El Dios justo y amoroso]</a></p>
+        `;
+        
+        instruccionCita = `"No intente contener el océano de la Trinidad en el vaso de su intelecto. Adore la distinción de Personas y confiese la unidad de esencia, pues ahí radica la herencia de nuestra salvación."`;
+
+    } else if (urlActual.includes('aprender-a-descansar')) {
+        fraseContexto = "Para entender que el reposo es un mandato de soberanía y no un descuido del deber, analice:";
+        
+        prerrequisitoHTML = `
+            <strong>Usted debe haber estudiado:</strong> <br>
+            <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a><br>
+            <em>Razonamiento:</em> Comprender el Sabbat exige aceptar la vigencia y suficiencia de los principios morales establecidos de forma inerrante en el canon.
+        `;
+        
+        ampliacionHTML = `
+            <p><span class="glifo-eje">❧</span> <strong>Para conectar la devoción íntima con el descanso del alma:</strong> <a href="/estudios/mi-amistad-con-dios.html" class="link-dependencia-stf">[13_Mi amistad con Dios]</a></p>
+        `;
+        
+        instruccionCita = `"El descanso cristiano no es ociosidad, es un acto de fe sumisa. Detener sus manos es confesar activamente que es Dios, y no su esfuerzo, quien sostiene su existencia."`;
+
+    } else {
+        // Bloque por defecto para tratados que aún no configures específicamente
+        fraseContexto = "Para mantener la estructura de este edificio doctrinal de manera coherente, verifique:";
+        
+        prerrequisitoHTML = `
+            <strong>Usted debe haber estudiado:</strong> <br>
+            <a href="/estudios/como-nos-habla-dios.html" class="link-dependencia-stf">[01_¿Cómo nos habla Dios?]</a><br>
+            <em>Razonamiento:</em> Toda la teología sistemática colapsa si no se asienta primero el medio por el cual el Creador ha decidido romper el silencio.
+        `;
+        
+        ampliacionHTML = `
+            <p><span class="glifo-eje">❧</span> <strong>Siguiente pilar fundamental del Corpus:</strong> <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a></p>
+        `;
+        
+        instruccionCita = `"El conocimiento no es una acumulación de datos, sino un edificio. Si intenta estudiar las ramificaciones sin consolidar la Inerrancia, edificará sobre arena."`;
+    }
+
+    // 3. CONSTRUCCIÓN DEL CONTENEDOR SEÑORIAL
+    const contenedorRef = document.createElement('section');
+    contenedorRef.id = 'bloque-referencias-rigor';
+    contenedorRef.className = 'seccion-tratado';
+    
+    contenedorRef.innerHTML = `
+        <div class="separador-seccion">
+            <span>RUTA DE ESTUDIO Y DEPENDENCIA DOCTRINAL</span>
+        </div>
+        
+        <div class="panel-tecnico-dinamico">
+            <p class="frase-contexto-stf">${fraseContexto}</p>
+
+            <div class="bloque-prerrequisito">
+                <span class="label-oro-dinamico">PRESUPOSICIÓN FUNDAMENTAL (Base obligatoria):</span>
+                <div class="tarjeta-eje-dinamica">
+                    <span class="glifo-v-dinamico">⚜</span>
+                    <div class="texto-dependencia-cuerpo">${prerrequisitoHTML}</div>
+                </div>
+            </div>
+
+            <div class="bloque-ampliacion">
+                <span class="label-oro-dinamico">AMPLIACIÓN Y CONTINUIDAD:</span>
+                <div class="tarjeta-eje-dinamica rama-continuidad">
+                    <div class="texto-ampliacion-cuerpo">${ampliacionHTML}</div>
+                </div>
+            </div>
+
+            <div class="caja-instruccion-rigor-final">
+                <span class="label-oro-dinamico">INSTRUCCIÓN DE RIGOR:</span>
+                <p class="cita-rigor-dinamica">${instruccionCita}</p>
+            </div>
+        </div>
+    `;
+
+    // --- ESTILOS ASIGNADOS DINÁMICAMENTE (Sin manchar tu CSS) ---
+    Object.assign(contenedorRef.style, { marginTop: '60px', padding: '0 40px' });
+
+    const panel = contenedorRef.querySelector('.panel-tecnico-dinamico');
+    Object.assign(panel.style, {
+        backgroundColor: '#fdfbf7', border: '1px solid rgba(155, 128, 78, 0.3)',
+        padding: '35px', borderRadius: '4px', textAlign: 'left'
+    });
+
+    const fContexto = contenedorRef.querySelector('.frase-contexto-stf');
+    Object.assign(fContexto.style, { fontWeight: '600', fontSize: '15px', color: '#2c2c2c', marginBottom: '25px', fontFamily: "var(--font-serif, 'Georgia', serif)" });
+
+    const labels = contenedorRef.querySelectorAll('.label-oro-dinamico');
+    labels.forEach(l => {
+        Object.assign(l.style, { display: 'block', fontFamily: "'Montserrat', sans-serif", fontSize: '11px', letterSpacing: '1px', fontWeight: '700', color: '#9b804e', marginBottom: '10px' });
+    });
+
+    const tarjetas = contenedorRef.querySelectorAll('.tarjeta-eje-dinamica');
+    tarjetas.forEach(t => {
+        Object.assign(t.style, { display: 'flex', gap: '15px', backgroundColor: '#ffffff', padding: '18px', border: '1px solid rgba(155, 128, 78, 0.1)', borderRadius: '4px', marginBottom: '25px', fontSize: '14px', lineHeight: '1.6', color: '#4a4a4a' });
+    });
+
+    const rama = contenedorRef.querySelector('.rama-continuidad');
+    if (rama) { rama.style.borderLeft = '3px solid rgba(155, 128, 78, 0.2)'; t.style.backgroundColor = 'transparent'; }
+
+    const glifo = contenedorRef.querySelector('.glifo-v-dinamico');
+    if (glifo) Object.assign(glifo.style, { color: '#9b804e', fontSize: '18px', fontWeight: 'bold' });
+
+    const cajaCita = contenedorRef.querySelector('.caja-instruccion-rigor-final');
+    Object.assign(cajaCita.style, { marginTop: '30px', padding: '25px', background: 'rgba(155, 128, 78, 0.02)', border: '1px double #9b804e', borderRadius: '4px' });
+
+    const citaTexto = contenedorRef.querySelector('.cita-rigor-dinamica');
+    Object.assign(citaTexto.style, { fontStyle: 'italic', marginTop: '10px', fontSize: '15px', lineHeight: '1.6', color: '#3a3a3a', margin: '0' });
+
+    // Estilo de los enlaces internos de dependencia
+    const linksInternos = contenedorRef.querySelectorAll('.link-dependencia-stf');
+    linksInternos.forEach(lnk => {
+        Object.assign(lnk.style, { color: '#9b804e', textDecoration: 'none', fontWeight: '700', transition: 'color 0.2s' });
+        lnk.addEventListener('mouseenter', () => lnk.style.color = '#ebdcb9');
+        lnk.addEventListener('mouseleave', () => lnk.style.color = '#9b804e');
+    });
+
+    paginaLibro.appendChild(contenedorRef);
+};
 // --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
 const iniciarSistema = () => {
     inyectarFaviconsYFuentes();
@@ -870,6 +1031,7 @@ const iniciarSistema = () => {
         inyectarFooterEstudio();   // 1. Primero se crea e inyecta el footer en el HTML...
         //arreglarPiePagina();       // 2. ¡Y justo después lo estilizamos y maquetamos de lujo!
         ocultarRutaEstudioGlobal();
+        inyectarEnlacesReferencia();
         setupTratadosNavigation();
         inyectarGemaSabiduria();
         inicializarUtilidades();
