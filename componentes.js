@@ -712,27 +712,28 @@ const inicializarScrollTop = () => {
         });
     });
 };
-// --- CONFIGURACIÓN DE TEXTURA PARA LA PÁGINA DEL LIBRO ---
-const aplicarMotivoLibro = () => {
+// --- CONFIGURACIÓN DEL MOTIVO LUXURY PARA EL CONTENEDOR EXTERIOR ---
+const aplicarMotivoFondoExterior = () => {
     if (!esEstudio) return;
 
-    // Buscamos tu contenedor específico del libro
+    // 1. Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior (lo naranja)
+    Object.assign(document.body.style, {
+        backgroundColor: '#f3efe4', // Un tono crema un punto más señorial para marcar el contraste
+        backgroundImage: "url('https://www.transparenttextures.com/patterns/handmade-paper.png')",
+        backgroundRepeat: 'repeat',
+        backgroundAttachment: 'fixed', // Hace que la textura exterior se quede estática al scrollear
+        backgroundBlendMode: 'multiply'
+    });
+
+    // 2. Blindamos la página del libro (lo verde/azul) para que se mantenga limpia e impoluta
     const paginaLibro = document.querySelector('.pagina-libro');
-    
     if (paginaLibro) {
         Object.assign(paginaLibro.style, {
-            // 1. Color base crema y textura de papel artesanal sutil
-            backgroundColor: '#fdfbf7', 
-            backgroundImage: "url('https://www.transparenttextures.com/patterns/handmade-paper.png')",
-            backgroundRepeat: 'repeat',
-            backgroundBlendMode: 'multiply', // Funde la textura con tu color crema
-            
-            // 2. Sombra perimetral interna ultra-suave para dar volumen de papel real
-            boxShadow: 'inset 0 0 40px rgba(155, 128, 78, 0.04), 0 10px 30px rgba(0, 0, 0, 0.02)',
-            
-            // 3. Suavizado de bordes para mantener la estética premium
-            borderRadius: '4px',
-            border: '1px solid rgba(155, 128, 78, 0.15)'
+            backgroundColor: '#ffffff', // Forzamos blanco puro o el crema original del libro
+            backgroundImage: 'none',     // Nos aseguramos de que aquí NO entre la textura exterior
+            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.03)', // Le da un relieve elegante sobre el fondo texturizado
+            position: 'relative',
+            zIndex: '2'
         });
     }
 };
@@ -788,7 +789,7 @@ const iniciarSistema = () => {
     setupVisuals();
     inicializarMenu();
     inicializarSEO();
-   //aplicarMotivoLibro();
+   aplicarMotivoFondoExterior();
 
   // Componentes que pueden esperar al scroll o carga completa
     window.addEventListener('load', () => {
