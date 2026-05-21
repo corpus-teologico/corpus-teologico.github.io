@@ -142,7 +142,54 @@ document.addEventListener("DOMContentLoaded", () => {
             if (height > 0) barra.style.width = (winScroll / height) * 100 + "%";
         });
     };
+// --- 3. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
+const setupTratadosNavigation = () => {
+    const esEstudioValidado = (typeof esEstudio !== 'undefined') ? esEstudio : window.location.pathname.includes('/estudios/');
+    if (!esEstudioValidado) return;
 
+    // CONTROL ANTIDUPLICADOS: Elimina cualquier fila de flechas previa antes de crear la nueva
+    const paginacionExistente = document.querySelector('.paginacion-tratados');
+    if (paginacionExistente) paginacionExistente.remove();
+
+    const ordenTratados = [
+        "como-nos-habla-dios.html", "solo-la-biblia-basta.html", "la-armonia-de-los-evangelios.html",
+        "conocer-para-amar.html", "nuestro-dios-trino.html", "el-dios-justo-y-amoroso.html",
+        "de-donde-viene-el-mal.html", "un-mundo-roto.html", "el-problema-del-pecado.html",
+        "nuestra-oscuridad.html", "volver-a-dios.html", "el-poder-del-espiritu.html",
+        "mi-amistad-con-dios.html", "ayuno.html", "aprender-a-descansar.html",
+        "ser-de-una-sola-pieza.html", "la-gran-comision.html", "libertad-de-las-cadenas.html",
+        "el-matrimonio-ideal.html", "el-adulterio.html", "el-bautismo-biblico.html",
+        "defendiendo-mi-fe.html", "ciencia-y-fe.html", "la-iglesia-de-cristo.html",
+        "lo-que-esta-por-venir.html"
+    ];
+
+    const currentPath = window.location.pathname;
+    const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+    const currentIndex = ordenTratados.indexOf(currentFile);
+
+    if (currentIndex === -1) return;
+
+    const targetContainer = document.querySelector('.pagina-libro') || document.querySelector('main');
+    if (!targetContainer) return;
+
+    let botonesHTML = `<div class="paginacion-tratados" style="display:flex; justify-content:space-between; max-width:800px; margin:50px auto 0 auto; padding:0 40px; width:100%; box-sizing:border-box;">`;
+
+    if (currentIndex > 0) {
+        botonesHTML += `<a href="${ordenTratados[currentIndex - 1]}" class="btn-paginacion prev" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px; font-weight:700;"><i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i> ANTERIOR</a>`;
+    } else {
+        botonesHTML += `<div></div>`;
+    }
+
+    if (currentIndex < ordenTratados.length - 1) {
+        botonesHTML += `<a href="${ordenTratados[currentIndex + 1]}" class="btn-paginacion next" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px; font-weight:700;">SIGUIENTE <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a>`;
+    } else {
+        botonesHTML += `<div></div>`;
+    }
+
+    botonesHTML += `</div>`;
+    
+    targetContainer.insertAdjacentHTML('beforeend', botonesHTML);
+};
     // --- 4. DICCIONARIO FLOTANTE (EXÉGESIS) ---
     const inicializarDiccionarioPropio = () => {
         let box = document.createElement('div');
@@ -985,35 +1032,23 @@ const arreglarPiePagina = () => {
     }
 };
 
-// --- 5. EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
+// --- 11. EJECUCIÓN OPTIMIZADA DEL SISTEMA (LAZY LOADING) ---
 const iniciarSistema = () => {
     inyectarFaviconsYFuentes();
     crearBarraProgreso();
     setupVisuals();
     inicializarMenu();
-    inicializarSEO();
-    
-    // Descomentamos esta línea para que pinte tu fondo de papel artesanal exterior al instante
-    aplicarMotivoFondoExterior(); 
 
     window.addEventListener('load', () => {
         inyectarFaviconsYFuentes();
         inicializarDiccionarioPropio();
-        repararEnlacesInternos();
-        inicializarScrollTop();
         
-        inyectarFooterEstudio();       // 1. Mete la estructura base del footer en el DOM
+        inyectarFooterEstudio();       // 1. Inyecta la base del pie
+        // inyectarEnlacesReferencia(); // Descomenta esta línea si vuelves a usar el bloque dinámico doctrinal
+        setupTratadosNavigation();     // 2. Ejecuta una única vez las flechas de navegación
+        inyectarGemaSabiduria();       // 3. Inserta la frase aleatoria
+        inicializarUtilidades();       
         
-        inyectarEnlacesReferencia();   // 2. Inyecta la Ruta Doctrinal Dinámica (y purga la estática del HTML si existiese)
-        
-        setupTratadosNavigation();     // 3. ¡CORREGIDO! Calcula y posiciona los botones justo debajo de tu ruta dinámicamente
-        
-        document.body.appendChild(document.getElementById('footer-global') || document.querySelector('footer')); // Asegura la posición del footer abajo del todo
-        arreglarPiePagina();           // 4. Estiliza el pie de página cerrando la estructura
-        
-        setupTratadosNavigation();     // Asegura los eventos en las flechas tras el render final
-        inyectarGemaSabiduria();
-        inicializarUtilidades();
         if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
     });
 };
