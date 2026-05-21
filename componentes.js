@@ -598,7 +598,7 @@ const inicializarExportacionPDF = () => {
             const span = document.createElement('span');
             span.id = 'lectura-estimada';
             span.style.cssText = "display:block; font-family:'Montserrat', sans-serif; font-size:0.65rem;margin-bottom: 30px;color:#000; margin-top:12px; letter-spacing:2px; font-weight:500; text-transform:uppercase;";
-            span.innerHTML = `<i class="fa-regular fa-clock" style="margin-right:5px;"></i> STF | Roberto Formigo`;
+            span.innerHTML = `<i class="fa-solid fa-cross" style="margin-right:5px;"></i> STF | Roberto Formigo`;
             h1.appendChild(span);
         }
     };
