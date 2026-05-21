@@ -636,65 +636,79 @@ const repararEnlacesInternos = () => {
         });
     });
 };
-   // --- 12. BOTÓN FLOTANTE "VOLVER ARRIBA" (SCROLL TO TOP) ---
+// --- 12. BOTÓN FLOTANTE "VOLVER ARRIBA" ESTILO LUXURY ---
 const inicializarScrollTop = () => {
     if (!esEstudio) return;
 
-    // 1. Creamos el botón dinámicamente con estilos elegantes
-    const btnTop = document.createElement('button');
-    btnTop.id = 'scroll-to-top';
-    btnTop.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+    // 1. Creamos el contenedor estructural exacto del hotel
+    const bttContainer = document.createElement('div');
+    bttContainer.id = 'backToTop';
+    bttContainer.innerHTML = '<span>↑</span><div class="btt-line"></div>';
     
-    // Aplicamos estilos en línea usando tus variables de color corporativas
-    Object.assign(btnTop.style, {
+    // 2. Aplicamos la lógica de estilos CSS fluidos y el mix-blend-mode
+    Object.assign(bttContainer.style, {
         position: 'fixed',
-        bottom: '30px',
-        right: '30px',
-        width: '45px',
-        height: '45px',
-        backgroundColor: '#fdfbf7',
-        color: 'var(--oro-profundo, #9b804e)',
-        border: '1px solid var(--oro-brillante, #9b804e)',
-        borderRadius: '50%',
-        cursor: 'pointer',
-        display: 'none', // Oculto por defecto
-        justifyContent: 'center',
+        bottom: '50px',
+        right: '40px',
+        zIndex: '1000005',
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-        zIndex: '1000',
-        transition: 'all 0.3s ease',
-        fontSize: '14px'
+        cursor: 'pointer',
+        opacity: '0',
+        visibility: 'hidden',
+        transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+        mixBlendMode: 'difference' // Esto hace que cambie de color según el fondo
     });
 
-    document.body.appendChild(btnTop);
-
-    // 2. Efecto Hover elegante (oro profundo al pasar el ratón)
-    btnTop.addEventListener('mouseenter', () => {
-        btnTop.style.backgroundColor = 'var(--oro-profundo, #9b804e)';
-        btnTop.style.color = '#fdfbf7';
-        btnTop.style.transform = 'translateY(-3px)';
-    });
-    btnTop.addEventListener('mouseleave', () => {
-        btnTop.style.backgroundColor = '#fdfbf7';
-        btnTop.style.color = 'var(--oro-profundo, #9b804e)';
-        btnTop.style.transform = 'translateY(0)';
+    // Estilos para el carácter de la flecha
+    const arrowSpan = bttContainer.querySelector('span');
+    Object.assign(arrowSpan.style, {
+        fontFamily: "'Montserrat', sans-serif",
+        fontSize: '26px',
+        color: '#ffffff',
+        marginBottom: '8px',
+        lineHeight: '1',
+        transition: 'transform 0.3s ease'
     });
 
-    // 3. Controlamos cuándo aparece el botón (cuando el usuario baja 400px)
+    // Estilos para la línea minimalista dinámica
+    const bttLine = bttContainer.querySelector('.btt-line');
+    Object.assign(bttLine.style, {
+        width: '1px',
+        height: '0px',
+        backgroundColor: '#ffffff',
+        transition: 'height 0.4s ease'
+    });
+
+    document.body.appendChild(bttContainer);
+
+    // 3. Efectos dinámicos Hover: la línea crece elegantemente hacia abajo
+    bttContainer.addEventListener('mouseenter', () => {
+        bttLine.style.height = '60px';
+        arrowSpan.style.transform = 'translateY(-3px)';
+    });
+    bttContainer.addEventListener('mouseleave', () => {
+        bttLine.style.height = '0px';
+        arrowSpan.style.transform = 'translateY(0)';
+    });
+
+    // 4. Control de visibilidad según el scroll del estudiante
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) {
-            btnTop.style.display = 'flex';
-            // Pequeño delay para que la opacidad haga transición suave si quieres añadirla
+        if (window.scrollY > 500) {
+            bttContainer.style.opacity = '1';
+            bttContainer.style.visibility = 'visible';
         } else {
-            btnTop.style.display = 'none';
+            bttContainer.style.opacity = '0';
+            bttContainer.style.visibility = 'hidden';
         }
     });
 
-    // 4. Acción de scroll suave hacia la cima
-    btnTop.addEventListener('click', () => {
+    // 5. Scroll suave y premium de vuelta a la cumbre
+    bttContainer.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Desplazamiento fluido y elegante
+            behavior: 'smooth'
         });
     });
 };
