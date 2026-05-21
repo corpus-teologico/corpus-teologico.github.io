@@ -606,7 +606,7 @@ const inicializarExportacionPDF = () => {
 const repararEnlacesInternos = () => {
     if (!esEstudio) return;
 
-    // Buscamos específicamente el panel de rutas de cada tratado
+    // Buscamos el panel técnico de la sección de rutas
     const panelTecnico = document.querySelector('.panel-tecnico');
     if (!panelTecnico) return;
 
@@ -614,32 +614,24 @@ const repararEnlacesInternos = () => {
     const enlaces = panelTecnico.querySelectorAll('a');
 
     enlaces.forEach(enlace => {
-        // 1. Invalidamos el enlace roto para que no recargue ni redirija
+        // 1. Invalidamos el enlace roto
         enlace.setAttribute('href', '#');
         
-        // 2. Le cambiamos el estilo visual para que se note que es una acción del sistema
+        // 2. Estilo visual de acción integrada
         enlace.style.cursor = 'pointer';
         enlace.style.borderBottom = '1px dashed var(--oro-profundo)';
 
-        // 3. Al hacer clic, abrimos el menú lateral automáticamente
+        // 3. Forzar apertura del menú Fullscreen al hacer clic
         enlace.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita cualquier comportamiento extraño
+            e.preventDefault();
 
-            // Buscamos el botón que abre tu menú lateral (ajusta la clase/ID si es necesario)
-            const botonMenu = document.getElementById('menu-toggle') || document.querySelector('.menu-toggle') || document.querySelector('.hamburger');
-            
-            if (botonMenu) {
-                botonMenu.click(); // Simula el clic real para desplegar el menú
-                
-                // Opcional: Un pequeño efecto visual para que el usuario note la apertura
-                botonMenu.style.transform = 'scale(1.2)';
-                setTimeout(() => botonMenu.style.transform = 'none', 300);
-            } else {
-                // Si no encuentra el botón, intentamos activar directamente la clase 'open/active' de tu nav
-                const navMenu = document.getElementById('sidebar') || document.querySelector('.menu-lateral') || document.querySelector('nav');
-                if (navMenu) {
-                    navMenu.classList.add('active'); // O la clase que uses para mostrarlo
-                }
+            // Buscamos tu contenedor real por su ID exacto
+            const menuOverlay = document.getElementById('menu-fullscreen');
+            if (menuOverlay) {
+                // Forzamos que se muestre en pantalla usando tus estilos inline
+                menuOverlay.style.display = 'flex';
+                menuOverlay.style.opacity = '1';
+                menuOverlay.style.pointerEvents = 'auto'; // Por si acaso estuviera bloqueado
             }
         });
     });
