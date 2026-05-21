@@ -714,7 +714,6 @@ const inicializarScrollTop = () => {
 };
 // --- CONFIGURACIÓN DEL MOTIVO LUXURY PARA EL CONTENEDOR EXTERIOR ---
 const aplicarMotivoFondoExterior = () => {
-    if (!esEstudio) return;
 
     // 1. Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior (lo naranja)
     Object.assign(document.body.style, {
