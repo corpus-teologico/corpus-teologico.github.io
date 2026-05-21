@@ -606,10 +606,6 @@ const inicializarExportacionPDF = () => {
 const repararEnlacesInternos = () => {
     if (!esEstudio) return;
 
-    // Buscamos el panel técnico de la sección de rutas
-    const panelTecnico = document.querySelector('.panel-tecnico');
-    if (!panelTecnico) return;
-
     // Diccionario de equivalencias: "Enlace viejo": "Enlace nuevo"
     const correcciones = {
         "la-armonia-de-la-revelacion.html": "como-nos-habla-dios.html",
@@ -617,20 +613,21 @@ const repararEnlacesInternos = () => {
         "manual-refutacion.html": "defendiendo-mi-fe.html"
     };
 
-    // Buscamos todos los enlaces dentro de ese panel
-    const enlaces = panelTecnico.querySelectorAll('a');
+    // Buscamos absolutamente TODOS los enlaces de la página
+    const enlaces = document.querySelectorAll('a');
     
     enlaces.forEach(enlace => {
         const hrefActual = enlace.getAttribute('href');
         if (!hrefActual) return;
 
-        // ESTO ES LO NUEVO: Aísla el nombre del archivo sin importar las carpetas previas
+        // Extraemos solo el nombre del archivo final
         const nombreArchivo = hrefActual.split('/').pop();
         
-        // Si el nombre del archivo es viejo, lo cambia manteniendo intacta la ruta de carpetas
+        // Si coincide con un enlace viejo, lo reescribimos a la fuerza
         if (correcciones[nombreArchivo]) {
             const rutaLimpia = hrefActual.replace(nombreArchivo, correcciones[nombreArchivo]);
             enlace.setAttribute('href', rutaLimpia);
+            console.log(`Enlace reparado: ${nombreArchivo} -> ${correcciones[nombreArchivo]}`);
         }
     });
 };
