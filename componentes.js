@@ -1030,7 +1030,7 @@ const iniciarSistema = () => {
         
         inyectarFooterEstudio();   // 1. Primero se crea e inyecta el footer en el HTML...
         //arreglarPiePagina();       // 2. ¡Y justo después lo estilizamos y maquetamos de lujo!
-        ocultarRutaEstudioGlobal();
+        //ocultarRutaEstudioGlobal();
         inyectarEnlacesReferencia();
         setupTratadosNavigation();
         inyectarGemaSabiduria();
