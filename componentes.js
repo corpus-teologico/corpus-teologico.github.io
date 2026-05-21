@@ -712,228 +712,102 @@ const inicializarScrollTop = () => {
         });
     });
 };
-// --- CONFIGURACIÓN DEL MOTIVO LUXURY PARA EL CONTENEDOR EXTERIOR ---
+// --- 1. CONFIGURACIÓN DEL MOTIVO LUXURY PARA EL CONTENEDOR EXTERIOR ---
 const aplicarMotivoFondoExterior = () => {
-
-    // 1. Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior (lo naranja)
+    // Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior
     Object.assign(document.body.style, {
-   backgroundColor: '#fdfaf4', // Tu color crema/oro base
+        backgroundColor: '#fdfaf4',
         backgroundImage: "url('../images/white-patterned-wallpaper.jpg')", 
         backgroundRepeat: 'repeat',
-        backgroundAttachment: 'fixed', // La textura se queda estática dando empaque premium
-        backgroundBlendMode: 'multiply', // Fusiona suavemente las vetas grises/ocres con tu color de fondo
-        backgroundSize: '500px' // Ajusta este número si quieres el grano de la textura más grande o más pequeño
+        backgroundAttachment: 'fixed',
+        backgroundBlendMode: 'multiply',
+        backgroundSize: '500px'
     });
 
-    // 2. Blindamos la página del libro (lo verde/azul) para que se mantenga limpia e impoluta
+    // Blindamos la página del libro para que se mantenga limpia e impoluta
     const paginaLibro = document.querySelector('.pagina-libro');
     if (paginaLibro) {
         Object.assign(paginaLibro.style, {
-            backgroundColor: '#ffffff', // Forzamos blanco puro o el crema original del libro
-            backgroundImage: 'none',     // Nos aseguramos de que aquí NO entre la textura exterior
-            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.03)', // Le da un relieve elegante sobre el fondo texturizado
+            backgroundColor: '#ffffff',
+            backgroundImage: 'none',
+            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.03)',
             position: 'relative',
             zIndex: '2'
         });
     }
 };
-// --- 11. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
-const setupTratadosNavigation = () => {
-    if (!esEstudio) return; // 1º Comprobamos contexto obligatorio
 
-    const ordenTratados = [
-        "como-nos-habla-dios.html", "solo-la-biblia-basta.html", "la-armonia-de-los-evangelios.html",
-        "conocer-para-amar.html", "nuestro-dios-trino.html", "el-dios-justo-y-amoroso.html",
-        "de-donde-viene-el-mal.html", "un-mundo-roto.html", "el-problema-del-pecado.html",
-        "nuestra-oscuridad.html", "volver-a-dios.html", "el-poder-del-espiritu.html",
-        "mi-amistad-con-dios.html", "ayuno.html", "aprender-a-descansar.html",
-        "ser-de-una-sola-pieza.html", "la-gran-comision.html", "libertad-de-las-cadenas.html",
-        "el-matrimonio-ideal.html", "el-adulterio.html", "el-bautismo-biblico.html",
-        "defendiendo-mi-fe.html", "ciencia-y-fe.html", "la-iglesia-de-cristo.html",
-        "lo-que-esta-por-venir.html"
-    ];
-
-    const currentPath = window.location.pathname;
-    const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-    const currentIndex = ordenTratados.indexOf(currentFile);
-
-    if (currentIndex === -1) return;
-
-    // 2º Buscamos el contenedor <main> justo cuando sabemos que se necesita
-    const mainContainer = document.querySelector('main') || document.querySelector('.contenido-estudio');
-    if (!mainContainer) return;
-
-    let botonesHTML = `<div class="paginacion-tratados" style="display:flex; justify-content:space-between; max-width:800px; margin:50px auto 0 auto; padding:0 20px;">`;
-
-    if (currentIndex > 0) {
-        botonesHTML += `<a href="${ordenTratados[currentIndex - 1]}" class="btn-paginacion prev" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px;"><i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i> ANTERIOR</a>`;
-    } else {
-        botonesHTML += `<div></div>`;
-    }
-
-    if (currentIndex < ordenTratados.length - 1) {
-        botonesHTML += `<a href="${ordenTratados[currentIndex + 1]}" class="btn-paginacion next" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px;">SIGUIENTE <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a>`;
-    } else {
-        botonesHTML += `<div></div>`;
-    }
-
-    botonesHTML += `</div>`;
-    
-    // 3º Lo inyectamos al final de la etiqueta <main>
-    mainContainer.insertAdjacentHTML('beforeend', botonesHTML);
-};
-// --- REDISEÑO SOBERANO DEL PIE DE PÁGINA (FOOTER) ---
-const arreglarPiePagina = () => {
-    // 1. Buscamos el contenedor que carga el footer global
-    const footerGlobal = document.getElementById('footer-global') || document.querySelector('footer');
-    
-    if (footerGlobal) {
-        // Le damos un empaque sólido, solemne y con volumen de hoja de libro
-        Object.assign(footerGlobal.style, {
-            marginTop: '80px',               // Separación elegante respecto al final del texto
-            padding: '50px 40px',            // Espacio interior generoso para que respire
-            backgroundColor: '#ffffff',      // Fondo blanco limpio idéntico al de la .pagina-libro
-            borderTop: '1px solid rgba(155, 128, 78, 0.25)', // Fina línea divisoria color oro atenuado
-            boxShadow: '0 -15px 35px rgba(0, 0, 0, 0.02)',   // Sutil relieve hacia arriba para cerrar el bloque
-            borderRadius: '0 0 4px 4px',    // Redondeado sutil para rematar la "página"
-            textAlign: 'center'
-        });
-
-        // 2. Buscamos los bloques que se quedan sueltos (los textos informativos)
-        // Buscamos párrafos o divs dentro del footer para estructurarlos noblemente
-        const elementosSueltos = footerGlobal.querySelectorAll('p, div, span');
-        
-        elementosSueltos.forEach(el => {
-            // Si es un contenedor interno, lo maquetamos en bloque centrado y limpio
-            if (el.parentElement === footerGlobal) {
-                Object.assign(el.style, {
-                    maxWidth: '600px',
-                    margin: '12px auto',
-                    fontFamily: "var(--font-sans, 'Montserrat', sans-serif)",
-                    fontSize: '11px',
-                    letterSpacing: '2px',
-                    textTransform: 'uppercase',
-                    color: 'var(--oro-profundo, #9b804e)',
-                    opacity: '0.8',
-                    lineHeight: '1.8'
-                });
-            }
-        });
-
-        // 3. El remate litúrgico: Un micro-marcador vertical de clausura
-        // Evitamos que se duplique si la función se ejecuta dos veces
-        if (!document.querySelector('.marcador-clausura-stf')) {
-            const marcador = document.createElement('div');
-            marcador.className = 'marcador-clausura-stf';
-            Object.assign(marcador.style, {
-                width: '30px',
-                height: '1px',
-                backgroundColor: 'var(--oro-brillante, #ebdcb9)',
-                margin: '35px auto 0',
-                opacity: '0.7'
-            });
-            footerGlobal.appendChild(marcador);
-        }
-    }
-};
-   // --- CENTRALIZADOR DE VISIBILIDAD: OCULTAR RUTA DE ESTUDIO ---
-const ocultarRutaEstudioGlobal = () => {
-    // 1. Buscamos todas las secciones de tratados en la página
-    const secciones = document.querySelectorAll('.seccion-tratado');
-
-    secciones.forEach(seccion => {
-        // 2. Localizamos el separador de sección
-        const separador = seccion.querySelector('.separador-seccion span');
-        
-        // 3. Si coincide exactamente con el encabezado de la ruta de estudio, la fulminamos
-        if (separador && separador.textContent.trim() === 'RUTA DE ESTUDIO Y DEPENDENCIA DOCTRINAL') {
-            seccion.remove(); // Elimina el elemento por completo del DOM
-        }
-    });
-};
-   // --- SISTEMA DINÁMICO DE RUTA DE ESTUDIO Y DEPENDENCIAS ---
+// --- 2. SISTEMA DINÁMICO DE RUTA DE ESTUDIO Y DEPENDENCIAS DOCTRINALES ---
 const inyectarEnlacesReferencia = () => {
-    // 1. Si estamos en la index/portada, no aplica la ruta de dependencia
     const esIndex = !window.location.pathname.includes('/estudios/');
     if (esIndex) return; 
 
     const paginaLibro = document.querySelector('.pagina-libro');
     if (!paginaLibro || document.getElementById('bloque-referencias-rigor')) return;
 
-    // Detectamos la URL actual en minúsculas
+    // LIMPIEZA AUTOMÁTICA: Si encuentra cualquier sección antigua escrita a mano en el HTML, la fulmina primero
+    const seccionVieja = Array.from(document.querySelectorAll('.seccion-tratado')).find(sec => sec.textContent.includes('RUTA DE ESTUDIO'));
+    if (seccionVieja) seccionVieja.remove();
+
     const urlActual = window.location.pathname.toLowerCase();
     
-    // Variables dinámicas que cambiarán según el tratado
     let fraseContexto = '';
     let prerrequisitoHTML = '';
     let ampliacionHTML = '';
     let instruccionCita = '';
 
-    // 2. MAPEO DE DEPENDENCIAS LOGICOTEOLÓGICAS
+    // MAPEO DE DEPENDENCIAS LOGICOTEOLÓGICAS
     if (urlActual.includes('volver-a-dios')) {
         fraseContexto = "Para comprender que el arrepentimiento es una respuesta a la inmutabilidad de Dios, siga este mapa:";
-        
         prerrequisitoHTML = `
             <strong>Usted debe haber estudiado:</strong> <br>
             <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a><br>
             <em>Razonamiento:</em> Solo aceptando la inerrancia y autoridad de las Escrituras se comprende que Dios no puede "negociar" Su estándar moral absoluto.
         `;
-        
         ampliacionHTML = `
             <p><span class="glifo-eje">❧</span> <strong>Para profundizar en la raíz del engaño del pecado:</strong> <a href="/estudios/el-problema-del-pecado.html" class="link-dependencia-stf">[09_El problema del pecado]</a></p>
             <p><span class="glifo-eje">❧</span> <strong>Sobre la condición espiritual previa a la gracia:</strong> <a href="/estudios/nuestra-oscuridad.html" class="link-dependencia-stf">[10_Nuestra oscuridad]</a></p>
         `;
-        
         instruccionCita = `"La 'inflexibilidad' de Dios es, en realidad, el ancla que evita que naufraguemos en las arenas movedizas de nuestras propias pasiones. No busque que Dios baje a Su nivel; arrepiéntase y suba usted al de Él a través de Cristo."`;
 
     } else if (urlActual.includes('nuestro-dios-trino')) {
         fraseContexto = "Para asimilar el misterio de la Divinidad sin caer en herejías históricas, consolide este orden:";
-        
         prerrequisitoHTML = `
             <strong>Usted debe haber estudiado:</strong> <br>
             <a href="/estudios/como-nos-habla-dios.html" class="link-dependencia-stf">[01_¿Cómo nos habla Dios?]</a><br>
             <em>Razonamiento:</em> La Trinidad es un dogma de Revelación pura, no de razón natural. Si no asienta la Revelación Especial, intentará racionalizar la esencia divina y errará.
         `;
-        
         ampliacionHTML = `
             <p><span class="glifo-eje">❧</span> <strong>La justicia y el amor operando en las Personas divinas:</strong> <a href="/estudios/el-dios-justo-y-amoroso.html" class="link-dependencia-stf">[06_El Dios justo y amoroso]</a></p>
         `;
-        
         instruccionCita = `"No intente contener el océano de la Trinidad en el vaso de su intelecto. Adore la distinción de Personas y confiese la unidad de esencia, pues ahí radica la herencia de nuestra salvación."`;
 
     } else if (urlActual.includes('aprender-a-descansar')) {
         fraseContexto = "Para entender que el reposo es un mandato de soberanía y no un descuido del deber, analice:";
-        
         prerrequisitoHTML = `
             <strong>Usted debe haber estudiado:</strong> <br>
             <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a><br>
             <em>Razonamiento:</em> Comprender el Sabbat exige aceptar la vigencia y suficiencia de los principios morales establecidos de forma inerrante en el canon.
         `;
-        
         ampliacionHTML = `
             <p><span class="glifo-eje">❧</span> <strong>Para conectar la devoción íntima con el descanso del alma:</strong> <a href="/estudios/mi-amistad-con-dios.html" class="link-dependencia-stf">[13_Mi amistad con Dios]</a></p>
         `;
-        
         instruccionCita = `"El descanso cristiano no es ociosidad, es un acto de fe sumisa. Detener sus manos es confesar activamente que es Dios, y no su esfuerzo, quien sostiene su existencia."`;
 
     } else {
-        // Bloque por defecto para tratados que aún no configures específicamente
         fraseContexto = "Para mantener la estructura de este edificio doctrinal de manera coherente, verifique:";
-        
         prerrequisitoHTML = `
             <strong>Usted debe haber estudiado:</strong> <br>
             <a href="/estudios/como-nos-habla-dios.html" class="link-dependencia-stf">[01_¿Cómo nos habla Dios?]</a><br>
             <em>Razonamiento:</em> Toda la teología sistemática colapsa si no se asienta primero el medio por el cual el Creador ha decidido romper el silencio.
         `;
-        
         ampliacionHTML = `
             <p><span class="glifo-eje">❧</span> <strong>Siguiente pilar fundamental del Corpus:</strong> <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a></p>
         `;
-        
         instruccionCita = `"El conocimiento no es una acumulación de datos, sino un edificio. Si intenta estudiar las ramificaciones sin consolidar la Inerrancia, edificará sobre arena."`;
     }
 
-    // 3. CONSTRUCCIÓN DEL CONTENEDOR SEÑORIAL
+    // Construcción del contenedor formal
     const contenedorRef = document.createElement('section');
     contenedorRef.id = 'bloque-referencias-rigor';
     contenedorRef.className = 'seccion-tratado';
@@ -968,7 +842,6 @@ const inyectarEnlacesReferencia = () => {
         </div>
     `;
 
-    // --- ESTILOS ASIGNADOS DINÁMICAMENTE (Sin manchar tu CSS) ---
     Object.assign(contenedorRef.style, { marginTop: '60px', padding: '0 40px' });
 
     const panel = contenedorRef.querySelector('.panel-tecnico-dinamico');
@@ -990,8 +863,12 @@ const inyectarEnlacesReferencia = () => {
         Object.assign(t.style, { display: 'flex', gap: '15px', backgroundColor: '#ffffff', padding: '18px', border: '1px solid rgba(155, 128, 78, 0.1)', borderRadius: '4px', marginBottom: '25px', fontSize: '14px', lineHeight: '1.6', color: '#4a4a4a' });
     });
 
+    // ¡CORREGIDO AQUÍ! Cambiada la variable huérfana 't' por 'rama'
     const rama = contenedorRef.querySelector('.rama-continuidad');
-    if (rama) { rama.style.borderLeft = '3px solid rgba(155, 128, 78, 0.2)'; t.style.backgroundColor = 'transparent'; }
+    if (rama) { 
+        rama.style.borderLeft = '3px solid rgba(155, 128, 78, 0.2)'; 
+        rama.style.backgroundColor = 'transparent'; 
+    }
 
     const glifo = contenedorRef.querySelector('.glifo-v-dinamico');
     if (glifo) Object.assign(glifo.style, { color: '#9b804e', fontSize: '18px', fontWeight: 'bold' });
@@ -1002,7 +879,6 @@ const inyectarEnlacesReferencia = () => {
     const citaTexto = contenedorRef.querySelector('.cita-rigor-dinamica');
     Object.assign(citaTexto.style, { fontStyle: 'italic', marginTop: '10px', fontSize: '15px', lineHeight: '1.6', color: '#3a3a3a', margin: '0' });
 
-    // Estilo de los enlaces internos de dependencia
     const linksInternos = contenedorRef.querySelectorAll('.link-dependencia-stf');
     linksInternos.forEach(lnk => {
         Object.assign(lnk.style, { color: '#9b804e', textDecoration: 'none', fontWeight: '700', transition: 'color 0.2s' });
@@ -1012,27 +888,130 @@ const inyectarEnlacesReferencia = () => {
 
     paginaLibro.appendChild(contenedorRef);
 };
-// --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
+
+// --- 3. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
+const setupTratadosNavigation = () => {
+    // Si la variable global esEstudio no está definida, la calculamos por la ruta
+    const esEstudioValidado = (typeof esEstudio !== 'undefined') ? esEstudio : window.location.pathname.includes('/estudios/');
+    if (!esEstudioValidado) return;
+
+    const ordenTratados = [
+        "como-nos-habla-dios.html", "solo-la-biblia-basta.html", "la-armonia-de-los-evangelios.html",
+        "conocer-para-amar.html", "nuestro-dios-trino.html", "el-dios-justo-y-amoroso.html",
+        "de-donde-viene-el-mal.html", "un-mundo-roto.html", "el-problema-del-pecado.html",
+        "nuestra-oscuridad.html", "volver-a-dios.html", "el-poder-del-espiritu.html",
+        "mi-amistad-con-dios.html", "ayuno.html", "aprender-a-descansar.html",
+        "ser-de-una-sola-pieza.html", "la-gran-comision.html", "libertad-de-las-cadenas.html",
+        "el-matrimonio-ideal.html", "el-adulterio.html", "el-bautismo-biblico.html",
+        "defendiendo-mi-fe.html", "ciencia-y-fe.html", "la-iglesia-de-cristo.html",
+        "lo-que-esta-por-venir.html"
+    ];
+
+    const currentPath = window.location.pathname;
+    const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+    const currentIndex = ordenTratados.indexOf(currentFile);
+
+    if (currentIndex === -1) return;
+
+    // Buscamos la página del libro para meterlas dentro de la hoja y que queden debajo de tu caja dinámica
+    const targetContainer = document.querySelector('.pagina-libro') || document.querySelector('main');
+    if (!targetContainer) return;
+
+    let botonesHTML = `<div class="paginacion-tratados" style="display:flex; justify-content:space-between; max-width:800px; margin:50px auto 0 auto; padding:0 40px; width:100%; box-sizing:border-box;">`;
+
+    if (currentIndex > 0) {
+        botonesHTML += `<a href="${ordenTratados[currentIndex - 1]}" class="btn-paginacion prev" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px; font-weight:700;"><i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i> ANTERIOR</a>`;
+    } else {
+        botonesHTML += `<div></div>`;
+    }
+
+    if (currentIndex < ordenTratados.length - 1) {
+        botonesHTML += `<a href="${ordenTratados[currentIndex + 1]}" class="btn-paginacion next" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px; font-weight:700;">SIGUIENTE <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a>`;
+    } else {
+        botonesHTML += `<div></div>`;
+    }
+
+    botonesHTML += `</div>`;
+    
+    // Lo inyectamos al final de la página del libro para asegurar que queden debajo del panel técnico
+    targetContainer.insertAdjacentHTML('beforeend', botonesHTML);
+};
+
+// --- 4. REDISEÑO SOBERANO DEL PIE DE PÁGINA (FOOTER) ---
+const arreglarPiePagina = () => {
+    const footerGlobal = document.getElementById('footer-global') || document.querySelector('footer');
+    
+    if (footerGlobal) {
+        Object.assign(footerGlobal.style, {
+            marginTop: '80px',
+            padding: '50px 40px',
+            backgroundColor: '#ffffff',
+            borderTop: '1px solid rgba(155, 128, 78, 0.25)',
+            boxShadow: '0 -15px 35px rgba(0, 0, 0, 0.02)',
+            borderRadius: '0 0 4px 4px',
+            textAlign: 'center'
+        });
+
+        const elementosSueltos = footerGlobal.querySelectorAll('p, div, span');
+        
+        elementosSueltos.forEach(el => {
+            if (el.parentElement === footerGlobal) {
+                Object.assign(el.style, {
+                    maxWidth: '600px',
+                    margin: '12px auto',
+                    fontFamily: "var(--font-sans, 'Montserrat', sans-serif)",
+                    fontSize: '11px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    color: 'var(--oro-profundo, #9b804e)',
+                    opacity: '0.8',
+                    lineHeight: '1.8'
+                });
+            }
+        });
+
+        if (!document.querySelector('.marcador-clausura-stf')) {
+            const marcador = document.createElement('div');
+            marcador.className = 'marcador-clausura-stf';
+            Object.assign(marcador.style, {
+                width: '30px',
+                height: '1px',
+                backgroundColor: 'var(--oro-brillante, #ebdcb9)',
+                margin: '35px auto 0',
+                opacity: '0.7'
+            });
+            footerGlobal.appendChild(marcador);
+        }
+    }
+};
+
+// --- 5. EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
 const iniciarSistema = () => {
     inyectarFaviconsYFuentes();
     crearBarraProgreso();
     setupVisuals();
     inicializarMenu();
     inicializarSEO();
-    //aplicarMotivoFondoExterior(); // Se ejecuta al principio para pintar el fondo rápido
+    
+    // Descomentamos esta línea para que pinte tu fondo de papel artesanal exterior al instante
+    aplicarMotivoFondoExterior(); 
 
-    // Componentes que esperan a que el HTML esté completamente parseado e inyectado
     window.addEventListener('load', () => {
         inyectarFaviconsYFuentes();
         inicializarDiccionarioPropio();
         repararEnlacesInternos();
         inicializarScrollTop();
         
-        inyectarFooterEstudio();   // 1. Primero se crea e inyecta el footer en el HTML...
-        //arreglarPiePagina();       // 2. ¡Y justo después lo estilizamos y maquetamos de lujo!
-        //ocultarRutaEstudioGlobal();
-        inyectarEnlacesReferencia();
-        setupTratadosNavigation();
+        inyectarFooterEstudio();       // 1. Mete la estructura base del footer en el DOM
+        
+        inyectarEnlacesReferencia();   // 2. Inyecta la Ruta Doctrinal Dinámica (y purga la estática del HTML si existiese)
+        
+        setupTratadosNavigation();     // 3. ¡CORREGIDO! Calcula y posiciona los botones justo debajo de tu ruta dinámicamente
+        
+        document.body.appendChild(document.getElementById('footer-global') || document.querySelector('footer')); // Asegura la posición del footer abajo del todo
+        arreglarPiePagina();           // 4. Estiliza el pie de página cerrando la estructura
+        
+        setupTratadosNavigation();     // Asegura los eventos en las flechas tras el render final
         inyectarGemaSabiduria();
         inicializarUtilidades();
         if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
