@@ -718,11 +718,12 @@ const aplicarMotivoFondoExterior = () => {
 
     // 1. Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior (lo naranja)
     Object.assign(document.body.style, {
-        backgroundColor: '#f3efe4', // Un tono crema un punto más señorial para marcar el contraste
-        backgroundImage: "url('https://raw.githubusercontent.com/subtlepatterns/SubtlePatterns/master/paper.png')",
+   backgroundColor: '#ebdcb9', // Tu color crema/oro base
+        backgroundImage: "url('../images/gray-orange-abstract-texture.jpg')", 
         backgroundRepeat: 'repeat',
-        backgroundAttachment: 'fixed', // Hace que la textura exterior se quede estática al scrollear
-        backgroundBlendMode: 'multiply'
+        backgroundAttachment: 'fixed', // La textura se queda estática dando empaque premium
+        backgroundBlendMode: 'multiply', // Fusiona suavemente las vetas grises/ocres con tu color de fondo
+        backgroundSize: '500px' // Ajusta este número si quieres el grano de la textura más grande o más pequeño
     });
 
     // 2. Blindamos la página del libro (lo verde/azul) para que se mantenga limpia e impoluta
