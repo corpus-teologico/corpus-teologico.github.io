@@ -836,6 +836,21 @@ const arreglarPiePagina = () => {
         }
     }
 };
+   // --- CENTRALIZADOR DE VISIBILIDAD: OCULTAR RUTA DE ESTUDIO ---
+const ocultarRutaEstudioGlobal = () => {
+    // 1. Buscamos todas las secciones de tratados en la página
+    const secciones = document.querySelectorAll('.seccion-tratado');
+
+    secciones.forEach(seccion => {
+        // 2. Localizamos el separador de sección
+        const separador = seccion.querySelector('.separador-seccion span');
+        
+        // 3. Si coincide exactamente con el encabezado de la ruta de estudio, la fulminamos
+        if (separador && separador.textContent.trim() === 'RUTA DE ESTUDIO Y DEPENDENCIA DOCTRINAL') {
+            seccion.remove(); // Elimina el elemento por completo del DOM
+        }
+    });
+};
 // --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
 const iniciarSistema = () => {
     inyectarFaviconsYFuentes();
@@ -854,7 +869,7 @@ const iniciarSistema = () => {
         
         inyectarFooterEstudio();   // 1. Primero se crea e inyecta el footer en el HTML...
         //arreglarPiePagina();       // 2. ¡Y justo después lo estilizamos y maquetamos de lujo!
-        
+        ocultarRutaEstudioGlobal();
         setupTratadosNavigation();
         inyectarGemaSabiduria();
         inicializarUtilidades();
