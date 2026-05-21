@@ -782,6 +782,60 @@ const setupTratadosNavigation = () => {
     // 3º Lo inyectamos al final de la etiqueta <main>
     mainContainer.insertAdjacentHTML('beforeend', botonesHTML);
 };
+// --- REDISEÑO SOBERANO DEL PIE DE PÁGINA (FOOTER) ---
+const arreglarPiePagina = () => {
+    // 1. Buscamos el contenedor que carga el footer global
+    const footerGlobal = document.getElementById('footer-global') || document.querySelector('footer');
+    
+    if (footerGlobal) {
+        // Le damos un empaque sólido, solemne y con volumen de hoja de libro
+        Object.assign(footerGlobal.style, {
+            marginTop: '80px',               // Separación elegante respecto al final del texto
+            padding: '50px 40px',            // Espacio interior generoso para que respire
+            backgroundColor: '#ffffff',      // Fondo blanco limpio idéntico al de la .pagina-libro
+            borderTop: '1px solid rgba(155, 128, 78, 0.25)', // Fina línea divisoria color oro atenuado
+            boxShadow: '0 -15px 35px rgba(0, 0, 0, 0.02)',   // Sutil relieve hacia arriba para cerrar el bloque
+            borderRadius: '0 0 4px 4px',    // Redondeado sutil para rematar la "página"
+            textAlign: 'center'
+        });
+
+        // 2. Buscamos los bloques que se quedan sueltos (los textos informativos)
+        // Buscamos párrafos o divs dentro del footer para estructurarlos noblemente
+        const elementosSueltos = footerGlobal.querySelectorAll('p, div, span');
+        
+        elementosSueltos.forEach(el => {
+            // Si es un contenedor interno, lo maquetamos en bloque centrado y limpio
+            if (el.parentElement === footerGlobal) {
+                Object.assign(el.style, {
+                    maxWidth: '600px',
+                    margin: '12px auto',
+                    fontFamily: "var(--font-sans, 'Montserrat', sans-serif)",
+                    fontSize: '11px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    color: 'var(--oro-profundo, #9b804e)',
+                    opacity: '0.8',
+                    lineHeight: '1.8'
+                });
+            }
+        });
+
+        // 3. El remate litúrgico: Un micro-marcador vertical de clausura
+        // Evitamos que se duplique si la función se ejecuta dos veces
+        if (!document.querySelector('.marcador-clausura-stf')) {
+            const marcador = document.createElement('div');
+            marcador.className = 'marcador-clausura-stf';
+            Object.assign(marcador.style, {
+                width: '30px',
+                height: '1px',
+                backgroundColor: 'var(--oro-brillante, #ebdcb9)',
+                margin: '35px auto 0',
+                opacity: '0.7'
+            });
+            footerGlobal.appendChild(marcador);
+        }
+    }
+};
 // --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
 const iniciarSistema = () => {
     inyectarFaviconsYFuentes();
@@ -789,16 +843,18 @@ const iniciarSistema = () => {
     setupVisuals();
     inicializarMenu();
     inicializarSEO();
-    aplicarMotivoFondoExterior();
+    aplicarMotivoFondoExterior(); // Se ejecuta al principio para pintar el fondo rápido
 
-  // Componentes que pueden esperar al scroll o carga completa
+    // Componentes que esperan a que el HTML esté completamente parseado e inyectado
     window.addEventListener('load', () => {
         inyectarFaviconsYFuentes();
         inicializarDiccionarioPropio();
-        
-        repararEnlacesInternos(); // <--- ¡AÑADE ESTA LÍNEA AQUÍ!
+        repararEnlacesInternos();
         inicializarScrollTop();
-        inyectarFooterEstudio();
+        
+        inyectarFooterEstudio();   // 1. Primero se crea e inyecta el footer en el HTML...
+        arreglarPiePagina();       // 2. ¡Y justo después lo estilizamos y maquetamos de lujo!
+        
         setupTratadosNavigation();
         inyectarGemaSabiduria();
         inicializarUtilidades();
