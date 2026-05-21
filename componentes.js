@@ -636,6 +636,68 @@ const repararEnlacesInternos = () => {
         });
     });
 };
+   // --- 12. BOTÓN FLOTANTE "VOLVER ARRIBA" (SCROLL TO TOP) ---
+const inicializarScrollTop = () => {
+    if (!esEstudio) return;
+
+    // 1. Creamos el botón dinámicamente con estilos elegantes
+    const btnTop = document.createElement('button');
+    btnTop.id = 'scroll-to-top';
+    btnTop.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+    
+    // Aplicamos estilos en línea usando tus variables de color corporativas
+    Object.assign(btnTop.style, {
+        position: 'fixed',
+        bottom: '30px',
+        right: '30px',
+        width: '45px',
+        height: '45px',
+        backgroundColor: '#fdfbf7',
+        color: 'var(--oro-profundo, #9b804e)',
+        border: '1px solid var(--oro-brillante, #9b804e)',
+        borderRadius: '50%',
+        cursor: 'pointer',
+        display: 'none', // Oculto por defecto
+        justifyContent: 'center',
+        alignItems: 'center',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+        zIndex: '1000',
+        transition: 'all 0.3s ease',
+        fontSize: '14px'
+    });
+
+    document.body.appendChild(btnTop);
+
+    // 2. Efecto Hover elegante (oro profundo al pasar el ratón)
+    btnTop.addEventListener('mouseenter', () => {
+        btnTop.style.backgroundColor = 'var(--oro-profundo, #9b804e)';
+        btnTop.style.color = '#fdfbf7';
+        btnTop.style.transform = 'translateY(-3px)';
+    });
+    btnTop.addEventListener('mouseleave', () => {
+        btnTop.style.backgroundColor = '#fdfbf7';
+        btnTop.style.color = 'var(--oro-profundo, #9b804e)';
+        btnTop.style.transform = 'translateY(0)';
+    });
+
+    // 3. Controlamos cuándo aparece el botón (cuando el usuario baja 400px)
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            btnTop.style.display = 'flex';
+            // Pequeño delay para que la opacidad haga transición suave si quieres añadirla
+        } else {
+            btnTop.style.display = 'none';
+        }
+    });
+
+    // 4. Acción de scroll suave hacia la cima
+    btnTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Desplazamiento fluido y elegante
+        });
+    });
+};
 // --- 11. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
 const setupTratadosNavigation = () => {
     if (!esEstudio) return; // 1º Comprobamos contexto obligatorio
@@ -695,7 +757,7 @@ const iniciarSistema = () => {
         inicializarDiccionarioPropio();
         
         repararEnlacesInternos(); // <--- ¡AÑADE ESTA LÍNEA AQUÍ!
-        
+        inicializarScrollTop();
         inyectarFooterEstudio();
         setupTratadosNavigation();
         inyectarGemaSabiduria();
