@@ -602,25 +602,68 @@ const inicializarExportacionPDF = () => {
             h1.appendChild(span);
         }
     };
+// --- 11. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
+    const setupTratadosNavigation = () => {
+        if (!esEstudio) return;
 
- // --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
-    const iniciarSistema = () => {
-        inyectarFaviconsYFuentes();
-        crearBarraProgreso();
-        setupVisuals();
-        inicializarMenu();
-        inicializarSEO();
+        const ordenTratados = [
+            "como-nos-habla-dios.html", "solo-la-biblia-basta.html", "la-armonia-de-los-evangelios.html",
+            "conocer-para-amar.html", "nuestro-dios-trino.html", "el-dios-justo-y-amoroso.html",
+            "de-donde-viene-el-mal.html", "un-mundo-roto.html", "el-problema-del-pecado.html",
+            "nuestra-oscuridad.html", "volver-a-dios.html", "el-poder-del-espiritu.html",
+            "mi-amistad-con-dios.html", "ayuno.html", "aprender-a-descansar.html",
+            "ser-de-una-sola-pieza.html", "la-gran-comision.html", "libertad-de-las-cadenas.html",
+            "el-matrimonio-ideal.html", "el-adulterio.html", "el-bautismo-biblico.html",
+            "defendiendo-mi-fe.html", "ciencia-y-fe.html", "la-iglesia-de-cristo.html",
+            "lo-que-esta-por-venir.html"
+        ];
 
-        // Componentes que pueden esperar al scroll o carga completa
-        window.addEventListener('load', () => {
-            inicializarDiccionarioPropio();
-            inyectarFooterEstudio();
-            inyectarGemaSabiduria();
-            inicializarUtilidades();
-            if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
-        });
+        const currentPath = window.location.pathname;
+        const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+        const currentIndex = ordenTratados.indexOf(currentFile);
+
+        if (currentIndex === -1) return;
+
+        const footerContainer = document.getElementById('footer-global');
+        if (!footerContainer) return;
+
+        let botonesHTML = `<div class="paginacion-tratados" style="display:flex; justify-content:space-between; max-width:800px; margin:50px auto 0 auto; padding:0 20px;">`;
+
+        if (currentIndex > 0) {
+            botonesHTML += `<a href="${ordenTratados[currentIndex - 1]}" class="btn-paginacion prev" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px;"><i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i> ANTERIOR</a>`;
+        } else {
+            botonesHTML += `<div></div>`;
+        }
+
+        if (currentIndex < ordenTratados.length - 1) {
+            botonesHTML += `<a href="${ordenTratados[currentIndex + 1]}" class="btn-paginacion next" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px;">SIGUIENTE <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a>`;
+        } else {
+            botonesHTML += `<div></div>`;
+        }
+
+        botonesHTML += `</div>`;
+        footerContainer.insertAdjacentHTML('beforebegin', botonesHTML);
     };
+// --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
+const iniciarSistema = () => {
+    inyectarFaviconsYFuentes();
+    crearBarraProgreso();
+    setupVisuals();
+    inicializarMenu();
+    inicializarSEO();
 
-    iniciarSistema();
+    // Componentes que pueden esperar al scroll o carga completa
+    window.addEventListener('load', () => {
+        inyectarFaviconsYFuentes();
+        inicializarDiccionarioPropio();
+        inyectarFooterEstudio(); // <-- Primero se inyecta el footer...
+        setupTratadosNavigation(); // <-- ...y justo después se mete la navegación antes de ese footer.
+        inyectarGemaSabiduria();
+        inicializarUtilidades();
+        if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
+    });
+};
+
+iniciarSistema();
 
 }); // Cierre del DOMContentLoaded
