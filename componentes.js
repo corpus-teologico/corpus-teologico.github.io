@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <a href="${rutaBase}estudios/aprender-a-descansar.html" class="nav-link-full" data-path="aprender-a-descansar.html">IV. Aprender a descansar</a>
                             <a href="${rutaBase}estudios/conocer-para-amar.html" class="nav-link-full" data-path="conocer-para-amar.html">V. Conocer para amar</a>
                             <a href="${rutaBase}estudios/de-donde-viene-el-mal.html" class="nav-link-full" data-path="de-donde-viene-el-mal.html">VI. ¿De dónde viene el mal?</a>
-                            <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VII. Un mundo roto</a>
+                            <a href="${rutaBase}estudios/un-mundo-roto.html" class="nav-link-full" data-path="un-mundo-roto.html">VII. Consecuencias de la caída</a>
                         </div>
                         <div class="nav-col">
                             <span class="nav-group-title">Tratados VIII — XV</span>
