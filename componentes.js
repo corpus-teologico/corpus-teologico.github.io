@@ -606,42 +606,42 @@ const inicializarExportacionPDF = () => {
 const repararEnlacesInternos = () => {
     if (!esEstudio) return;
 
-    // Tu lista oficial e inmutable de tratados reales
-    const ordenTratados = [
-        "como-nos-habla-dios", "solo-la-biblia-basta", "la-armonia-de-los-evangelios",
-        "conocer-para-amar", "nuestro-dios-trino", "el-dios-justo-y-amoroso",
-        "de-donde-viene-el-mal", "un-mundo-roto", "el-problema-del-pecado",
-        "nuestra-oscuridad", "volver-a-dios", "el-poder-del-espiritu",
-        "mi-amistad-con-dios", "ayuno", "aprender-a-descansar",
-        "ser-de-una-sola-pieza", "la-gran-comision", "libertad-de-las-cadenas",
-        "el-matrimonio-ideal", "el-adulterio", "el-bautismo-biblico",
-        "defendiendo-mi-fe", "ciencia-y-fe", "la-iglesia-de-cristo",
-        "lo-que-esta-por-venir"
-    ];
+    // Buscamos específicamente el panel de rutas de cada tratado
+    const panelTecnico = document.querySelector('.panel-tecnico');
+    if (!panelTecnico) return;
 
-    // Escaneamos todos los enlaces de la página
-    const enlaces = document.querySelectorAll('a');
+    // Capturamos todos los enlaces de ese panel
+    const enlaces = panelTecnico.querySelectorAll('a');
 
     enlaces.forEach(enlace => {
-        const hrefActual = enlace.getAttribute('href');
-        if (!hrefActual || hrefActual.startsWith('http') || hrefActual.startsWith('#')) return;
+        // 1. Invalidamos el enlace roto para que no recargue ni redirija
+        enlace.setAttribute('href', '#');
+        
+        // 2. Le cambiamos el estilo visual para que se note que es una acción del sistema
+        enlace.style.cursor = 'pointer';
+        enlace.style.borderBottom = '1px dashed var(--oro-profundo)';
 
-        // Pasamos el texto del enlace a minúsculas y limpiamos acentos/signos
-        const textoEnlace = enlace.textContent.toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quita acentos
-            .replace(/[^a-z0-8\s-]/g, ""); // Quita corchetes, números aislados y símbolos
+        // 3. Al hacer clic, abrimos el menú lateral automáticamente
+        enlace.addEventListener('click', (e) => {
+            e.preventDefault(); // Evita cualquier comportamiento extraño
 
-        // Buscamos si alguna palabra clave de tus tratados reales coincide con el texto escrito
-        const tratadoEncontrado = ordenTratados.find(tratado => {
-            const palabrasClave = tratado.split('-');
-            // Si el texto del enlace contiene palabras clave importantes, es match
-            return palabrasClave.some(palabra => palabra.length > 3 && textoEnlace.includes(palabra));
+            // Buscamos el botón que abre tu menú lateral (ajusta la clase/ID si es necesario)
+            const botonMenu = document.getElementById('menu-toggle') || document.querySelector('.menu-toggle') || document.querySelector('.hamburger');
+            
+            if (botonMenu) {
+                botonMenu.click(); // Simula el clic real para desplegar el menú
+                
+                // Opcional: Un pequeño efecto visual para que el usuario note la apertura
+                botonMenu.style.transform = 'scale(1.2)';
+                setTimeout(() => botonMenu.style.transform = 'none', 300);
+            } else {
+                // Si no encuentra el botón, intentamos activar directamente la clase 'open/active' de tu nav
+                const navMenu = document.getElementById('sidebar') || document.querySelector('.menu-lateral') || document.querySelector('nav');
+                if (navMenu) {
+                    navMenu.classList.add('active'); // O la clase que uses para mostrarlo
+                }
+            }
         });
-
-        // Si encontramos una coincidencia en el texto, reescribimos el enlace a su archivo real
-        if (tratadoEncontrado) {
-            enlace.setAttribute('href', `${tratadoEncontrado}.html`);
-        }
     });
 };
 // --- 11. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
