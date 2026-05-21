@@ -719,7 +719,7 @@ const aplicarMotivoFondoExterior = () => {
     // 1. Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior (lo naranja)
     Object.assign(document.body.style, {
         backgroundColor: '#f3efe4', // Un tono crema un punto más señorial para marcar el contraste
-        backgroundImage: "url('https://www.transparenttextures.com/patterns/diagonal-stripes.png')",
+        backgroundImage: "url('https://raw.githubusercontent.com/subtlepatterns/SubtlePatterns/master/paper.png')",
         backgroundRepeat: 'repeat',
         backgroundAttachment: 'fixed', // Hace que la textura exterior se quede estática al scrollear
         backgroundBlendMode: 'multiply'
