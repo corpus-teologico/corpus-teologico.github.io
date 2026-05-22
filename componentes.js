@@ -142,54 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (height > 0) barra.style.width = (winScroll / height) * 100 + "%";
         });
     };
-// --- 3. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
-const setupTratadosNavigation = () => {
-    const esEstudioValidado = (typeof esEstudio !== 'undefined') ? esEstudio : window.location.pathname.includes('/estudios/');
-    if (!esEstudioValidado) return;
 
-    // CONTROL ANTIDUPLICADOS: Elimina cualquier fila de flechas previa antes de crear la nueva
-    const paginacionExistente = document.querySelector('.paginacion-tratados');
-    if (paginacionExistente) paginacionExistente.remove();
-
-    const ordenTratados = [
-        "como-nos-habla-dios.html", "solo-la-biblia-basta.html", "la-armonia-de-los-evangelios.html",
-        "conocer-para-amar.html", "nuestro-dios-trino.html", "el-dios-justo-y-amoroso.html",
-        "de-donde-viene-el-mal.html", "un-mundo-roto.html", "el-problema-del-pecado.html",
-        "nuestra-oscuridad.html", "volver-a-dios.html", "el-poder-del-espiritu.html",
-        "mi-amistad-con-dios.html", "ayuno.html", "aprender-a-descansar.html",
-        "ser-de-una-sola-pieza.html", "la-gran-comision.html", "libertad-de-las-cadenas.html",
-        "el-matrimonio-ideal.html", "el-adulterio.html", "el-bautismo-biblico.html",
-        "defendiendo-mi-fe.html", "ciencia-y-fe.html", "la-iglesia-de-cristo.html",
-        "lo-que-esta-por-venir.html"
-    ];
-
-    const currentPath = window.location.pathname;
-    const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-    const currentIndex = ordenTratados.indexOf(currentFile);
-
-    if (currentIndex === -1) return;
-
-    const targetContainer = document.querySelector('.pagina-libro') || document.querySelector('main');
-    if (!targetContainer) return;
-
-    let botonesHTML = `<div class="paginacion-tratados" style="display:flex; justify-content:space-between; max-width:800px; margin:50px auto 0 auto; padding:0 40px; width:100%; box-sizing:border-box;">`;
-
-    if (currentIndex > 0) {
-        botonesHTML += `<a href="${ordenTratados[currentIndex - 1]}" class="btn-paginacion prev" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px; font-weight:700;"><i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i> ANTERIOR</a>`;
-    } else {
-        botonesHTML += `<div></div>`;
-    }
-
-    if (currentIndex < ordenTratados.length - 1) {
-        botonesHTML += `<a href="${ordenTratados[currentIndex + 1]}" class="btn-paginacion next" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px; font-weight:700;">SIGUIENTE <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a>`;
-    } else {
-        botonesHTML += `<div></div>`;
-    }
-
-    botonesHTML += `</div>`;
-    
-    targetContainer.insertAdjacentHTML('beforeend', botonesHTML);
-};
     // --- 4. DICCIONARIO FLOTANTE (EXÉGESIS) ---
     const inicializarDiccionarioPropio = () => {
         let box = document.createElement('div');
@@ -759,188 +712,34 @@ const inicializarScrollTop = () => {
         });
     });
 };
-// --- 1. CONFIGURACIÓN DEL MOTIVO LUXURY PARA EL CONTENEDOR EXTERIOR ---
+// --- CONFIGURACIÓN DEL MOTIVO LUXURY PARA EL CONTENEDOR EXTERIOR ---
 const aplicarMotivoFondoExterior = () => {
-    // Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior
+
+    // 1. Aplicamos el motivo de papel artesanal EXCLUSIVAMENTE al fondo exterior (lo naranja)
     Object.assign(document.body.style, {
-        backgroundColor: '#fdfaf4',
+   backgroundColor: '#fdfaf4', // Tu color crema/oro base
         backgroundImage: "url('../images/white-patterned-wallpaper.jpg')", 
         backgroundRepeat: 'repeat',
-        backgroundAttachment: 'fixed',
-        backgroundBlendMode: 'multiply',
-        backgroundSize: '500px'
+        backgroundAttachment: 'fixed', // La textura se queda estática dando empaque premium
+        backgroundBlendMode: 'multiply', // Fusiona suavemente las vetas grises/ocres con tu color de fondo
+        backgroundSize: '500px' // Ajusta este número si quieres el grano de la textura más grande o más pequeño
     });
 
-    // Blindamos la página del libro para que se mantenga limpia e impoluta
+    // 2. Blindamos la página del libro (lo verde/azul) para que se mantenga limpia e impoluta
     const paginaLibro = document.querySelector('.pagina-libro');
     if (paginaLibro) {
         Object.assign(paginaLibro.style, {
-            backgroundColor: '#ffffff',
-            backgroundImage: 'none',
-            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.03)',
+            backgroundColor: '#ffffff', // Forzamos blanco puro o el crema original del libro
+            backgroundImage: 'none',     // Nos aseguramos de que aquí NO entre la textura exterior
+            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.03)', // Le da un relieve elegante sobre el fondo texturizado
             position: 'relative',
             zIndex: '2'
         });
     }
 };
-
-// --- 2. SISTEMA DINÁMICO DE RUTA DE ESTUDIO Y DEPENDENCIAS DOCTRINALES ---
-const inyectarEnlacesReferencia = () => {
-    const esIndex = !window.location.pathname.includes('/estudios/');
-    if (esIndex) return; 
-
-    const paginaLibro = document.querySelector('.pagina-libro');
-    if (!paginaLibro || document.getElementById('bloque-referencias-rigor')) return;
-
-    // LIMPIEZA AUTOMÁTICA: Si encuentra cualquier sección antigua escrita a mano en el HTML, la fulmina primero
-    const seccionVieja = Array.from(document.querySelectorAll('.seccion-tratado')).find(sec => sec.textContent.includes('RUTA DE ESTUDIO'));
-    if (seccionVieja) seccionVieja.remove();
-
-    const urlActual = window.location.pathname.toLowerCase();
-    
-    let fraseContexto = '';
-    let prerrequisitoHTML = '';
-    let ampliacionHTML = '';
-    let instruccionCita = '';
-
-    // MAPEO DE DEPENDENCIAS LOGICOTEOLÓGICAS
-    if (urlActual.includes('volver-a-dios')) {
-        fraseContexto = "Para comprender que el arrepentimiento es una respuesta a la inmutabilidad de Dios, siga este mapa:";
-        prerrequisitoHTML = `
-            <strong>Usted debe haber estudiado:</strong> <br>
-            <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a><br>
-            <em>Razonamiento:</em> Solo aceptando la inerrancia y autoridad de las Escrituras se comprende que Dios no puede "negociar" Su estándar moral absoluto.
-        `;
-        ampliacionHTML = `
-            <p><span class="glifo-eje">❧</span> <strong>Para profundizar en la raíz del engaño del pecado:</strong> <a href="/estudios/el-problema-del-pecado.html" class="link-dependencia-stf">[09_El problema del pecado]</a></p>
-            <p><span class="glifo-eje">❧</span> <strong>Sobre la condición espiritual previa a la gracia:</strong> <a href="/estudios/nuestra-oscuridad.html" class="link-dependencia-stf">[10_Nuestra oscuridad]</a></p>
-        `;
-        instruccionCita = `"La 'inflexibilidad' de Dios es, en realidad, el ancla que evita que naufraguemos en las arenas movedizas de nuestras propias pasiones. No busque que Dios baje a Su nivel; arrepiéntase y suba usted al de Él a través de Cristo."`;
-
-    } else if (urlActual.includes('nuestro-dios-trino')) {
-        fraseContexto = "Para asimilar el misterio de la Divinidad sin caer en herejías históricas, consolide este orden:";
-        prerrequisitoHTML = `
-            <strong>Usted debe haber estudiado:</strong> <br>
-            <a href="/estudios/como-nos-habla-dios.html" class="link-dependencia-stf">[01_¿Cómo nos habla Dios?]</a><br>
-            <em>Razonamiento:</em> La Trinidad es un dogma de Revelación pura, no de razón natural. Si no asienta la Revelación Especial, intentará racionalizar la esencia divina y errará.
-        `;
-        ampliacionHTML = `
-            <p><span class="glifo-eje">❧</span> <strong>La justicia y el amor operando en las Personas divinas:</strong> <a href="/estudios/el-dios-justo-y-amoroso.html" class="link-dependencia-stf">[06_El Dios justo y amoroso]</a></p>
-        `;
-        instruccionCita = `"No intente contener el océano de la Trinidad en el vaso de su intelecto. Adore la distinción de Personas y confiese la unidad de esencia, pues ahí radica la herencia de nuestra salvación."`;
-
-    } else if (urlActual.includes('aprender-a-descansar')) {
-        fraseContexto = "Para entender que el reposo es un mandato de soberanía y no un descuido del deber, analice:";
-        prerrequisitoHTML = `
-            <strong>Usted debe haber estudiado:</strong> <br>
-            <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a><br>
-            <em>Razonamiento:</em> Comprender el Sabbat exige aceptar la vigencia y suficiencia de los principios morales establecidos de forma inerrante en el canon.
-        `;
-        ampliacionHTML = `
-            <p><span class="glifo-eje">❧</span> <strong>Para conectar la devoción íntima con el descanso del alma:</strong> <a href="/estudios/mi-amistad-con-dios.html" class="link-dependencia-stf">[13_Mi amistad con Dios]</a></p>
-        `;
-        instruccionCita = `"El descanso cristiano no es ociosidad, es un acto de fe sumisa. Detener sus manos es confesar activamente que es Dios, y no su esfuerzo, quien sostiene su existencia."`;
-
-    } else {
-        fraseContexto = "Para mantener la estructura de este edificio doctrinal de manera coherente, verifique:";
-        prerrequisitoHTML = `
-            <strong>Usted debe haber estudiado:</strong> <br>
-            <a href="/estudios/como-nos-habla-dios.html" class="link-dependencia-stf">[01_¿Cómo nos habla Dios?]</a><br>
-            <em>Razonamiento:</em> Toda la teología sistemática colapsa si no se asienta primero el medio por el cual el Creador ha decidido romper el silencio.
-        `;
-        ampliacionHTML = `
-            <p><span class="glifo-eje">❧</span> <strong>Siguiente pilar fundamental del Corpus:</strong> <a href="/estudios/solo-la-biblia-basta.html" class="link-dependencia-stf">[02_Sólo la Biblia basta]</a></p>
-        `;
-        instruccionCita = `"El conocimiento no es una acumulación de datos, sino un edificio. Si intenta estudiar las ramificaciones sin consolidar la Inerrancia, edificará sobre arena."`;
-    }
-
-    // Construcción del contenedor formal
-    const contenedorRef = document.createElement('section');
-    contenedorRef.id = 'bloque-referencias-rigor';
-    contenedorRef.className = 'seccion-tratado';
-    
-    contenedorRef.innerHTML = `
-        <div class="separador-seccion">
-            <span>RUTA DE ESTUDIO Y DEPENDENCIA DOCTRINAL</span>
-        </div>
-        
-        <div class="panel-tecnico-dinamico">
-            <p class="frase-contexto-stf">${fraseContexto}</p>
-
-            <div class="bloque-prerrequisito">
-                <span class="label-oro-dinamico">PRESUPOSICIÓN FUNDAMENTAL (Base obligatoria):</span>
-                <div class="tarjeta-eje-dinamica">
-                    <span class="glifo-v-dinamico">⚜</span>
-                    <div class="texto-dependencia-cuerpo">${prerrequisitoHTML}</div>
-                </div>
-            </div>
-
-            <div class="bloque-ampliacion">
-                <span class="label-oro-dinamico">AMPLIACIÓN Y CONTINUIDAD:</span>
-                <div class="tarjeta-eje-dinamica rama-continuidad">
-                    <div class="texto-ampliacion-cuerpo">${ampliacionHTML}</div>
-                </div>
-            </div>
-
-            <div class="caja-instruccion-rigor-final">
-                <span class="label-oro-dinamico">INSTRUCCIÓN DE RIGOR:</span>
-                <p class="cita-rigor-dinamica">${instruccionCita}</p>
-            </div>
-        </div>
-    `;
-
-    Object.assign(contenedorRef.style, { marginTop: '60px', padding: '0 40px' });
-
-    const panel = contenedorRef.querySelector('.panel-tecnico-dinamico');
-    Object.assign(panel.style, {
-        backgroundColor: '#fdfbf7', border: '1px solid rgba(155, 128, 78, 0.3)',
-        padding: '35px', borderRadius: '4px', textAlign: 'left'
-    });
-
-    const fContexto = contenedorRef.querySelector('.frase-contexto-stf');
-    Object.assign(fContexto.style, { fontWeight: '600', fontSize: '15px', color: '#2c2c2c', marginBottom: '25px', fontFamily: "var(--font-serif, 'Georgia', serif)" });
-
-    const labels = contenedorRef.querySelectorAll('.label-oro-dinamico');
-    labels.forEach(l => {
-        Object.assign(l.style, { display: 'block', fontFamily: "'Montserrat', sans-serif", fontSize: '11px', letterSpacing: '1px', fontWeight: '700', color: '#9b804e', marginBottom: '10px' });
-    });
-
-    const tarjetas = contenedorRef.querySelectorAll('.tarjeta-eje-dinamica');
-    tarjetas.forEach(t => {
-        Object.assign(t.style, { display: 'flex', gap: '15px', backgroundColor: '#ffffff', padding: '18px', border: '1px solid rgba(155, 128, 78, 0.1)', borderRadius: '4px', marginBottom: '25px', fontSize: '14px', lineHeight: '1.6', color: '#4a4a4a' });
-    });
-
-    // ¡CORREGIDO AQUÍ! Cambiada la variable huérfana 't' por 'rama'
-    const rama = contenedorRef.querySelector('.rama-continuidad');
-    if (rama) { 
-        rama.style.borderLeft = '3px solid rgba(155, 128, 78, 0.2)'; 
-        rama.style.backgroundColor = 'transparent'; 
-    }
-
-    const glifo = contenedorRef.querySelector('.glifo-v-dinamico');
-    if (glifo) Object.assign(glifo.style, { color: '#9b804e', fontSize: '18px', fontWeight: 'bold' });
-
-    const cajaCita = contenedorRef.querySelector('.caja-instruccion-rigor-final');
-    Object.assign(cajaCita.style, { marginTop: '30px', padding: '25px', background: 'rgba(155, 128, 78, 0.02)', border: '1px double #9b804e', borderRadius: '4px' });
-
-    const citaTexto = contenedorRef.querySelector('.cita-rigor-dinamica');
-    Object.assign(citaTexto.style, { fontStyle: 'italic', marginTop: '10px', fontSize: '15px', lineHeight: '1.6', color: '#3a3a3a', margin: '0' });
-
-    const linksInternos = contenedorRef.querySelectorAll('.link-dependencia-stf');
-    linksInternos.forEach(lnk => {
-        Object.assign(lnk.style, { color: '#9b804e', textDecoration: 'none', fontWeight: '700', transition: 'color 0.2s' });
-        lnk.addEventListener('mouseenter', () => lnk.style.color = '#ebdcb9');
-        lnk.addEventListener('mouseleave', () => lnk.style.color = '#9b804e');
-    });
-
-    paginaLibro.appendChild(contenedorRef);
-};
-
-// --- 3. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
+// --- 11. NAVEGACIÓN ENTRE TRATADOS (ANTERIOR / SIGUIENTE) ---
 const setupTratadosNavigation = () => {
-    // Si la variable global esEstudio no está definida, la calculamos por la ruta
-    const esEstudioValidado = (typeof esEstudio !== 'undefined') ? esEstudio : window.location.pathname.includes('/estudios/');
-    if (!esEstudioValidado) return;
+    if (!esEstudio) return; // 1º Comprobamos contexto obligatorio
 
     const ordenTratados = [
         "como-nos-habla-dios.html", "solo-la-biblia-basta.html", "la-armonia-de-los-evangelios.html",
@@ -960,48 +759,52 @@ const setupTratadosNavigation = () => {
 
     if (currentIndex === -1) return;
 
-    // Buscamos la página del libro para meterlas dentro de la hoja y que queden debajo de tu caja dinámica
-    const targetContainer = document.querySelector('.pagina-libro') || document.querySelector('main');
-    if (!targetContainer) return;
+    // 2º Buscamos el contenedor <main> justo cuando sabemos que se necesita
+    const mainContainer = document.querySelector('main') || document.querySelector('.contenido-estudio');
+    if (!mainContainer) return;
 
-    let botonesHTML = `<div class="paginacion-tratados" style="display:flex; justify-content:space-between; max-width:800px; margin:50px auto 0 auto; padding:0 40px; width:100%; box-sizing:border-box;">`;
+    let botonesHTML = `<div class="paginacion-tratados" style="display:flex; justify-content:space-between; max-width:800px; margin:50px auto 0 auto; padding:0 20px;">`;
 
     if (currentIndex > 0) {
-        botonesHTML += `<a href="${ordenTratados[currentIndex - 1]}" class="btn-paginacion prev" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px; font-weight:700;"><i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i> ANTERIOR</a>`;
+        botonesHTML += `<a href="${ordenTratados[currentIndex - 1]}" class="btn-paginacion prev" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px;"><i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i> ANTERIOR</a>`;
     } else {
         botonesHTML += `<div></div>`;
     }
 
     if (currentIndex < ordenTratados.length - 1) {
-        botonesHTML += `<a href="${ordenTratados[currentIndex + 1]}" class="btn-paginacion next" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px; font-weight:700;">SIGUIENTE <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a>`;
+        botonesHTML += `<a href="${ordenTratados[currentIndex + 1]}" class="btn-paginacion next" style="text-decoration:none; color:#9b804e; font-family:'Montserrat'; font-size:11px; letter-spacing:1px;">SIGUIENTE <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a>`;
     } else {
         botonesHTML += `<div></div>`;
     }
 
     botonesHTML += `</div>`;
     
-    // Lo inyectamos al final de la página del libro para asegurar que queden debajo del panel técnico
-    targetContainer.insertAdjacentHTML('beforeend', botonesHTML);
+    // 3º Lo inyectamos al final de la etiqueta <main>
+    mainContainer.insertAdjacentHTML('beforeend', botonesHTML);
 };
-
-// --- 4. REDISEÑO SOBERANO DEL PIE DE PÁGINA (FOOTER) ---
+// --- REDISEÑO SOBERANO DEL PIE DE PÁGINA (FOOTER) ---
 const arreglarPiePagina = () => {
+    // 1. Buscamos el contenedor que carga el footer global
     const footerGlobal = document.getElementById('footer-global') || document.querySelector('footer');
     
     if (footerGlobal) {
+        // Le damos un empaque sólido, solemne y con volumen de hoja de libro
         Object.assign(footerGlobal.style, {
-            marginTop: '80px',
-            padding: '50px 40px',
-            backgroundColor: '#ffffff',
-            borderTop: '1px solid rgba(155, 128, 78, 0.25)',
-            boxShadow: '0 -15px 35px rgba(0, 0, 0, 0.02)',
-            borderRadius: '0 0 4px 4px',
+            marginTop: '80px',               // Separación elegante respecto al final del texto
+            padding: '50px 40px',            // Espacio interior generoso para que respire
+            backgroundColor: '#ffffff',      // Fondo blanco limpio idéntico al de la .pagina-libro
+            borderTop: '1px solid rgba(155, 128, 78, 0.25)', // Fina línea divisoria color oro atenuado
+            boxShadow: '0 -15px 35px rgba(0, 0, 0, 0.02)',   // Sutil relieve hacia arriba para cerrar el bloque
+            borderRadius: '0 0 4px 4px',    // Redondeado sutil para rematar la "página"
             textAlign: 'center'
         });
 
+        // 2. Buscamos los bloques que se quedan sueltos (los textos informativos)
+        // Buscamos párrafos o divs dentro del footer para estructurarlos noblemente
         const elementosSueltos = footerGlobal.querySelectorAll('p, div, span');
         
         elementosSueltos.forEach(el => {
+            // Si es un contenedor interno, lo maquetamos en bloque centrado y limpio
             if (el.parentElement === footerGlobal) {
                 Object.assign(el.style, {
                     maxWidth: '600px',
@@ -1017,6 +820,8 @@ const arreglarPiePagina = () => {
             }
         });
 
+        // 3. El remate litúrgico: Un micro-marcador vertical de clausura
+        // Evitamos que se duplique si la función se ejecuta dos veces
         if (!document.querySelector('.marcador-clausura-stf')) {
             const marcador = document.createElement('div');
             marcador.className = 'marcador-clausura-stf';
@@ -1031,24 +836,28 @@ const arreglarPiePagina = () => {
         }
     }
 };
-
-// --- 11. EJECUCIÓN OPTIMIZADA DEL SISTEMA (LAZY LOADING) ---
+// --- EJECUCIÓN OPTIMIZADA (LAZY LOADING) ---
 const iniciarSistema = () => {
     inyectarFaviconsYFuentes();
     crearBarraProgreso();
     setupVisuals();
     inicializarMenu();
+    inicializarSEO();
+    //aplicarMotivoFondoExterior(); // Se ejecuta al principio para pintar el fondo rápido
 
+    // Componentes que esperan a que el HTML esté completamente parseado e inyectado
     window.addEventListener('load', () => {
         inyectarFaviconsYFuentes();
         inicializarDiccionarioPropio();
+        repararEnlacesInternos();
+        inicializarScrollTop();
         
-        inyectarFooterEstudio();       // 1. Inyecta la base del pie
-        // inyectarEnlacesReferencia(); // Descomenta esta línea si vuelves a usar el bloque dinámico doctrinal
-        setupTratadosNavigation();     // 2. Ejecuta una única vez las flechas de navegación
-        inyectarGemaSabiduria();       // 3. Inserta la frase aleatoria
-        inicializarUtilidades();       
+        inyectarFooterEstudio();   // 1. Primero se crea e inyecta el footer en el HTML...
+        //arreglarPiePagina();       // 2. ¡Y justo después lo estilizamos y maquetamos de lujo!
         
+        setupTratadosNavigation();
+        inyectarGemaSabiduria();
+        inicializarUtilidades();
         if (document.getElementById('glosario-dinamico')) generarPaginaGlosario();
     });
 };
