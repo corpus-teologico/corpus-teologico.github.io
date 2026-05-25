@@ -1106,3 +1106,72 @@ div#footer-global {
 .tarjeta-estudio:hover .titulo-estudio {
     color: #c5af86 !important;
 }
+/* 1. Preparar la tarjeta como contenedor principal */
+.grid-estudios a.tarjeta-estudio {
+    display: flex;
+    position: relative;          /* CRÍTICO: Permite posicionar el bubble dentro de la tarjeta */
+    text-decoration: none !important; 
+    color: #2b2b2b !important;       
+    background-color: #fdfbf7;       
+    border: 1px solid #e2ded5;
+    padding: 20px;               /* Ajusta según el padding que ya tengas */
+    border-radius: 4px;          /* Si usas bordes redondeados */
+    transition: all 0.3s ease;
+    overflow: visible !important; /* Permite que el bubble sobresalga un poco si es necesario */
+}
+
+/* 2. Resetear textos internos */
+.tarjeta-estudio .numero,
+.tarjeta-estudio .titulo-estudio,
+.tarjeta-estudio .descripcion-breve {
+    text-decoration: none !important;
+}
+
+/* 3. El Hover de la tarjeta: se eleva e ilumina el borde */
+.tarjeta-estudio:hover {
+    background-color: #ffffff !important;
+    border-color: #c5af86 !important; 
+    transform: translateY(-4px);       
+    box-shadow: 0 8px 20px rgba(197, 175, 134, 0.15); 
+}
+
+.tarjeta-estudio:hover .titulo-estudio {
+    color: #c5af86 !important;
+}
+
+/* =======================================================
+   4. EL BUBBLE (La etiqueta mágica "Acceder")
+======================================================= */
+.tarjeta-estudio::after {
+    content: "ACCEDER →";        /* Texto que aparecerá dentro del globo */
+    position: absolute;
+    bottom: 15px;                /* Posicionado en la esquina inferior derecha */
+    right: 20px;
+    
+    /* Estética del globo/burbuja (Estilo clásico/académico) */
+    background-color: #c5af86;   /* Tu color oro/dorado corporativo */
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif; /* Tipografía limpia para botones */
+    font-size: 0.75rem;          /* Pequeño y elegante */
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 50px;         /* Forma de píldora/burbuja redondeada */
+    
+    /* Estado inicial: Invisible y ligeramente desplazado hacia abajo */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+    pointer-events: none;        /* Evita que interfiera con el clic */
+    box-shadow: 0 4px 10px rgba(197, 175, 134, 0.3);
+}
+
+/* 5. Activación del Bubble al pasar el ratón */
+.tarjeta-estudio:hover::after {
+    opacity: 1;
+    transform: translateY(0);    /* Sube suavemente con un leve efecto muelle */
+}
+.tarjeta-estudio .descripcion-breve {
+    padding-right: 90px; /* Deja un "hueco" en la derecha exclusivo para que la burbuja no tape letras */
+    transition: color 0.3s ease;
+}
