@@ -960,7 +960,106 @@ body.alto-contraste .separador-seccion span {
 .tarjeta-estudio .link-leer {
     display: inline-flex !important;
 }
+/* ==========================================================================
+   OPTIMIZACIÓN RESPONSIVE GLOBAL (SISTEMA TEOLÓGICO FORMIGO)
+   ========================================================================== */
 
+@media screen and (max-width: 768px) {
+    
+    /* 1. Reset de Estructura y Márgenes del Cuerpo */
+    body {
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden; /* Evita el scroll horizontal */
+    }
+
+    /* 2. Ajuste del Contenedor Principal de la Lectura */
+    main.pagina-libro, 
+    .pagina-libro {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20px 15px !important; /* Margen sutil de seguridad en los bordes */
+        margin: 0 auto !important;
+        box-sizing: border-box;
+    }
+
+    /* 3. Descompresión de Paneles Técnicos y Tarjetas */
+    .panel-tecnico {
+        padding: 20px 15px !important; /* Reduce el acolchado interno drásticamente */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 25px !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Evita la acumulación de padding si hay paneles técnicos anidados */
+    .panel-tecnico .panel-tecnico {
+        padding: 15px 10px !important;
+        margin-top: 20px !important;
+    }
+
+    /* 4. Conversión de Grillas Rígidas a Columnas Únicas */
+    .grid-ejes, 
+    .nav-grid {
+        grid-template-columns: 1fr !important; /* Pasa de 2 o 3 columnas a 1 sola */
+        gap: 25px !important;
+    }
+
+    /* 5. Optimización de Tarjetas de Ejes y Listas */
+    .tarjeta-eje {
+        padding: 15px 12px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        display: flex;
+        flex-direction: column; /* Alinea el glifo arriba y el texto abajo si es necesario */
+        gap: 10px;
+    }
+
+    /* Ajuste de listas con glifos */
+    ul {
+        padding-left: 10px !important;
+    }
+
+    /* 6. Suavizado de Bloques de Citas y Salmos */
+    blockquote, 
+    .salmo-final, 
+    section.introduccion-texto p[style*="border-left"] {
+        padding-left: 15px !important;
+        padding-right: 5px !important;
+        margin: 25px 0 !important;
+        font-size: 1.15rem !important; /* Evita tamaños gigantescos de fuente en móvil */
+    }
+
+    /* 7. Ajuste de Separadores de Sección */
+    .separador-seccion {
+        margin: 35px 0 20px 0 !important;
+    }
+    
+    .separador-seccion span {
+        font-size: 0.8rem !important; /* Reduce ligeramente el texto del separador */
+        letter-spacing: 1px !important;
+    }
+
+    /* 8. Adaptación de Encabezados (Títulos) */
+    h2 {
+        font-size: 1.8rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    .subtitulo {
+        font-size: 0.75rem !important;
+        letter-spacing: 2px !important;
+    }
+
+    /* 9. Comportamiento del Menú Overlay en Móviles */
+    .menu-card {
+        width: 90% !important;
+        max-height: 85vh !important;
+        overflow-y: auto !important; /* Permite scroll si los 25 tratados no caben */
+        padding: 30px 20px !important;
+    }
+}
 div#footer-global {
     background: var(--blanco-papel);
 }
