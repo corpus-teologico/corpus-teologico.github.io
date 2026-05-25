@@ -1106,72 +1106,78 @@ div#footer-global {
 .tarjeta-estudio:hover .titulo-estudio {
     color: #c5af86 !important;
 }
-/* 1. Preparar la tarjeta como contenedor principal */
+/* 1. La Tarjeta (Sofisticación Minimalista) */
 .grid-estudios a.tarjeta-estudio {
     display: flex;
-    position: relative;          /* CRÍTICO: Permite posicionar el bubble dentro de la tarjeta */
+    position: relative;          
     text-decoration: none !important; 
-    color: #2b2b2b !important;       
-    background-color: #fdfbf7;       
-    border: 1px solid #e2ded5;
-    padding: 20px;               /* Ajusta según el padding que ya tengas */
-    border-radius: 4px;          /* Si usas bordes redondeados */
-    transition: all 0.3s ease;
-    overflow: visible !important; /* Permite que el bubble sobresalga un poco si es necesario */
+    color: #1a1a1a !important;       /* Texto casi negro, muy nítido */
+    background-color: #fefcf9;       /* Un crema marfil exquisito */
+    border: 1px solid #eae6dd;       /* Borde muy tenue, color lino */
+    padding: 28px 24px;              /* Más aire y espacio (el espacio es lujo) */
+    border-radius: 0px;              /* Bordes rectos y puros (las curvas restan formalidad) */
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Animación suave como la seda */
 }
 
-/* 2. Resetear textos internos */
-.tarjeta-estudio .numero,
-.tarjeta-estudio .titulo-estudio,
-.tarjeta-estudio .descripcion-breve {
-    text-decoration: none !important;
-}
-
-/* 3. El Hover de la tarjeta: se eleva e ilumina el borde */
+/* 2. El Hover de la Tarjeta (Elegancia silenciosa) */
 .tarjeta-estudio:hover {
     background-color: #ffffff !important;
-    border-color: #c5af86 !important; 
-    transform: translateY(-4px);       
-    box-shadow: 0 8px 20px rgba(197, 175, 134, 0.15); 
+    border-color: #bfa36f !important; /* Oro viejo/champán (un tono más apagado y elegante que el amarillo) */
+    transform: translateY(-3px);       
+    box-shadow: 0 12px 30px rgba(191, 163, 111, 0.06); /* Sombra casi imperceptible, muy fina */
+}
+
+/* 3. Títulos y Textos */
+.tarjeta-estudio .titulo-estudio {
+    font-family: 'Cormorant Garamond', serif; /* Tu tipografía clásica */
+    font-size: 1.35rem;
+    font-weight: 500;                /* Menos grueso = más elegante */
+    letter-spacing: 0.3px;
+    color: #1a1a1a;
+    transition: color 0.4s ease;
 }
 
 .tarjeta-estudio:hover .titulo-estudio {
-    color: #c5af86 !important;
+    color: #bfa36f !important;        /* El título vira al oro champán */
+}
+
+.tarjeta-estudio .descripcion-breve {
+    color: #666666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    padding-right: 120px;            /* Espacio de cortesía para el indicador */
 }
 
 /* =======================================================
-   4. EL BUBBLE (La etiqueta mágica "Acceder")
+   4. EL INDICADOR PREMIUM ("Estudiar Tratado")
 ======================================================= */
 .tarjeta-estudio::after {
-    content: "ACCEDER →";        /* Texto que aparecerá dentro del globo */
+    content: "ESTUDIAR TRATADO";      /* Un léxico más selecto que "Acceder" */
     position: absolute;
-    bottom: 15px;                /* Posicionado en la esquina inferior derecha */
-    right: 20px;
+    bottom: 28px;
+    right: 24px;
     
-    /* Estética del globo/burbuja (Estilo clásico/académico) */
-    background-color: #c5af86;   /* Tu color oro/dorado corporativo */
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif; /* Tipografía limpia para botones */
-    font-size: 0.75rem;          /* Pequeño y elegante */
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 6px 14px;
-    border-radius: 50px;         /* Forma de píldora/burbuja redondeada */
+    /* Estilo Editorial de Lujo */
+    color: #bfa36f;                  /* Oro viejo */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;              /* Muy pequeño, tipo nota al pie de página */
+    font-weight: 600;
+    letter-spacing: 2px;             /* Letras muy espaciadas (clave del diseño pijo) */
     
-    /* Estado inicial: Invisible y ligeramente desplazado hacia abajo */
+    /* El "subrayado" elegante */
+    border-bottom: 1px solid rgba(191, 163, 111, 0.3);
+    padding-bottom: 4px;
+    
+    /* Estado inicial: Escondido con clase */
     opacity: 0;
-    transform: translateY(10px);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
-    pointer-events: none;        /* Evita que interfiera con el clic */
-    box-shadow: 0 4px 10px rgba(197, 175, 134, 0.3);
+    transform: translateX(-10px);    /* En lugar de subir, aparece deslizándose desde la izquierda */
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
 }
 
-/* 5. Activación del Bubble al pasar el ratón */
+/* 5. Activación en Hover */
 .tarjeta-estudio:hover::after {
     opacity: 1;
-    transform: translateY(0);    /* Sube suavemente con un leve efecto muelle */
-}
-.tarjeta-estudio .descripcion-breve {
-    padding-right: 90px; /* Deja un "hueco" en la derecha exclusivo para que la burbuja no tape letras */
-    transition: color 0.3s ease;
+    transform: translateX(0);        /* Se desliza a su sitio suavemente */
+    border-bottom-color: #bfa36f;    /* El subrayado se intensifica */
 }
