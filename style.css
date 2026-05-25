@@ -1063,3 +1063,46 @@ body.alto-contraste .separador-seccion span {
 div#footer-global {
     background: var(--blanco-papel);
 }
+/* 1. Resetear el comportamiento visual del enlace de la tarjeta */
+.grid-estudios a.tarjeta-estudio {
+    display: flex;
+    text-decoration: none !important; /* Elimina por completo el subrayado de la caja */
+    color: #2b2b2b !important;       /* Fuerza a que el texto vuelva a su color oscuro/editorial */
+    background-color: #fdfbf7;       /* Tu color de fondo crema de fondo si lo tenías */
+    border: 1px solid #e2ded5;
+    transition: all 0.3s ease;
+}
+
+/* 2. Asegurar que los textos internos NO se subrayen ni cambien a morado */
+.tarjeta-estudio .numero,
+.tarjeta-estudio .titulo-estudio,
+.tarjeta-estudio .descripcion-breve {
+    text-decoration: none !important; /* Cero subrayados en títulos y párrafos */
+    display: block;
+}
+
+.tarjeta-estudio .titulo-estudio {
+    color: #1a1a1a; /* El color casi negro original de tus títulos */
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.tarjeta-estudio .descripcion-breve {
+    color: #555555; /* Color grisáceo elegante para la sinopsis */
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* 3. El Efecto Hover Profesional: Solo cuando el usuario pasa el ratón por encima */
+.tarjeta-estudio:hover {
+    background-color: #ffffff !important;
+    border-color: #c5af86 !important; /* Ilumina el borde con tu color oro/dorado */
+    transform: translateY(-2px);       /* Efecto sutil de elevación */
+    box-shadow: 0 5px 15px rgba(197, 175, 134, 0.1); /* Sombra dorada muy suave */
+}
+
+/* El título cambia sutilmente a dorado al pasar el cursor por la tarjeta */
+.tarjeta-estudio:hover .titulo-estudio {
+    color: #c5af86 !important;
+}
