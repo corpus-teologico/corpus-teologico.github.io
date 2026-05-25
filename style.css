@@ -1106,78 +1106,104 @@ div#footer-global {
 .tarjeta-estudio:hover .titulo-estudio {
     color: #c5af86 !important;
 }
-/* 1. La Tarjeta (Sofisticación Minimalista) */
+/* 1. La Tarjeta Base (Contenedor) */
 .grid-estudios a.tarjeta-estudio {
     display: flex;
-    position: relative;          
+    position: relative;          /* OBLIGATORIO: Para que la capa y el botón no se salgan */
     text-decoration: none !important; 
-    color: #1a1a1a !important;       /* Texto casi negro, muy nítido */
-    background-color: #fefcf9;       /* Un crema marfil exquisito */
-    border: 1px solid #eae6dd;       /* Borde muy tenue, color lino */
-    padding: 28px 24px;              /* Más aire y espacio (el espacio es lujo) */
-    border-radius: 0px;              /* Bordes rectos y puros (las curvas restan formalidad) */
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Animación suave como la seda */
+    color: #1a1a1a !important;       
+    background-color: #fdfbf7;       
+    border: 1px solid #eae6dd;       
+    padding: 28px 24px;              
+    border-radius: 0px;              /* Bordes rectos, estilo editorial */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow: hidden;                /* Recorta la capa para que no sobresalga de las esquinas */
 }
 
-/* 2. El Hover de la Tarjeta (Elegancia silenciosa) */
+/* Animación sutil de elevación de la tarjeta al hacer hover */
 .tarjeta-estudio:hover {
-    background-color: #ffffff !important;
-    border-color: #bfa36f !important; /* Oro viejo/champán (un tono más apagado y elegante que el amarillo) */
-    transform: translateY(-3px);       
-    box-shadow: 0 12px 30px rgba(191, 163, 111, 0.06); /* Sombra casi imperceptible, muy fina */
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
 }
 
-/* 3. Títulos y Textos */
-.tarjeta-estudio .titulo-estudio {
-    font-family: 'Cormorant Garamond', serif; /* Tu tipografía clásica */
-    font-size: 1.35rem;
-    font-weight: 500;                /* Menos grueso = más elegante */
-    letter-spacing: 0.3px;
-    color: #1a1a1a;
-    transition: color 0.4s ease;
+/* 2. Reset de los textos internos */
+.tarjeta-estudio .titulo-estudio,
+.tarjeta-estudio .descripcion-breve,
+.tarjeta-estudio .numero {
+    text-decoration: none !important;
+    transition: filter 0.4s ease;    /* Hace que el texto del fondo se difumine un poco bajo la capa */
 }
 
-.tarjeta-estudio:hover .titulo-estudio {
-    color: #bfa36f !important;        /* El título vira al oro champán */
+/* OPCIONAL: Al hacer hover, el texto de fondo se vuelve un pelín borroso para dar profundidad de campo */
+.tarjeta-estudio:hover .contenido-estudio,
+.tarjeta-estudio:hover .numero {
+    filter: blur(1px);
 }
 
-.tarjeta-estudio .descripcion-breve {
-    color: #666666;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    padding-right: 120px;            /* Espacio de cortesía para el indicador */
-}
 
 /* =======================================================
-   4. EL INDICADOR PREMIUM ("Estudiar Tratado")
+   3. LA CAPA ELEGANTE (Overlay) - Pseudo-elemento ::before
 ======================================================= */
-.tarjeta-estudio::after {
-    content: "ESTUDIAR TRATADO";      /* Un léxico más selecto que "Acceder" */
+.tarjeta-estudio::before {
+    content: "";
     position: absolute;
-    bottom: 28px;
-    right: 24px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     
-    /* Estilo Editorial de Lujo */
-    color: #bfa36f;                  /* Oro viejo */
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem;              /* Muy pequeño, tipo nota al pie de página */
-    font-weight: 600;
-    letter-spacing: 2px;             /* Letras muy espaciadas (clave del diseño pijo) */
+    /* Efecto "Glow" translúcido oscuro y elegante */
+    background: rgba(26, 26, 26, 0.85); /* Fondo oscuro con 85% de opacidad */
+    backdrop-filter: blur(4px);         /* Efecto cristal esmerilado premium */
     
-    /* El "subrayado" elegante */
-    border-bottom: 1px solid rgba(191, 163, 111, 0.3);
-    padding-bottom: 4px;
-    
-    /* Estado inicial: Escondido con clase */
+    /* Estado inicial: Invisible */
     opacity: 0;
-    transform: translateX(-10px);    /* En lugar de subir, aparece deslizándose desde la izquierda */
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1;                         /* Se posiciona por encima del texto */
 }
 
-/* 5. Activación en Hover */
+/* Al pasar el ratón, la capa se desvanece suavemente hacia adentro */
+.tarjeta-estudio:hover::before {
+    opacity: 1;
+}
+
+
+/* =======================================================
+   4. EL BOTÓN "ACCESO A ESTUDIO" - Pseudo-elemento ::after
+======================================================= */
+.tarjeta-estudio::after {
+    content: "ACCESO A ESTUDIO →";
+    position: absolute;
+    
+    /* Centrado matemático absoluto dentro de la tarjeta */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%); /* Empieza un poco más abajo para la animación */
+    
+    /* Estilo del Botón de Alta Gama */
+    background: transparent;
+    color: #bfa36f;                    /* Oro viejo / Champán */
+    border: 1px solid #bfa36f;         /* Línea fina dorada */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;                /* Diminuto y estilizado */
+    font-weight: 600;
+    letter-spacing: 2.5px;             /* Espaciado pijo entre letras */
+    padding: 12px 26px;
+    white-space: nowrap;               /* Evita que el texto se rompa en dos líneas */
+    
+    /* Estado inicial: Oculto */
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+    z-index: 2;                        /* Por encima de la capa negra */
+}
+
+/* Al pasar el ratón, el botón sube a su centro perfecto y se vuelve visible */
 .tarjeta-estudio:hover::after {
     opacity: 1;
-    transform: translateX(0);        /* Se desliza a su sitio suavemente */
-    border-bottom-color: #bfa36f;    /* El subrayado se intensifica */
+    transform: translate(-50%, -50%);   /* Sube suavemente flotando al centro exacto */
+}
+
+/* Efecto extra: Si el cursor toca exactamente el botón dorado, brilla más */
+.tarjeta-estudio:hover::after {
+    background: rgba(191, 163, 111, 0.05); /* Un reflejo dorado ligerísimo */
 }
