@@ -1144,6 +1144,7 @@ div#footer-global {
 /* =======================================================
    3. LA CAPA ELEGANTE (Overlay) - Pseudo-elemento ::before
 ======================================================= */
+/* LA CAPA TRANSLÚCIDA (Efecto Cristal de Lujo) */
 .tarjeta-estudio::before {
     content: "";
     position: absolute;
@@ -1152,16 +1153,18 @@ div#footer-global {
     width: 100%;
     height: 100%;
     
-    /* Efecto "Glow" translúcido oscuro y elegante */
-    background: rgba(26, 26, 26, 0.85); /* Fondo oscuro con 85% de opacidad */
-    backdrop-filter: blur(4px);         /* Efecto cristal esmerilado premium */
+    /* Fondo casi transparente (tono marfil/crema al 45% de opacidad) */
+    background: rgba(253, 251, 247, 0.45); 
     
-    /* Estado inicial: Invisible */
+    /* El truco del lujo: difumina el texto original del fondo al pasar el mouse */
+    backdrop-filter: blur(5px);         
+    -webkit-backdrop-filter: blur(5px); /* Compatibilidad con Safari */
+    
+    /* Estado inicial */
     opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 1;                         /* Se posiciona por encima del texto */
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
 }
-
 /* Al pasar el ratón, la capa se desvanece suavemente hacia adentro */
 .tarjeta-estudio:hover::before {
     opacity: 1;
