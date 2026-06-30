@@ -257,7 +257,7 @@ const setupVisuals = () => {
                     </div>
                     
                     <div class="nav-col">
-                        <span class="nav-group-title">Tratados XVI — XXV</span>
+                        <span class="nav-group-title">Tratados XVI — XXVII</span>
                         <a href="${rutaBase}estudios/ser-de-una-sola-pieza.html" class="nav-link-full" data-path="ser-de-una-sola-pieza.html">XVI. La Integridad</a>
                         <a href="${rutaBase}estudios/la-gran-comision.html" class="nav-link-full" data-path="la-gran-comision.html">XVII. La Tentación</a>
                         <a href="${rutaBase}estudios/libertad-de-las-cadenas.html" class="nav-link-full" data-path="libertad-de-las-cadenas.html">XVIII. La Adicción: Esclavitud e Idolatría</a>
