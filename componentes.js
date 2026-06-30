@@ -268,6 +268,7 @@ const setupVisuals = () => {
                         <a href="${rutaBase}estudios/ciencia-y-fe.html" class="nav-link-full" data-path="ciencia-y-fe.html">XXIII. Ciencia y fe</a>
                         <a href="${rutaBase}estudios/la-iglesia-de-cristo.html" class="nav-link-full" data-path="la-iglesia-de-cristo.html">XXIV. La Iglesia de Cristo</a>
                         <a href="${rutaBase}estudios/lo-que-esta-por-venir.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XXV. La esperanza de la gloria</a>
+                        <a href="${rutaBase}estudios/la-justicia-divina.html" class="nav-link-full" data-path="lo-que-esta-por-venir.html">XXVI. La Justicia Divina</a>
                     </div>
                     
                 </div>
