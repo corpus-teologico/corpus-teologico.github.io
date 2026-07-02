@@ -233,6 +233,7 @@ const setupVisuals = () => {
                         <a href="${rutaBase}glosario.html" class="nav-link-full" data-path="glosario.html">Glosario</a>
                         <a href="${rutaBase}carta-abierta.html" class="nav-link-full" data-path="carta-abierta.html">Carta Abierta</a>
                         <a href="${rutaBase}bibliografia.html" class="nav-link-full" data-path="bibliografia.html">Bibliografía</a>
+                        <a href="${rutaBase}pastores.html" class="nav-link-full" data-path="pastores.html">Tesoro Doctrinal</a>
                         
                         <span class="nav-group-title" style="margin-top:20px">Tratados I — VII</span>
                         <a href="${rutaBase}estudios/como-nos-habla-dios.html" class="nav-link-full" data-path="como-nos-habla-dios.html">I. ¿Cómo nos habla Dios?</a>
