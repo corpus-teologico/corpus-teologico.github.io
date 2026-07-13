@@ -3,1326 +3,850 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tesoro Doctrinal | STF</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Tesoro Doctrinal | Clasificado</title>
     
-    <!-- ZERO-TOUCH MAINTENANCE CSS -->
     <style>
-        /* Main container initializing the CSS counter */
-        .directorio-citas {
-            counter-reset: cita-counter;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        /* CSS Variables for theme consistency */
+        :root {
+            --oro-profundo: #b8860b;
+            --fondo-panel: #fdfbf7;
+            --texto-principal: #333;
+            --borde-suave: rgba(212,175,55,0.3);
+            --scroll-behavior: smooth;
         }
 
-        /* Base styling for accordion block */
-        .bloque-acordeon {
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Dashboard Grid Layout: 2 Columns */
+        .directorio-teologico {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        /* Sticky Sidebar Navigation */
+        .menu-lateral {
+            position: sticky;
+            top: 20px;
+            background: var(--fondo-panel);
+            padding: 20px;
             border: 1px solid var(--oro-profundo);
-            padding: 15px 20px;
-            border-radius: 4px;
-            background-color: #fdfbf7;
-            transition: all 0.3s ease;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
         }
 
-        /* Shadow effect when accordion is expanded */
-        .bloque-acordeon[open] {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            background-color: #fff;
+        .menu-lateral h3 {
+            color: var(--oro-profundo);
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--borde-suave);
+            padding-bottom: 10px;
         }
 
-        /* Summary wrapper ensuring flex layout and hiding native arrows */
-        .bloque-acordeon summary {
-            cursor: pointer;
-            outline: none;
+        .menu-lateral ul {
             list-style: none;
-            display: flex;
-            align-items: center;
-        }
-        
-        /* Fallback to hide Webkit specific summary markers */
-        .bloque-acordeon summary::-webkit-details-marker {
-            display: none;
+            padding: 0;
+            margin: 0;
         }
 
-        /* Auto-generated counter badge injected before the title */
-        .bloque-acordeon summary::before {
-            counter-increment: cita-counter;
-            content: "#" counter(cita-counter);
+        .menu-lateral li {
+            margin-bottom: 10px;
+        }
+
+        .menu-lateral a {
+            text-decoration: none;
+            color: var(--texto-principal);
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: block;
+            padding: 5px 0;
+            transition: color 0.2s ease;
+        }
+
+        .menu-lateral a:hover {
+            color: var(--oro-profundo);
             font-weight: bold;
-            color: #fff;
-            background-color: var(--oro-profundo);
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-right: 15px;
-            font-size: 0.85rem;
-            min-width: 35px;
-            text-align: center;
         }
 
-        /* Flex container for Author and Snippet to handle text overflow */
-        .info-cita {
+        /* Content Area */
+        .contenido-citas {
             display: flex;
             flex-direction: column;
-            width: 100%;
-            overflow: hidden;
-            padding-right: 15px;
+            gap: 50px;
         }
 
-        /* Author title styling */
-        .info-cita .autor {
+        /* Category Header */
+        .categoria-teologica h2 {
             color: var(--oro-profundo);
-            font-weight: bold;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--oro-profundo);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 25px;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            scroll-margin-top: 30px;
         }
 
-        /* Truncated snippet styling */
-        .info-cita .snippet {
-            font-size: 0.85rem;
-            color: #888;
-            font-style: italic;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-top: 3px;
+        /* Individual Quote Cards */
+        .tarjeta-cita {
+            background: var(--fondo-panel);
+            border-left: 4px solid var(--oro-profundo);
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
-        /* Dynamic chevron indicator */
-        .bloque-acordeon summary::after {
-            content: "▼";
+        .tarjeta-cita blockquote {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--texto-principal);
+            text-align: justify;
+        }
+
+        .tarjeta-cita .autor {
+            display: block;
+            text-align: right;
+            margin-top: 15px;
+            font-weight: bold;
             color: var(--oro-profundo);
-            margin-left: auto;
-            font-size: 0.8rem;
-            transition: transform 0.3s ease;
+            font-size: 0.9rem;
         }
 
-        /* Rotate chevron on open state */
-        .bloque-acordeon[open] summary::after {
-            transform: rotate(180deg);
-        }
-
-        /* Bottom border for summary when expanded */
-        .bloque-acordeon[open] summary {
-            border-bottom: 1px dashed rgba(212,175,55,0.3);
-            padding-bottom: 12px;
-            margin-bottom: 15px;
-        }
-
-        /* Hide the snippet preview when content is expanded for cleaner UI */
-        .bloque-acordeon[open] .snippet {
-            display: none;
+        /* Responsive behavior for mobile */
+        @media (max-width: 850px) {
+            .directorio-teologico {
+                grid-template-columns: 1fr;
+            }
+            .menu-lateral {
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
         }
     </style>
 </head>
 <body>
-<main class="pagina-libro">
-    <div id="header-global"></div>
 
-    <section class="seccion-tratado">
-        <div class="separador-seccion"><span>DIRECTORIO HOMILÉTICO Y DOCTRINAL</span></div>
-        <p class="introduccion-seccion" style="text-align: center; font-style: italic; color: var(--texto-mutado); margin-bottom: 30px;">
-            Compendio continuo de sentencias, exposiciones y advertencias. (El sistema auto-numera e indexa cada nuevo bloque).
-        </p>
+<main class="pagina-libro" style="padding: 40px 20px;">
+    
+    <div class="directorio-teologico">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="menu-lateral">
+            <h3>Clasificación Doctrinal</h3>
+            <ul>
+                <li><a href="#cat-soberania">1. Soberanía y Creación</a></li>
+                <li><a href="#cat-pecado">2. Pecado y Depravación</a></li>
+                <li><a href="#cat-gracia">3. Gracia y Justificación</a></li>
+                <li><a href="#cat-vida">4. Disciplina y Vida Cristiana</a></li>
+            </ul>
+        </aside>
 
-        <!-- SINGLE CONTINUOUS CONTAINER -->
-        <div class="directorio-citas">
+        <!-- MAIN CONTENT AREA -->
+        <div class="contenido-citas">
 
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">John Spencer (Cosas nuevas y viejas)</span>
-                        <span class="snippet">«Un hombre que corta con un cuchillo romo es la causa del acto de cortar, pero no del cort...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Un hombre que corta con un cuchillo romo es la causa del acto de cortar, pero no del cortar mal; la causa de esto es el cuchillo; o si un músico toca un instrumento que está desafinado, él es la causa del sonido, pero no de la desafinación; la causa de ésta son las cuerdas desafinadas; o cuando un jinete cabalga un caballo que cojea y lo espolea, el jinete es la causa del movimiento, pero el caballo produce el movimiento a sacudidas; de la misma manera, Dios es el autor de toda acción, pero no del mal de esta acción; la causa de esto es el hombre.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«El malo no habitará junto a Ti. ¡Oh, qué insensato es intentar hospedar a la vez a dos in...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «El malo no habitará junto a Ti. ¡Oh, qué insensato es intentar hospedar a la vez a dos invitados hostiles entre sí como son Cristo Jesús y el diablo! Puedes tener la seguridad de que Cristo no va a vivir in la sala de tu corazón si al mismo tiempo hospedas al diablo en el sótano de tus pensamientos.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 4-6. Aquí se nos presenta al Señor apartando a los malos y parece que lo hace en se...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 4-6. Aquí se nos presenta al Señor apartando a los malos y parece que lo hace en seis pasos. Primero, no tiene placer en ellos; segundo, ellos no habitan con Él; tercero, los echa de sí, no estarán ante su vista; cuarto, su corazón se aparta de ellos: «aborreces a los que hacen iniquidad»; quinto, su mano se vuelve contra ellos: «Tú destruirás a los que hablan mentira»; sexto, su Espíritu se levanta contra ellos, y se aleja de ellos: «el Señor abomina al hombre sanguinario y engañador».»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">William Greenhill</span>
-                        <span class="snippet">«Si un hombre aborrece a un animal venenoso, aborrece aún más al veneno. La fuerza del abo...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Si un hombre aborrece a un animal venenoso, aborrece aún más al veneno. La fuerza del aborrecimiento de Dios es hacia el pecado, y por ello nosotros también deberíamos aborrecer al pecado, y aborrecerlo con toda nuestra fuerza; es una abominación para Dios, por lo que debería serlo para nosotros.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Sepulcro abierto es su garganta, un sepulcro lleno de cosas asquerosas, miasmas, pestilen...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Sepulcro abierto es su garganta, un sepulcro lleno de cosas asquerosas, miasmas, pestilencia y enfermedad. Pero, peor aún, es un sepulcro abierto, con todos los gases y hedores saliendo del mismo y esparciendo muerte y destrucción alrededor. Así que sería una gran misericordia si la garganta de los malvados pudiera ser cerrada, pero «su garganta es sepulcro abierto» y, como resultado, toda la maldad de su corazón sale fuera por ella.<br><br>
+            <!-- CATEGORY -->
+            <section id="cat-soberania" class="categoria-teologica">
+                <h2>1. Soberanía y Creación</h2>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Un hombre que corta con un cuchillo romo es la causa del acto de cortar, pero no del cortar mal; la causa de esto es el cuchillo; o si un músico toca un instrumento que está desafinado, él es la causa del sonido, pero no de la desafinación; la causa de ésta son las cuerdas desafinadas; o cuando un jinete cabalga un caballo que cojea y lo espolea, el jinete es la causa del movimiento, pero el caballo produce el movimiento a sacudidas; de la misma manera, Dios es el autor de toda acción, pero no del mal de esta acción; la causa de esto es el hombre.»
+                    </blockquote>
+                    <span class="autor">— John Spencer (Cosas nuevas y viejas)</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «¿No nos asombramos todos tanto de la obra perfecta de las manos de Dios realizada en la hormiga, este pequeño insecto que se arrastra, como de la que ha hecho en el mayor de los elefantes? ¿De qué haya tantas partes y miembros ensamblados en un espacio tan pequeño? ¿De que una criatura tan pobre pueda proveer en el verano el alimento que necesitará en invierno?»
+                    </blockquote>
+                    <span class="autor">— Daniel Rogers</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Enoc anduo tanto con Dios que andaba como Dios; no «andaba como los hombres», algo que el apóstol reprueba (1ª Corintios 3:3). Andaba tan poco como el mundo, que permaneció poco en el mundo.»
+                    </blockquote>
+                    <span class="autor">— Joseph Caryl</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 24. Esforzaos todos vosotros. El ánimo del cristiano puede ser descrito así: Es la audacia indomable de un corazón santificado que se aventura a afrontar dificultades y sufrir penalidades por una buena causa cuando Dios le llama a ello. La audacia que hay en los brutos es mencionada como semejante al valor que Dios concede a los hombres (Ezequiel 3:9). Esta es la promesa del Señor: «Como el diamante, más duro que el pedernal, he hecho yo tu frente.» La locución «más duro» es la misma en el hebreo que se usa in este texto —fortiorem petra—, la roca que no teme las inclemencias del tiempo: verano o invierno, sol o lluvia, calor o frío, heladas o nieve; no se sonroja, no se arruga, no cambia en su calidad; es todavía la misma.»
+                    </blockquote>
+                    <span class="autor">— Anónimo / Simeon Ash</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «La fe verdadera no sólo sabe que la doblez es imposible delante de Dios, sino también que ya no es necesaria. El creyente no tiene nada que esconder; se ve como delante de Dios, abierto y desnudo; y si ha aprendido a verse a sí mismo tal cual es, también ha aprendido a ver a Dios cuando se revela.»
+                    </blockquote>
+                    <span class="autor">— J. W. Reeve</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 4. Porque de día y de noche pesaba sobre mí tu mano. El dedo de Dios puede aplastarnos -¿qué no puede hacer su mano?- y está presionando de modo pesado y continuo. Bajo los terrores de la conciencia los hombres tienen poco descanso, día y noche; porque los tristes pensamientos de todo el día les acosan in sus dormitorios y les persiguen in sus sueños, o bien les dejan despiertos in un sudor frío de temor; es mejor llevar un mundo in el hombro, como Atlas, que la mano de Dios in el corazón, como David.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «¡De qué modo tan absurdo tratan los filósofos el origen del mundo! ¡Qué pocos han razonado de modo sistemático sobre este tema tan esencial! Nuestro profeta resuelve la importante cuestión con un solo principio; y lo que es más notable: este principio, que es expresado noblemente, lleva consigo la evidencia más clara. El principio es: «Por la palabra de Jehová fueron hechos los cielos, y todo el ejército de ellos por el aliento de su boca» (vers. 6). Esta es la explicación más racional que se ha dado nunca de la creación del mundo. El mundo es la obra de una voluntad eficiente por sí misma, y este principio solamente puede explicar su creación.»
+                    </blockquote>
+                    <span class="autor">— Escolástico de la Verdad</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «La doctrina de la providencia expresada in estas palabras: «Dios considera las obras de los habitantes de la tierra» es una consecuencia necesaria de su principio «Dios formó sus corazones»; y este principio es una consecuencia necesaria de lo que el Salmista había indicado antes como explicación del origen del mundo.»
+                    </blockquote>
+                    <span class="autor">— Comentario Sistemático</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Una de las objeciones más especiosas que se han opuesto nunca a la doctrina de la providencia es el contraste entre la grandeza de Dios y la pequeñez del hombre. ¿Cómo puede una criatura tan insignificante como el hombre ser objeto del cuidado y atención de un ser tan magnífico como Dios? No hay objeción que pueda ser más especiosa o, in apariencia, más invencible. La distancia entre el insecto más rudimentario y el monarca más poderoso, que pisa y aplasta a los reptiles sin la menor consideración para ellos, es una imagen muy imperfecta de la distancia entre Dios y el hombre. Lo que prueba que estaría por debajo de la dignidad del monarca el observar los movimientos de las hormigas, o gusanos, e interesarse in sus acciones y castigarlas o premiarlas, parece demostrar que Dios se degradaría si observara, dirigiera, castigara o premiara a la Humanidad, que es infinitamente inferior a Él.»
+                    </blockquote>
+                    <span class="autor">— Tratado de la Providencia Trascendente</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «La conciencia es un medio para frenar y restringir, controlar y reprender a la naturaleza corrupta y las formas crecientes de la misma. No está in calidad de habitante nativo, sino como una guarnición militar plantada in una ciudad rebelde por el gran Gobernador del mundo, para mantener la rebelión de sus habitantes dentro de límites, pues de otro modo estallaría in una indescriptible confusión.»
+                    </blockquote>
+                    <span class="autor">— Thomas Goodwin</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 11, 12. Con nuestros pensamientos secretos de merecer algo de El por nuestros actos religiosos lo que hacemos es mostrar nuestro desprecio a la suficiencia de Dios, como si Dios estuviera en deuda con nosotros, se viera obligado a algo. Como si nuestras devociones pudieran traer una bienaventuranza a Dios mayor que la que ya posee esencialmente, cuando, realmente, “nuestra bondad no pasa a El”.»
+                    </blockquote>
+                    <span class="autor">— Stephen Charnock</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 8. Y no sean como sus padres, generación contumaz y rebelde. No había oportunidad para mejora. Los padres obstinados en sus caminos y rebeldes contra el camino de Dios son tristes ejemplos para los hijos; y es de desear que una mejor instrucción pueda traer una raza mejor. Es común en algunas regiones que los hombres consideren las costumbres familiares como la mejor regla de crianza; pero la desobediencia no tiene que ser disculpada por el hecho de ser hereditaria. La lepra no deja de ser repulsiva porque se halla en la familia desde hace mucho tiempo.»
+                    </blockquote>
+                    <span class="autor">— George Swinnock</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 30. Luego se alegran, porque se apaciguaron. Nadie puede apreciar tanto este versículo como el que ha estado en una tormenta en el mar. No hay música más dulce que el ruido que hace la cadena al ser arrastrada por los marineros cuando dejan caer el anda; no hay lugar que parezca más deseable que la bahía o ensenada en que el barco se halla en reposo. Y así los guía al puerto que deseaban. Cuanto más desapacible es la travesía, más anhelan el puerto los marineros; y todos vemos el cielo como un puerto cuando se multiplican nuestras tribulaciones.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Después de haber andado dos miles para visitar un vecindario en que pocos podían leer, con el objetivo de pasar la velada leyendo a una compañía que estaba reunida para escuchar, y estando ya a punto de regresar por una senda estrecha, a través de bosques, en que el camino se bifurcaba varias veces, se me proveyó de una antorcha de tea. Objeté que era demasiado pequeña, pues pesaba menos de media libra. “Le llegará hasta su casa”, contestó mi huésped. Le dije: “El viento la apagará.” Me respondió: “Estará encendida hasta que llegue a su casa.” “Pero ¿si llueve?”, dije. El replicó: “Le iluminará hasta su casa.” A pesar de mis temores, tuve luz abundante en el camino hasta casa y me proporcionó una ilustración apropiada, creo, de la forma en que nuestros corazones indecisos podrían ser guiados por la “senda estrecha”. Si aceptáramos la Biblia como nuestro guía, sería una lámpara para nuestros pies, que iluminaría nuestro camino al cielo. Uno me dijo que tenía cinco objeciones a la Biblia. Le contesté que si la tomara como lámpara para sus pies “le iluminaría hasta llegar a casa”. Otro me dijo que hallaba dos faltas en la Biblia, y le contesté con las palabras de mi amigo que me proveyó la torcha: “Te iluminará hasta llegar a casa.”»
+                    </blockquote>
+                    <span class="autor">— “The American Messenger”</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «El alma está rodeada de muchos peligros. 1. Es entrampada por la mundanalidad, uno de los peligros más gigantescos contra los cuales el pueblo de Dios ha de estar especialmente en guardia -un enemigo de toda espiritualidad del pensamiento y el sentimiento. 2. Es entrampada por el egoísmo -un enemigo a toda caridad generosa y del corazón, a toda generosidad y filantropía cristianas. 3. Es entrampada por la incredulidad - el enemigo de la oración, la confianza sencilla y todo esfuerzo cristiano personal. Estos no son peligros imaginarios. Los encontramos en la vida cotidiana. Nos amenazan en todo momento y con frecuencia hemos de lamentarnos por los estragos que hacen en nuestros corazones.»
+                    </blockquote>
+                    <span class="autor">— George Barlow</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «¿Dónde están las herramientas con que hizo el mundo? ¿Dónde está la llana con que hizo la bóveda del cielo? ¿Y la pala con que cavó el mar? Lo hizo todo de la nada. Así pues, encomienda tu alma al mismo fiel Creador.»
+                    </blockquote>
+                    <span class="autor">— Thomas Manton</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Feliz el hombre que acierta el término medio exacto obrando de modo que crea en Dios, y creyendo en Dios de modo que obre sin temor.»
+                    </blockquote>
+                    <span class="autor">— C. H. S.</span>
+                </div>
+            </section>
+
+            <!-- CATEGORY -->
+            <section id="cat-pecado" class="categoria-teologica">
+                <h2>2. Pecado y Depravación</h2>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «El malo no habitará junto a Ti. ¡Oh, qué insensato es intentar hospedar a la vez a dos invitados hostiles entre sí como son Cristo Jesús y el diablo! Puedes tener la seguridad de que Cristo no va a vivir in la sala de tu corazón si al mismo tiempo hospedas al diablo en el sótano de tus pensamientos.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 4-6. Aquí se nos presenta al Señor apartando a los malos y parece que lo hace en seis pasos. Primero, no tiene placer en ellos; segundo, ellos no habitan con Él; tercero, los echa de sí, no estarán ante su vista; cuarto, su corazón se aparta de ellos: «aborreces a los que hacen iniquidad»; quinto, su mano se vuelve contra ellos: «Tú destruirás a los que hablan mentira»; sexto, su Espíritu se levanta contra ellos, y se aleja de ellos: «el Señor abomina al hombre sanguinario y engañador».»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Si un hombre aborrece a un animal venenoso, aborrece aún más al veneno. La fuerza del aborrecimiento de Dios es hacia el pecado, y por ello nosotros también deberíamos aborrecer al pecado, y aborrecerlo con toda nuestra fuerza; es una abominación para Dios, por lo que debería serlo para nosotros.»
+                    </blockquote>
+                    <span class="autor">— William Greenhill</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Sepulcro abierto es su garganta, un sepulcro lleno de cosas asquerosas, miasmas, pestilencia y enfermedad. Pero, peor aún, es un sepulcro abierto, con todos los gases y hedores saliendo del mismo y esparciendo muerte y destrucción alrededor. Así que sería una gran misericordia si la garganta de los malvados pudiera ser cerrada, pero «su garganta es sepulcro abierto» y, como resultado, toda la maldad de su corazón sale fuera por ella.<br><br>
             ¡Qué peligroso es un sepulcro abierto!; los hombres, al pasar por allí, pueden fácilmente tropezar y caer en él y encontrarse entre los muertos. ¡Ah!, cuidado con el malvado, porque hará y dirá cuanto pueda para destruirte. Hay un pensamiento dulce aquí, sin embargo. En la resurrección, ésta será no sólo de los cuerpos, sino de los caracteres.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Robert Haldane (Exposiciones de la Epístola a los Romanos)</span>
-                        <span class="snippet">«Esta figura retrata gráficamente la conducta depravada de los malos. No hay nada más abom...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Esta figura retrata gráficamente la conducta depravada de los malos. No hay nada más abominable para los sentidos que un sepulcro abierto; cuando un cadáver empieza su putrefacción salen de allí pútridas emanaciones.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Thos. Wilson</span>
-                        <span class="snippet">«Así como un sepulcro, después de haber devorado muchos cadáveres, está todavía dispuesto ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Así como un sepulcro, después de haber devorado muchos cadáveres, está todavía dispuesto a consumir más, y no está nunca satisfecho, del mismo modo el malvado, habiendo derribado a muchos con sus palabras, sigue con su nefasta pesquisa, buscando aún a quién devorar.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Con su lengua hablan lisonjas. Cuando el lobo lame al cordero, se está preparando para mo...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Con su lengua hablan lisonjas. Cuando el lobo lame al cordero, se está preparando para mojar sus dientes con la sangre del inocente animal.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">David Clarkson</span>
-                        <span class="snippet">«Los obradores de iniquidad han de perecer (Lucas 13:27).»</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Los obradores de iniquidad han de perecer (Lucas 13:27).»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 6. Destruirás a los que hablan mentira. Los que hablan mentira deben ser castigados...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 6. Destruirás a los que hablan mentira. Los que hablan mentira deben ser castigados como los obradores de maldad. Todos los mentirosos tendrán su porción en el lago que arde con fuego y azufre.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">John Trapp</span>
-                        <span class="snippet">«Sea que mientan en broma o que mientan en serio, todos los que mienten (si no se arrepien...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Sea que mientan en broma o que mientan en serio, todos los que mienten (si no se arrepienten) irán al infierno en serio.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">William Cowper</span>
-                        <span class="snippet">«En el mismo campo en que Absalón presentó batalla contra su padre estaba el roble que fue...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «En el mismo campo en que Absalón presentó batalla contra su padre estaba el roble que fue su cadalso. La mula en que cabalgaba fue su verdugo, porque la mula le llevó al árbol, y su cabello, del cual se gloriaba, sirvió como cuerda para dejarlo colgando. Poco saben los malvados que todo lo que ahora tienen será una trampa o lazo para ellos cuando Dios empiece a castigarlos.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Martín Lutero</span>
-                        <span class="snippet">«Mas yo por la abundancia de tu misericordia entraré en tu casa. ¡Qué versículo tan hermos...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Mas yo por la abundancia de tu misericordia entraré en tu casa. ¡Qué versículo tan hermoso es éste! Las palabras y el sentido de las mismas llevan consigo un poderoso contraste. Porque hay dos cosas a las cuales estamos sometidos en esta vida: la esperanza y el temor, que son, como si dijéramos, las dos fuentes de Jueces 1:15, la de arriba, y la de abajo. El temor viene al considerar las amenazas y juicios terribles de Dios; pero la esperanza viene de considerar las promesas y dulces misericordias de Dios.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Martín Lutero</span>
-                        <span class="snippet">«Por la abundancia de tu misericordia. No entraré en ella por mis propios méritos; no, ten...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Por la abundancia de tu misericordia. No entraré en ella por mis propios méritos; no, tengo una gran multitud de pecados, y, por tanto, entraré por la abundancia de tu misericordia.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Archibald Symson</span>
-                        <span class="snippet">«Al presentarte delante de Dios, el argumento más poderoso que puedes usar es tu necesidad...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Al presentarte delante de Dios, el argumento más poderoso que puedes usar es tu necesidad, tu pobreza, lágrimas, miseria, impotencia y confesarlas delante de Él, lo cual te abrirá la puerta y te proveerá de todas las cosas que Él tiene. El mendigo echado muestra sus llagas a la vista del mundo para moverles a compasión. Así deploremos nuestras desgracias ante Dios, para que Él, como el compasivo samaritano, a la vista de nuestras heridas, pueda ayudarnos a su tiempo debido.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Autor Desconocido (Trad. Puritanos)</span>
-                        <span class="snippet">«Puede parecer un cambio maravilloso en David, siendo un hombre de una mente tan grande, q...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Puede parecer un cambio maravilloso en David, siendo un hombre de una mente tan grande, que se vea así abatido y deprimido. ¿No prevaleció contra Goliat, contra el león y el oso, con su fortaleza y magnanimidad? Pero ¡ahora está sollozando, suspirando, llorando como un niño! Cuando los hombres y las bestias están frente a él, David es más que vencedor; pero cuando tiene que entendérselas con Dios, contra el cual ha pecado, queda reducido a menos que nada.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Apartaos de mí, todos los hacedores de iniquidad. El arrepentimiento es una cosa práctica...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Apartaos de mí, todos los hacedores de iniquidad. El arrepentimiento es una cosa práctica. No basta lamentar la profanación del templo del corazón; hemos de azotar a los que compran y venden y derribar las mesas de los cambistas. Un pecador perdonado va a aborrecer los pecados que costaron al Salvador su sangre.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Daniel Rogers</span>
-                        <span class="snippet">«¿No nos asombramos todos tanto de la obra perfecta de las manos de Dios realizada en la h...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «¿No nos asombramos todos tanto de la obra perfecta de las manos de Dios realizada en la hormiga, este pequeño insecto que se arrastra, como de la que ha hecho en el mayor de los elefantes? ¿De qué haya tantas partes y miembros ensamblados en un espacio tan pequeño? ¿De que una criatura tan pobre pueda proveer en el verano el alimento que necesitará en invierno?»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Lewis Stuckley</span>
-                        <span class="snippet">«Que los miembros de la iglesia no tengan demasiada familiaridad con los pecadores impenit...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Que los miembros de la iglesia no tengan demasiada familiaridad con los pecadores impenitentes. Sé que el hombre is una criatura sociable, pero esto no excusa a los santos a ser descuidados en la elección de sus compañías.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Jos. Caryl</span>
-                        <span class="snippet">«Los malvados son llamados «hacedores de iniquidad» porque están dispuestos a pecar. Tiene...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Los malvados son llamados «hacedores de iniquidad» porque están dispuestos a pecar. Tienen una fuerte inclinación en el espíritu para hacer lo malo, y lo hacen a conciencia, no a medias; no un poco aquí y un poco allá (como es posible que lo haga el hombre bueno), sino que lo engullen en grandes cantidades; están llenos de él y lo hacen plenamente; lo hacen en cantidad, y son «hacedores de iniquidad».»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Juan Calvino</span>
-                        <span class="snippet">«Vers. 6. El juicio que has convocado. David, para orar debidamente, reposa en la Palabra ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 6. El juicio que has convocado. David, para orar debidamente, reposa en la Palabra y promesa de Dios; y el resultado de su ejercicio es éste: Señor, no soy llevado por la ambición, o la pasión voluntariosa y necia, o el deseo corrompido, desconsiderado, de pedirte todo lo que agrada a mi carne; sino que es la clara luz de tu Palabra la que me dirige, y en ella me fundo con firmeza.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 12. Si no se arrepiente, Él afilará su espada. La espada de Dios ha sido afilada en...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 12. Si no se arrepiente, Él afilará su espada. La espada de Dios ha sido afilada en la piedra que gira de nuestra maldad diaria, y si no nos arrepentimos, con presteza nos hará pedazos. El pecador no tiene otra alternativa.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«¡Cuán pocos son los que creen que Dios llamará a cuentas al malvado! Si lo creyéramos, te...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «¡Cuán pocos son los que creen que Dios llamará a cuentas al malvado! Si lo creyéramos, temblaríamos como el que está dentro de una casa que se derrumba; nos esforzaríamos por «salvarnos de esta generación depravada».»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Thos. Guthrie</span>
-                        <span class="snippet">«La obra que se hace en amor pasa a ser la mitad de difícil y tediosa. Es como con una pie...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «La obra que se hace en amor pasa a ser la mitad de difícil y tediosa. Es como con una piedra grande, que si intentamos moverla en el aire o sobre el suelo no lo conseguimos. Pero si inundamos el campo donde se halla y la piedra queda enterrada en el agua, ahora, una vez sumergida, hallamos que aplicando nuestra fuerza la podemos mover de su lugar con nuestro brazo. Del mismo modo, bajo las influencias celestiales de la gracia, la marea del amor se levanta, envuelve nuestros deberes y dificultades, y un niño puede hacer la labor de un hombre, y un hombre la de un gigante.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Robert Cawdray</span>
-                        <span class="snippet">«Vers. 8. Un cristiano fiel, tanto si abunda en la riqueza, el honor, las riquezas (la tri...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 8. Un cristiano fiel, tanto si abunda en la riqueza, el honor, las riquezas (la trinidad del mundo), sino en el perdón del pecado... [Texto truncado en origen, se preserva el nodo]»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">William Gurnall</span>
-                        <span class="snippet">«La nube cargada pronto deja caer lluvia; el mortero cargado pronto se dispara cuando se l...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «La nube cargada pronto deja caer lluvia; el mortero cargado pronto se dispara cuando se le aplica el fuego. Un alma que medita está en potencia próxima a la oración.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Joseph Caryl</span>
-                        <span class="snippet">«Enoc anduo tanto con Dios que andaba como Dios; no «andaba como los hombres», algo que el...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Enoc anduo tanto con Dios que andaba como Dios; no «andaba como los hombres», algo que el apóstol reprueba (1ª Corintios 3:3). Andaba tan poco como el mundo, que permaneció poco en el mundo.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Enmudezcan los labios mentirosos, que profieren insolencias contra el justo. Los pensamie...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Enmudezcan los labios mentirosos, que profieren insolencias contra el justo. Los pensamientos propios orgullosos con frecuencia dan por resultado estimaciones devaluadoras de los demás. Cuanto más espacio procuramos para nosotros, menos queda para nuestros vecinos. ¡Qué iniquidad es que los personajes indeseables siempre estén despotricando contra los hombres buenos! No tienen capacidad para apreciar el valor moral, del cual ellos carecen por completo, y tienen la desvergüenza de ascender al tribunal y juzgar a los hombres, a cuyo lado ellos no son más que escoria.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 22. Decía yo en mi inquietud: Cortado soy de delante de tus ojos, etc. Generalmente...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 22. Decía yo en mi inquietud: Cortado soy de delante de tus ojos, etc. Generalmente, cuando tenemos prisa farfullamos lo que no debemos. Las palabras precipitadas las dice la lengua en un momento, pero pueden permanecer durante muchos años en la conciencia.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Anónimo Puritano</span>
-                        <span class="snippet">«¡Oh, qué amor le debemos a Cristo, que ha abodado por nosotros cuando nosotros no teníamo...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «¡Oh, qué amor le debemos a Cristo, que ha abodado por nosotros cuando nosotros no teníamos nada que decir! ¡Esto nos ha sacado del foso de los leones y de las fauces del león rugiente!»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Timothy Rogers</span>
-                        <span class="snippet">«La bondad de Dios es inescrutable; cuán inmensa es la excelencia de su majestad para que ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «La bondad de Dios es inescrutable; cuán inmensa es la excelencia de su majestad para que se digne mirar a una persona como yo; que me haya dado paz cuando estaba llena de terror y andaba continuamente en medio del fuego y el azufre.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Anónimo / Simeon Ash</span>
-                        <span class="snippet">«Vers. 24. Esforzaos todos vosotros. El ánimo del cristiano puede ser descrito así: Es la ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 24. Esforzaos todos vosotros. El ánimo del cristiano puede ser descrito así: Es la audacia indomable de un corazón santificado que se aventura a afrontar dificultades y sufrir penalidades por una buena causa cuando Dios le llama a ello. La audacia que hay en los brutos es mencionada como semejante al valor que Dios concede a los hombres (Ezequiel 3:9). Esta es la promesa del Señor: «Como el diamante, más duro que el pedernal, he hecho yo tu frente.» La locución «más duro» es la misma en el hebreo que se usa in este texto —fortiorem petra—, la roca que no teme las inclemencias del tiempo: verano o invierno, sol o lluvia, calor o frío, heladas o nieve; no se sonroja, no se arruga, no cambia en su calidad; es todavía la misma.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Simeon Ash</span>
-                        <span class="snippet">«Amado, el valor no consiste en un ojo penetrante, una mirada hosca, en palabras altisonan...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Amado, el valor no consiste en un ojo penetrante, una mirada hosca, en palabras altisonantes; sino que consiste en los hechos, el vigor de tu brazo, de tu pecho. La raíz de donde viene el coraje es el amor a Dios; todos los santos de Dios que aman al Señor son de buen ánimo. El amor a Cristo me constriñe a estas empresas, dice el apóstol (2ª Corintios 5:14). La regla por la cual se rige es la Palabra de Dios: lo que el Señor se ha complacido en dejarnos registrado para la guía del cristiano en las páginas sagradas (1º Crónicas 22:12, 13). Y el final, al cual se refiere, es Dios. Porque para todo hombre santificado, siendo un hombre que se niega a sí mismo y mira a Dios y sus intereses, Dios es su centro, en el que reposan sus actividades y sus empresas; y su alma no se satisface, ni puede hacerlo, si no es en Dios.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Simeon Ash</span>
-                        <span class="snippet">«El cuartear los deseos carnales, para un hombre, es como cuartear su propio cuerpo; es un...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «El cuartear los deseos carnales, para un hombre, es como cuartear su propio cuerpo; es un trabajo doloroso y penoso, como si un hombre se cortara sus propios pies, se cortara las manos o se pinchara sus propios ojos, como expresan Cristo y el apóstol Pablo.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Archibald Symson</span>
-                        <span class="snippet">«Feliz, tres veces feliz, el hombre que puede edificar tanto como ha derribado.»</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Feliz, tres veces feliz, el hombre que puede edificar tanto como ha derribado.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Bienaventurado aquel a quien es perdonada su transgresión. Un perdón de la transgresión p...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Bienaventurado aquel a quien es perdonada su transgresión. Un perdón de la transgresión pleno, instantáneo, irreversible, vuelve el infierno del pobre pecador en un cielo y le convierte, de heredero de ira, en participante de bendición. La palabra traducida por «perdón» en el original es «quitar», como una carga que es quitada o una barrera eliminada. ¡Qué descanso y alivio! Le costó a nuestro Salvador sudar sangre el llevar nuestra carga. Sí, le costó la vida el quitarla. Sansón se llevó las puertas de Gaza a cuestas, pero ¿qué era esto comparado con el peso que Jesús llevó en favor nuestro?»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Thomas Watson</span>
-                        <span class="snippet">«El santo David, al comienzo de este Salmo nos muestra en qué consiste la verdadera felici...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «El santo David, al comienzo de este Salmo nos muestra en qué consiste la verdadera felicidad: no en la hermosura, el honor, las riquezas (la trinidad del mundo), sino en el perdón del pecado. Pablo exclama: «He obtenido misericordia» (1ª Timoteo 1:13). Cuando el Señor perdona a un pecador, Él no paga una deuda, sino que concede un legado. Dios, al perdonar el pecado, remite la culpa y el castigo. La culpa clama a la justicia: tan pronto como Adán hubo comido la fruta, vio la espada flameante y oyó la maldición; pero en la remisión Dios parece decir al pecador: «Aunque has caído en las manos de mi justicia y mereces la muerte, a pesar de ello te absuelvo, y todo lo que está cargado a tu cuenta queda remitido.»»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Cubierto su pecado. Cubierto por Dios, como el arca estaba cubierta por el propiciatorio,...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Cubierto su pecado. Cubierto por Dios, como el arca estaba cubierta por el propiciatorio, como Noé fue cubierto por el diluvio, como los egipcios fueron cubiertos por las profundidades del mar. ¡Qué cubierta ha de ser que esconda para siempre de la vista del Dios Omnisciente toda la inmundicia de la carne y del espíritu! El que ha visto una vez el pecado en toda su horrible deformidad, puede apreciar la felicidad de no tener que verlo más.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Richard Alleine</span>
-                        <span class="snippet">«Hay una forma de cubrir el pecado que es una maldición (Proverbios 28:13). «El que encubr...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Hay una forma de cubrir el pecado que es una maldición (Proverbios 28:13). «El que encubre sus pecados, no prosperará.» Hay un modo de encubrirlo, que es no confesarlo, o lo que es peor, negarlo —Gehazi lo usó—, un cubrir el pecado con una mentira; y hay también un cubrir el pecado al justificarnos: «No he hecho esto», o «No era nada malo». Todas éstas son formas falsas de cubrirlo; el que cubre así su pecado no prosperará. Pero hay una forma bendita de cubrir el pecado: el perdón del pecado es esconderlo de la vista, y esto es la bienaventuranza.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Adam Clarke</span>
-                        <span class="snippet">«Vers. 1, 2. En estos versículos se mencionan cuatro males: 1) Transgresión, pesha; 2) pec...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 1, 2. En estos versículos se mencionan cuatro males: 1) Transgresión, pesha; 2) pecado, chataah; 3) iniquidad, avon; 4) doblez, remiyah. El primero significa pasarse de la raya, hacer lo prohibido. El segundo significa errar el blanco, no hacer lo mandado; pero es con frecuencia tomado como expresión pecaminosa, o pecado en la naturaleza, que produce transgresión in la vida. El tercero significa lo que se ha desviado de su curso o situación apropiados; algo moralmente deformado o tergiversado; iniquidad, que es contrario a equidad o justicia. El cuarto significa fraude, dolo, doblez, etc. Para quitar estos males son mencionados tres actos: perdonar, cubrir, no imputar.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Suplemento Exegético</span>
-                        <span class="snippet">«Vers. 1-2, 6-7. ¿Quién es bienaventurado? No el que cubre, esconde o no confiesa su pecad...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 1-2, 6-7. ¿Quién es bienaventurado? No el que cubre, esconde o no confiesa su pecado. En tanto que David estaba en este estado, era muy desgraciado. Había doblez en su espíritu (2), miseria in su corazón, sus mismos huesos habían envejecido, su jugo se había secado como en una sequía de verano (3, 4).»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 2. Bienaventurado el hombre a quien Jehová no imputa iniquidad. Nota las tres palab...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 2. Bienaventurado el hombre a quien Jehová no imputa iniquidad. Nota las tres palabras usadas con tanta frecuencia para denotar desobediencia: transgresión, pecado e iniquidad, son las tres cabezas del cancerbero del infierno, pero nuestro glorioso Señor ha hecho callar sus ladridos contra los suyos que creen para siempre. La trinidad del pecado es vencida por la Trinidad del cielo.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Y en cuyo espíritu no hay doblez. Libre de culpa, libre de doblez. Los que son justificad...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Y en cuyo espíritu no hay doblez. Libre de culpa, libre de doblez. Los que son justificados de culpa son santificados de falsedad. Un mentiroso no es un alma perdonada. La traición, la doblez, la disimulación, la tacañería, son rasgos de los hijos del diablo, pero el que ha sido limpiado de pecado es veraz, sincero y simple como un niño.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">J. W. Reeve</span>
-                        <span class="snippet">«Cuando ha sido perdonado, el creyente tiene el valor de ser veraz ante Dios; puede permit...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Cuando ha sido perdonado, el creyente tiene el valor de ser veraz ante Dios; puede permitirirse el abandonar la doblez in el espíritu. ¿Quién no declara todos sus débitos cuando otro está dispuesto a pagarlos? ¿Quién no declararía su enfermedad si estuviera seguro de ser curado con ello?»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">J. W. Reeve</span>
-                        <span class="snippet">«La fe verdadera no sólo sabe que la doblez es imposible delante de Dios, sino también que...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «La fe verdadera no sólo sabe que la doblez es imposible delante de Dios, sino también que ya no es necesaria. El creyente no tiene nada que esconder; se ve como delante de Dios, abierto y desnudo; y si ha aprendido a verse a sí mismo tal cual es, también ha aprendido a ver a Dios cuando se revela.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Comentario Exegético</span>
-                        <span class="snippet">«Vers. 3. Se consumieron mis huesos. ¡Qué clase de muerte es el pecado! ¡Es una enfermedad...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 3. Se consumieron mis huesos. ¡Qué clase de muerte es el pecado! ¡Es una enfermedad pestilencial! ¡Un fuego in los huesos! En tanto que intentamos cubrir nuestro pecado ruge por dentro y, como una herida infectada, se hincha horriblemente y es causa de gran dolor.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Colector Puritano</span>
-                        <span class="snippet">«En mi gemir todo el día. Nadie conoce los dolores de la convicción de pecado como el que ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «En mi gemir todo el día. Nadie conoce los dolores de la convicción de pecado como el que ha pasado por ella. El potro, la rueda, el haz llameante son fáciles de soportar comparados con el Tófet que es una conciencia culpable inflamada dentro del pecho: es mejor sufrir todas las enfermedades que aquejan la carne que yacer bajo el sentimiento aplastante de la ira del Dios Todopoderoso. La Inquisición española, con todas sus torturas, no era nada comparada con la pesquisa de la conciencia dentro del corazón.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 4. Porque de día y de noche pesaba sobre mí tu mano. El dedo de Dios puede aplastar...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 4. Porque de día y de noche pesaba sobre mí tu mano. El dedo de Dios puede aplastarnos -¿qué no puede hacer su mano?- y está presionando de modo pesado y continuo. Bajo los terrores de la conciencia los hombres tienen poco descanso, día y noche; porque los tristes pensamientos de todo el día les acosan in sus dormitorios y les persiguen in sus sueños, o bien les dejan despiertos in un sudor frío de temor; es mejor llevar un mundo in el hombro, como Atlas, que la mano de Dios in el corazón, como David.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Nathanael Hardy</span>
-                        <span class="snippet">«Vers. 4, 5. Si vuestras ofensas han sido, no como mosquitos, sino como camellos, nuestra ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 4, 5. Si vuestras ofensas han sido, no como mosquitos, sino como camellos, nuestra pena ha de ser, no una gota, sino un océano. Los pecados carmesí requieren lágrimas de sangre; y si Pedro pecó vergonzosamente, tuvo que llorar amargamente. Por lo tanto, si tu vida antigua ha sido una retahíla de iniquidades, una cuerda bien trenzada, un escrito repleto de borrones, un curso manchado con pecados diversos y serios, multiplica tus confesiones y amplía tu humillación; dobla tus ayunos y triplica tus oraciones; derrama tus lágrimas y acarrea profundos suspiros. En una palabra, repite e incrementa tu reconocimiento, aunque, como dice el apóstol in otro caso: «No te aflijas como los que no tienen esperanza», que ante tu arrepentimiento sincero y apropiado la bondad divina va a perdonarte los pecados.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Isaac Craven</span>
-                        <span class="snippet">«Vers. 5. My pecado te declaré, y no encubrí my iniquidad. Entre los hombres, una confesió...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 5. My pecado te declaré, y no encubrí my iniquidad. Entre los hombres, una confesión franca abre el paso a la sentencia; pero con Dios, cuanto más lamenta un pecador su ofensa más se atenúa la ira de su Juez. El pecado llama la justicia, puesto que es una ofensa contra Dios; con todo, una vez es una herida para el alma, le mueve a la misericordia y la clemencia.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Nathanael Hardy</span>
-                        <span class="snippet">«Vers. 6. Por esto orará a Ti todo santo, dice David. ¡Por esto! ¿Qué? Sus pecados. Y ¿qui...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 6. Por esto orará a Ti todo santo, dice David. ¡Por esto! ¿Qué? Sus pecados. Y ¿quién? No es el inicuo, sino el santo, in este sentido, que tiene motivos para orar. ¿Y por qué ha de orar? Sin duda, para que le sea renovado el perdón, incrementada la gracia y perfeccionada la gloria. No podemos decir que no tenemos pecado. ¡Oh!, oremos, pues, con David: «No entres in juicio con tu siervo, ¡oh Jehová!»»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 7. Tú eres my refugio. Observa que el mismo hombre que in el versículo cuatro estab...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 7. Tú eres my refugio. Observa que el mismo hombre que in el versículo cuatro estaba oprimido por la presencia de Dios aquí halla refugio in Él. Ve lo que pueden hacer la sincera confesión y el pleno perdón. El evangelio in la doctrina de la sustitución hace de Él nuestro refugio, cuando de otro modo sería nuestro Juez.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">John Donne</span>
-                        <span class="snippet">«Vers. 9. No seáis como el caballo, o como el mulo. Según la naturaleza de estas dos besti...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 9. No seáis como el caballo, o como el mulo. Según la naturaleza de estas dos bestias, los padres y otros expositores han dado varias interpretaciones, o por lo menos alusiones. Consideran que el caballo y el mulo admiten a un jinete, una carga, sin discreción o diferencia, sin debate o consideración; no preguntan si el jinete is noble o villano, ni si la carga es de oro para el tesoro u hortalizas para el mercado. Y estos expositores hallan la misma indiferencia in el pecador habitual a toda clase de pecado; tanto si es por placer, o para beneficio, o para compañía, todos son pecados.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Colector Puritano</span>
-                        <span class="snippet">«Que han de ser sujetados con cabestro y con freno, porque si no, no se pueden dominar. El...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Que han de ser sujetados con cabestro y con freno, porque si no, no se pueden dominar. El freno de la aflicción muestra lo duros que somos de dominar; las bridas de la enfermedad y dolencias manifiestan lo obstinado de nuestra voluntad. No deberíamos ser tratados como mulas si no hubiera mucho del asno in nosotros.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 10. Muchos dolores habrá para el impío. El que siembra pecados cosechará aflicción ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 10. Muchos dolores habrá para el impío. El que siembra pecados cosechará aflicción in gavillas copiosas. Las penas de la conciencia, el desengaño, el terror, son la herencia segura del pecador in el tiempo, y luego las penas de remordimiento y desesperación para siempre. Mas al que espera in Jehová, le rodeará la misericordia. El malvado tiene un enjambre de avispas que le rodean, many penas; pero nosotros tenemos un enjambre de abejas que producen miel.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Albert Barnes</span>
-                        <span class="snippet">«Se verá rodeado de misericordia, como nos rodea el aire o la luz del sol. Hallará miseric...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Se verá rodeado de misericordia, como nos rodea el aire o la luz del sol. Hallará misericordia y favor por todas partes: in casa, fuera; de día, de noche; in sociedad, in soledad; in enfermedad, in salud; in vida, in muerte; in el tiempo, in la eternidad. Andará entre misericordia, morirá entre misericoridias; vivirá in un mundo mejor in medio de las misericoridias eternas.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">El Tesoro Cristiano</span>
-                        <span class="snippet">««Nota bien este texto» dijo Richard Adkins a su nieto Abel, que estaba leyéndole el Salmo...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    ««Nota bien este texto» dijo Richard Adkins a su nieto Abel, que estaba leyéndole el Salmo treinta y dos-. «Nota este texto: "Al que espera in Jehová, le rodea la misericordia." Lo leí in my juventud y lo creí; y ahora lo leo in my ancianidad, y, gracias a Dios, sé que es verdad. Oh, es una gran bendición in medio de los goces y sufrimientos del mundo, Abel, el confiar in el Señor».»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Exégeta Anónimo</span>
-                        <span class="snippet">«Vers. 11. Alegraos. La felicidad no es sólo un privilegio, sino que es nuestro deber. Ver...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 11. Alegraos. La felicidad no es sólo un privilegio, sino que es nuestro deber. Verdaderamente servimos a un Dios generoso, puesto que hace que una parte de nuestra obediencia sea el estar gozosos. ¡Qué pecaminosas son nuestras murmuraciones rebeldes! Leemos de uno que murió al pie del patíbulo, de la inmensa alegría que tuvo al recibir el perdón de su monarca; y ¿vamos a recibir el perdón gratuito del Rey de reyes y, con todo, nos entregamos a una pena inexcusable?»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon / Dickson</span>
-                        <span class="snippet">«Título: Este canto de alabanza no tiene título o indicación de autor; «nos enseña» dice D...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Título: Este canto de alabanza no tiene título o indicación de autor; «nos enseña» dice Dickson- «a ver las sagradas Escrituras como totalmente inspiradas por Dios, y no atribuirles valor según los escritores de las mismas». Alabanza de Jehová es el motivo de este cántico sagrado.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Escolástico de la Verdad</span>
-                        <span class="snippet">«¡De qué modo tan absurdo tratan los filósofos el origen del mundo! ¡Qué pocos han razonad...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «¡De qué modo tan absurdo tratan los filósofos el origen del mundo! ¡Qué pocos han razonado de modo sistemático sobre este tema tan esencial! Nuestro profeta resuelve la importante cuestión con un solo principio; y lo que es más notable: este principio, que es expresado noblemente, lleva consigo la evidencia más clara. El principio es: «Por la palabra de Jehová fueron hechos los cielos, y todo el ejército de ellos por el aliento de su boca» (vers. 6). Esta es la explicación más racional que se ha dado nunca de la creación del mundo. El mundo es la obra de una voluntad eficiente por sí misma, y este principio solamente puede explicar su creación.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Comentario Sistemático</span>
-                        <span class="snippet">«La doctrina de la providencia expresada in estas palabras: «Dios considera las obras de l...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «La doctrina de la providencia expresada in estas palabras: «Dios considera las obras de los habitantes de la tierra» es una consecuencia necesaria de su principio «Dios formó sus corazones»; y este principio es una consecuencia necesaria de lo que el Salmista había indicado antes como explicación del origen del mundo.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Tratado de la Providencia Trascendente</span>
-                        <span class="snippet">«Una de las objeciones más especiosas que se han opuesto nunca a la doctrina de la provide...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Una de las objeciones más especiosas que se han opuesto nunca a la doctrina de la providencia es el contraste entre la grandeza de Dios y la pequeñez del hombre. ¿Cómo puede una criatura tan insignificante como el hombre ser objeto del cuidado y atención de un ser tan magnífico como Dios? No hay objeción que pueda ser más especiosa o, in apariencia, más invencible. La distancia entre el insecto más rudimentario y el monarca más poderoso, que pisa y aplasta a los reptiles sin la menor consideración para ellos, es una imagen muy imperfecta de la distancia entre Dios y el hombre. Lo que prueba que estaría por debajo de la dignidad del monarca el observar los movimientos de las hormigas, o gusanos, e interesarse in sus acciones y castigarlas o premiarlas, parece demostrar que Dios se degradaría si observara, dirigiera, castigara o premiara a la Humanidad, que es infinitamente inferior a Él.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Zephaniah Smyth</span>
-                        <span class="snippet">«¿Por qué permite Dios que los malvados acusen a los fieles de tales cosas cuando son inoc...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «¿Por qué permite Dios que los malvados acusen a los fieles de tales cosas cuando son inocentes? Si Dios quisiera podría impedirlo, y cerrar la boca de los malvados para que no pudieran hablar in contra de sus hijos. Como todas las cosas obran para bien de los que aman a Dios, también resulta esto para el bien del pueblo de Dios. Hay un bien cuádruple que saca de aquí para beneficio de ellos: Primero, por este medio Dios los humilla, y hace que examinen con diligencia lo que hay de malo y oculto in sus propios corazones. Segundo, por este medio Dios les pone de rodillas con más frecuencia, para que le busquen para abogar su causa. Tercero, Dios usa el reproche de los malos como una preservación contra el crimen mismo del que se les acusa. Cuarto, Dios nos enseña cómo juzgar rectamente a los demás; in el futuro, no escucharán los falsos informes sobre sus prójimos.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">William Gurnall</span>
-                        <span class="snippet">«Tales son la ceguera y corrupción de nuestra naturaleza, que nuestros pensamientos de Él ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Tales son la ceguera y corrupción de nuestra naturaleza, que nuestros pensamientos de Él se hallan deformados hasta que por el ojo de la fe vemos su rostro in el cristal de la Palabra. En realidad, es natural que cada hombre desee acomodar sus deseos carnales a un concepto tal de Dios que le sea favorable y cómodo. Dios nos dice: "¿Pensabas que de cierto sería yo como tú?" (Salmo 50:21). Los pecadores hacen con Dios como los etíopes coptos con los ángeles, a quienes in sus cuadros los pintan caras negras para que se parezcan a ellos.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Stephen Charnock</span>
-                        <span class="snippet">«Esto hacen los hombres cuando ruegan sobre pecados pequeños, veniales, tales que Dios no ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Esto hacen los hombres cuando ruegan sobre pecados pequeños, veniales, tales que Dios no va a considerar dignos de nota; y como ellos piensan que es así, por tanto Dios ha de pensar lo mismo. El hombre, con un orgullo descomunal, quisiera encaramarse al trono del Todopoderoso y establecer una contradicción con la voluntad de Dios, al poner su propia voluntad y no la de Dios como la regla y escuadra de sus acciones. Este principio comenzó in el Paraíso cuando Adán no quiso atenerse a la voluntad revelada de Dios para él.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Thomas Goodwin</span>
-                        <span class="snippet">«La conciencia es un medio para frenar y restringir, controlar y reprender a la naturaleza...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «La conciencia es un medio para frenar y restringir, controlar y reprender a la naturaleza corrupta y las formas crecientes de la misma. No está in calidad de habitante nativo, sino como una guarnición militar plantada in una ciudad rebelde por el gran Gobernador del mundo, para mantener la rebelión de sus habitantes dentro de límites, pues de otro modo estallaría in una indescriptible confusión.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Teólogo del Sistema</span>
-                        <span class="snippet">«Como enseñaba San Agustín, Dios juzgó que era mejor sacar bien del mal que simplemente no...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Como enseñaba San Agustín, Dios juzgó que era mejor sacar bien del mal que simplemente no permitir el mal. Sin la entrada del pecado in el orden decretado, el glorioso atributo de la Misericordia habría permanecido desconocido por la eternidad, pues la misericordia no es otra cosa que la bondad infinita aplicada directamente a la miseria humana.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">John Owen / Gary Thomas</span>
-                        <span class="snippet">«Cuidado, amado hermano, con pensar que la santidad es una carga pesada. El matrimonio te ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Cuidado, amado hermano, con pensar que la santidad es una carga pesada. El matrimonio te hace santo al obligarte a morir a ti mismo diariamente. Y cuando mueres a ti mismo, Cristo vive in ti; y donde Cristo vive, hay plenitud de gozo. El matrimonio, por tanto, no fue diseñado primariamente por el Creador para hacernos felices bajo los términos de la carne, sino para hacernos santos; y es precisamente in esa santidad donde el alma halla la más profunda, duradera y verdadera felicidad que glorifica a Dios.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Neciamente han soñado que los becerros con cuernos y pezuñas podían agradar al Señor, cua...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Neciamente han soñado que los becerros con cuernos y pezuñas podían agradar al Señor, cuando en realidad El busca corazones y almas. Se han imaginado impíamente que Jehová necesita estas provisiones, y que si ellos proveen su altar de animales engordados, El estará contento. Lo que tenía por objeto su instrucción pasó a ser su confianza. No recuerdan que “obedecer es mejor que los sacrificios, y el atender, mejor que la grosura de los carneros”.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Stephen Charnock</span>
-                        <span class="snippet">«Vers. 11, 12. Con nuestros pensamientos secretos de merecer algo de El por nuestros actos...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 11, 12. Con nuestros pensamientos secretos de merecer algo de El por nuestros actos religiosos lo que hacemos es mostrar nuestro desprecio a la suficiencia de Dios, como si Dios estuviera en deuda con nosotros, se viera obligado a algo. Como si nuestras devociones pudieran traer una bienaventuranza a Dios mayor que la que ya posee esencialmente, cuando, realmente, “nuestra bondad no pasa a El”.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Anónimo (Tradición Puritana)</span>
-                        <span class="snippet">«Concepto extraño éste el de un Dios hambriento. Con todo, si una idea absurda fuera verda...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Concepto extraño éste el de un Dios hambriento. Con todo, si una idea absurda fuera verdad, si el Señor deseara la carne, no se la pediría a los hombres. Él podría proveérsela de sus propias posesiones; no necesitaría aprovisionamiento procedente de sus criaturas. Incluso bajo la idea más burda posible de Dios, la fe en las ceremonias externas es altamente ridícula. ¿Piensan los hombres que el Señor necesita banderas y música, incienso y lino fino? Si fuera así, las estrellas levantarían su estandarte, los vientos y las olas serían su orquesta, diez mil veces diez mil flores exhalarían perfume, la nieve sería su alba, el arco iris su cinto, las nubes de luz su manto. ¡Oh necios y tardos de corazón, adoráis lo que no sabéis!»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">George Swinnock</span>
-                        <span class="snippet">«Vers. 4-6. El paño teñido en crudo conserva mejor el color. Los discípulos en la juventud...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 4-6. El paño teñido en crudo conserva mejor el color. Los discípulos en la juventud resultan ángeles en la edad adulta. El uso y la experiencia refuerzan y confirman toda clase de arte y ciencia. Cuanto más tiempo ha sido criado tu hijo en la escuela de Cristo, más capaz será de resistir las estratagemas y falacias de Satanás, y evitarías. Cuanto más ha estado aprendiendo este oficio, más habilidad y deleite tendrá al adorar y gozarse del bendito Dios. El árbol, cuando es maduro, resiste bien el viento, justo en la forma en que se hizo rígido el tronco cuando era joven. Los hijos de Merindal contestaron de tal forma en cuestiones de religión ante el obispo de Cavailon que los perseguía, que uno presente dijo al obispo: “He de confesar que he estado presente en disputas de doctores de la Sorbona, pero nunca he aprendido tanto como de estos niños.” Siete niños a la vez sufrieron el martirio con Sinfrosia, una matrona piadosa: su madre. Esta es la bendición que con frecuencia acompaña la crianza religiosa; por tanto, Juliano el apóstata, para impedir el crecimiento del cristianismo, no permitía que los niños aprendieran enseñanza humana o divina. Filipo de Macedonia estaba contento de que Alejandro hubiera nacido en tanto que vivía Aristóteles, para que pudiera ser instruido por él en su filosofía. No es una misericordia pequeña el que tus hijos hayan nacido en los días del evangelio, y en un valle de visión, una tierra de luz, donde pueden ser instruidos en el cristianismo. ¡Oh, no falles, pues, en familiarizar a tus hijos con la naturaleza de Dios, las natures y oficios de Cristo, su propia pecaminosidad natural y su miseria, el camino y el medio de su recuperación, el fin y objeto por el cual fueron enviados al mundo, la necesidad de regeneración y vida santa, si es que han de escapar de la muerte eterna! ¡Ay!, ¿cómo es posible que puedan nunca llegar al cielo si no sáben el camino?»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">George Swinnock</span>
-                        <span class="snippet">«Vers. 8. Y no sean como sus padres, generación contumaz y rebelde. No había oportunidad p...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 8. Y no sean como sus padres, generación contumaz y rebelde. No había oportunidad para mejora. Los padres obstinados en sus caminos y rebeldes contra el camino de Dios son tristes ejemplos para los hijos; y es de desear que una mejor instrucción pueda traer una raza mejor. Es común en algunas regiones que los hombres consideren las costumbres familiares como la mejor regla de crianza; pero la desobediencia no tiene que ser disculpada por el hecho de ser hereditaria. La lepra no deja de ser repulsiva porque se halla en la familia desde hace mucho tiempo.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">George Swinnock</span>
-                        <span class="snippet">«Vers. 14. Y toda la noche con resplandor de fuego. Tan constante era el cuidado del Gran ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 14. Y toda la noche con resplandor de fuego. Tan constante era el cuidado del Gran Pastor, que noche y día había la prueba de su presencia ante el pueblo. La nube que era sombra de día, era luz de noche. Lo mismo es la gracia que calma nuestros goces, alivia y es solaz para nuestras penas. ¡Que misericordia tener una luz de fuego con nosotros, entre los horrores desoladores del desierto de la aflicción! Nuestro Dios ha sido todo esto para nosotros, y ¿vamos nosotros a mostramos infieles a El? Hemos sentido la sombra y la light según nuestras circunstancias cambiantes han requerido.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Musculus</span>
-                        <span class="snippet">«Contra este Dios ellos habían añadido pecado tras pecado. El pecar es simplemente humano,...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Contra este Dios ellos habían añadido pecado tras pecado. El pecar es simplemente humano, y les ocurre a los santos incluso después de haber recibido la gracia; pero el pecar contra Dios significa un grado singular de impiedad.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Brownlow North (Nosotros mismos)</span>
-                        <span class="snippet">«No hay nada vivo que no requiera alimento; cuando no lo deseamos es que estamos muertos, ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «No hay nada vivo que no requiera alimento; cuando no lo deseamos es que estamos muertos, y el que lo desearan no era un pecado. Su pecado consistía en dudar, o bien de que Dios pudiera o quisiera sostenerlos en el desierto, o que permitiera que los que seguían su dirección carecieran de algo necesario. Esto era su pecado. Era el mismo pecado de los cristianos de hoy. Estos israelitas necesitaban provisión de alimento diario para sus cuerpos, y lo mismo los cristianos hoy para su alma. El no necesitarlo es una señal de muerte, y el alma viviente pronto moriría sin este alimento. Así que, lejos de ser un pecado, nuestro Señor ha declarado que bienaventurado es el que tiene hambre y sed de justicia; añadiendo la más preciosa promesa, que los tales serán satisfechos. Pero es un pecado, y un gran pecado, en caso de que esta provisión no sea visible a los sentidos de modo inmediato, el murmurar y el temer. Fue para probar su fe que estas cosas ocurrieron a los israelitas, como las pruebas de todos los cristianos en todas las edades; y es “después de haber sufrido un tiempo” que podemos esperar ser corroborados y satisfechos.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Juan Calvino</span>
-                        <span class="snippet">«Vers. 30. Aún no habían quitado de sí su anhelo. Esto implica que todavía ardían en su de...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 30. Aún no habían quitado de sí su anhelo. Esto implica que todavía ardían en su deseo carnal. Si se objeta que esto no está de acuerdo con la frase anterior, en que dice: “Comieron, y se saciaron; y se cumplió, pues, su deseo”, contestaremos que si, como sabemos muy bien, la mente de los hombres no es mantenida dentro de los limites de la razón y la templanza, se vuelve insaciable; y, por ello, una gran abundancia no va a extinguir el fuego de un apetito corrupto.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Alexander Carmichael</span>
-                        <span class="snippet">«Considera que hay más satisfacción real en mortificar la concupiscencia que en hacer prov...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Considera que hay más satisfacción real en mortificar la concupiscencia que en hacer provisión para ella o satisfacerla; hay más placer verdadero en contradecir y frustrar nuestra carne que en gratificaría; si hubiera algún placer verdadero in el pecado, el infierno no sería infierno, porque cuanto más pecado, más gozo. No podrás satisfacer un deseo camal aunque hagas todo lo que puedas y te conviertas en un esclavo del mismo; crees que si tuvieras el deseo de tu corazón tendrías descanso:. te equivocas mucho; ellos lo tuvieron.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Edward Payson</span>
-                        <span class="snippet">«Cuantos me escucháis si queréis ver vuestros pecados en su color verdadero; si queréis es...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Cuantos me escucháis si queréis ver vuestros pecados en su color verdadero; si queréis estimar su número, magnitud y maldad, traedlos a un lugar santo, donde no se ve otra cosa que pureza inmaculada y esplendor de una gloria increada; donde el sol mismo aparecería como una mancha oscura; y allí, en medio de este circulo de inteligencias seráficas, con el Dios infinito derramando toda la luz de su rostro alrededor, examinad vuestras vidas, contemplad vuestras transgresiones y ved cuál es su aspecto. Recordad que Dios, en cuya presencia estáis, es el Ser que prohíbe el pecado, y que la trasgresión de su ley eterna es pecado, y que contra El es cometido todo lo que es pecado.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«La Vulgata traduce “Nuestros años pasan como una telaraña.” Implica que nuestra vida es t...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «La Vulgata traduce “Nuestros años pasan como una telaraña.” Implica que nuestra vida es tan frágil como el hilo de una telaraña. ¿Qué hay más frágil que una telaraña? ¿En qué hay más sabiduría que en la complicada fábrica del cuerpo humano? And ¿qué hay que pueda ser destruido más fácilmente. El cristal es como granito, comparado con la carne; el vapor es cual roca, comparado con la vida.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Anónimo (Reflexión Pastoral)</span>
-                        <span class="snippet">«Un alma que no se alimenta de la Palabra es un alma que se debilita hasta quedar indefens...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Un alma que no se alimenta de la Palabra es un alma que se debilita hasta quedar indefensa ante los ataques del pecado. Cuando hay “hambre espiritual” porque no leemos, nuestra oscuridad interna nos ofrece “comida chatarra”: vicios, distracciones o ídolos que prometen llenarnos pero nos dejan vacíos.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">James Hamilton / Hugh Stowell</span>
-                        <span class="snippet">«¿Hay algún hijo de Dios que pueda mirar el historial variado de su corazón o su historia ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «¿Hay algún hijo de Dios que pueda mirar el historial variado de su corazón o su historia externa, and no ver la bondad y severidad, severidad y bondad, siguiéndole en todo su camino? ¿Ha tenido que beber alguna copa tan amarga que no pueda decir: “Aquí no hay misericordia”? ¿Ha tenido un curso tan esplendoroso que pueda decir: “No hay disciplina ni corrección aquí”? ¿Ha tenido alguna vez malas noticias, y no ha habido noticias buenas que hayan contrarrestado las anteriores y le hayan aliviado? ¿Ha sido su cielo tan oscuro que no haya habido ninguna estrella visible, o una nube tan negra que no haya habido rastro de promesa de arco iris en ella? John Newton hace notar: “La gracia de Dios es tan necesaria para crear un temperamento recto en el cristiano al romperse un plato como cuando muere un hijo suyo”; y como nadie puede decir cuando amanece el día si aquél será el que le presente la mayor prueba de su vida, ¡qué prudente es orar sin cesar: “Sostenme conforme a tu Palabra”!»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Anónimo (Tradición Exegética)</span>
-                        <span class="snippet">«Vers. 40, 41. Se encendió, por tanto, el furor de Jehová sobre su pecado, y abominó su he...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 40, 41. Se encendió, por tanto, el furor de Jehová sobre su pecado, y abominó su heredad. El sentimiento descrito es como el de un marido que todavía ama a su esposa culpable y, con todo, cuando piensa en su lujuria, siente que toda su naturaleza se levanta en justa ira contra ella, de modo que el contemplarlo aflige su alma.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 24. Y sus maravillas en las profundidades. No todos los creyentes tienen la misma e...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 24. Y sus maravillas en las profundidades. No todos los creyentes tienen la misma experiencia, profunda; pero con buen fin, para que puedan hacer negocios por El, el Señor envía a algunos de sus santos al mar de las tribulaciones del alma, y allí ven las maravillas de la gracia divina, que los demás no conocen. El navegar por los abismos de la depravación interna, las inmensas aguas de la pobreza, las olas de la persecución y las marejadas de la tentación necesita a Dios por encima de los demás, y le encuentran.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Vers. 30. Luego se alegran, porque se apaciguaron. Nadie puede apreciar tanto este versíc...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 30. Luego se alegran, porque se apaciguaron. Nadie puede apreciar tanto este versículo como el que ha estado en una tormenta en el mar. No hay música más dulce que el ruido que hace la cadena al ser arrastrada por los marineros cuando dejan caer el anda; no hay lugar que parezca más deseable que la bahía o ensenada en que el barco se halla en reposo. Y así los guía al puerto que deseaban. Cuanto más desapacible es la travesía, más anhelan el puerto los marineros; y todos vemos el cielo como un puerto cuando se multiplican nuestras tribulaciones.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. Spurgeon</span>
-                        <span class="snippet">«Esta es mi gloria. Con mi intelecto, mi lengua, mi facultad poética, mi habilidad musical...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Esta es mi gloria. Con mi intelecto, mi lengua, mi facultad poética, mi habilidad musical, todo lo que me da renombre y me confiere honor. Es mi gloria poder hablar y no ser un animal mudo, por tanto mi voz manifestará tu alabanza; es mi gloria conocer a Dios y no ser un pagano, y por tanto mi intelecto instruido te adorará; es mi gloria ser un saint y no ser ya un rebelde, por tanto la gracia que he recibido te bendecirá; es mi gloria ser inmortal y no un mero bruto que perece, por tanto mi vida interior celebrará tu majestad.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Joseph Caryl</span>
-                        <span class="snippet">«Un hombre piadoso no sólo hace lo que es bueno, sino que se deleita en hacerlo, su alma s...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Un hombre piadoso no sólo hace lo que es bueno, sino que se deleita en hacerlo, su alma se apega a ello; está en su elemento cuando está haciéndolo; no hay nada que más le cuadre y agrade que hacer su deber; lo ama, sí, le gusta hacerlo, y lo ama aunque no pueda hacerlo.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">“The American Messenger”</span>
-                        <span class="snippet">«Después de haber andado dos miles para visitar un vecindario en que pocos podían leer, co...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Después de haber andado dos miles para visitar un vecindario en que pocos podían leer, con el objetivo de pasar la velada leyendo a una compañía que estaba reunida para escuchar, y estando ya a punto de regresar por una senda estrecha, a través de bosques, en que el camino se bifurcaba varias veces, se me proveyó de una antorcha de tea. Objeté que era demasiado pequeña, pues pesaba menos de media libra. “Le llegará hasta su casa”, contestó mi huésped. Le dije: “El viento la apagará.” Me respondió: “Estará encendida hasta que llegue a su casa.” “Pero ¿si llueve?”, dije. El replicó: “Le iluminará hasta su casa.” A pesar de mis temores, tuve luz abundante en el camino hasta casa y me proporcionó una ilustración apropiada, creo, de la forma en que nuestros corazones indecisos podrían ser guiados por la “senda estrecha”. Si aceptáramos la Biblia como nuestro guía, sería una lámpara para nuestros pies, que iluminaría nuestro camino al cielo. Uno me dijo que tenía cinco objeciones a la Biblia. Le contesté que si la tomara como lámpara para sus pies “le iluminaría hasta llegar a casa”. Otro me dijo que hallaba dos faltas en la Biblia, y le contesté con las palabras de mi amigo que me proveyó la torcha: “Te iluminará hasta llegar a casa.”»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Edward Reyner</span>
-                        <span class="snippet">«Una lengua sin freno es un vehiculum diaboli, el carro del diablo, en que cabalga en triu...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Una lengua sin freno es un vehiculum diaboli, el carro del diablo, en que cabalga en triunfo. Míster Greenham describe la lengua muy bien por medio de contrarios o diferencias: «Es un trozo de carne pequeño en cantidad, pero poderoso en calidad; es blando, pero resbaladizo; se mueve ligero, pero cae pesado; su toque es blando, pero hiere profundo; sale rápidamente, pero quema de modo vehemente; pincha muy adentro, y por tanto no cura con facilidad; tiene fácilmente libertad de salir, pero no halla medios fáciles para regresar; una vez inflamada por el fuelle de Satanás, es como un fuego del infierno.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. S.</span>
-                        <span class="snippet">«Neciamente han soñado que los becerros con cuernos y pezuñas podían agradar al Señor, cua...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Neciamente han soñado que los becerros con cuernos y pezuñas podían agradar al Señor, cuando en realidad El busca corazones y almas. Se han imaginado impíamente que Jehová necesita estas provisiones, y que si ellos proveen su altar de animales engordados, El estará contento. Lo que tenía por objeto su instrucción pasó a ser su confianza. No recuerdan que «obedecer es mejor que los sacrificios, y el atender, mejor que la grosura de los carneros».»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Stephen Charnock</span>
-                        <span class="snippet">«Vers. 11, 12. Con nuestros pensamientos secretos de merecer algo de El por nuestros actos...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 11, 12. Con nuestros pensamientos secretos de merecer algo de El por nuestros actos religiosos lo que hacemos es mostrar nuestro desprecio a la suficiencia de Dios, como si Dios estuviera en deuda con nosotros, se viera obligado a algo. Como si nuestras devociones pudieran traer una bienaventuranza a Dios mayor que la que ya posee esencialmente, cuando, realmente, «nuestra bondad no pasa a El».»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">George Swinnock</span>
-                        <span class="snippet">«Vers. 4-6. El paño teñido en crudo conserva mejor el color. Los discípulos en la juventud...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 4-6. El paño teñido en crudo conserva mejor el color. Los discípulos en la juventud resultan ángeles en la edad adulta. El uso y la experiencia refuerzan y confirman toda clase de arte y ciencia. Cuanto más tiempo ha sido criado tu hijo en la escuela de Cristo, más capaz será de resistir las estratagemas y falacias de Satanás, y evitarías. Cuanto más ha estado aprendiendo este oficio, más habilidad y deleite tendrá al adorar y gozarse del bendito Dios. El árbol, cuando es maduro, resiste bien el viento, justo en la forma en que se hizo rígido el tronco cuando era joven.<br><br>Los hijos de Merindal contestaron de tal forma en cuestiones de religión ante el obispo de Cavailon que los perseguía, que uno presente dijo al obispo: «He de confesar que he estado presente en disputas de doctores de la Sorbona, pero nunca he aprendido tanto como de estos niños.» Siete niños a la vez sufrieron el martirio con Sinfrosia, una matrona piadosa: su madre.<br><br>Esta es la bendición que con frecuencia acompaña la crianza religiosa; por tanto, Juliano el apóstata, para impedir el crecimiento del cristianismo, no permitía que los niños aprendieran enseñanza humana o divina.<br><br>Filipo de Macedonia estaba contento de que Alejandro hubiera nacido en tanto que vivía Aristóteles, para que pudiera ser instruido por él en su filosofía. No es una misericordia pequeña el que tus hijos hayan nacido en los días del evangelio, y en un valle de visión, una tierra de luz, donde pueden ser instruidos en el cristianismo. ¡Oh, no falles, pues, en familiarizar a tus hijos con la naturaleza de Dios, las naturalezas y oficios de Cristo, su propia pecaminosidad natural y su miseria, el camino y el medio de su recuperación, el fin y objeto por el cual fueron enviados al mundo, la necesidad de regeneración y vida santa, si es que han de escapar de la muerte eterna! ¡Ay!, ¿cómo es posible que puedan nunca llegar al cielo si no sáben el camino?»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Anónimo</span>
-                        <span class="snippet">«Vers. 14. Y toda la noche con resplandor de fuego. Tan constante era el cuidado del Gran ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 14. Y toda la noche con resplandor de fuego. Tan constante era el cuidado del Gran Pastor, que noche y día había la prueba de su presencia ante el pueblo. La nube que era sombra de día, era luz de noche. Lo mismo es la gracia que calma nuestros goces, alivia y es solaz para nuestras penas. ¡Que misericordia tener una luz de fuego con nosotros, entre los horrores desoladores del desierto de la aflicción! Nuestro Dios ha sido todo esto para nosotros, y ¿vamos nosotros a mostramos infieles a El?. Hemos sentido la sombra y la luz según nuestras circunstancias cambiantes han requerido.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Brownlow North</span>
-                        <span class="snippet">«No hay nada vivo que no requiera alimento; cuando no lo deseamos es que estamos muertos, ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «No hay nada vivo que no requiera alimento; cuando no lo deseamos es que estamos muertos, y el que lo desearan no era un pecado. Su pecado consistía en dudar, o bien de que Dios pudiera o quisiera sostenerlos en el desierto, o que permitiera que los que seguían su dirección carecieran de algo necesario. Esto era su pecado. Era el mismo pecado de los cristianos de hoy. Estos israelitas necesitaban provisión de alimento diario para sus cuerpos, y lo mismo los cristianos hoy para su alma. El no necesitarlo es una señal de muerte, y el alma viviente pronto moriría sin este alimento.<br><br>Así que, lejos de ser un pecado, nuestro Señor ha declarado que bienaventurado es el que tiene hambre y sed de justicia; añadiendo la más preciosa promesa, que los tales serán satisfechos.<br><br>Pero es un pecado, y un gran pecado, en caso de que esta provisión no sea visible a los sentidos de modo inmediato, el murmurar y el temer. Fue para probar su fe que estas cosas ocurrieron a los israelitas, como las pruebas de todos los cristianos en todas las edades; y es «después de haber sufrido un tiempo» que podemos esperar ser corroborados y satisfechos.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Juan Calvino</span>
-                        <span class="snippet">«Vers. 30. Aún no habían quitado de sí su anhelo. Esto implica que todavía ardían en su de...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Vers. 30. Aún no habían quitado de sí su anhelo. Esto implica que todavía ardían en su deseo carnal. Si se objeta que esto no está de acuerdo con la frase anterior, en que dice: «Comieron, y se saciaron; y se cumplió, pues, su deseo», contestaremos que si, como sabemos muy bien, la mente de los hombres no es mantenida dentro de los limites de la razón y la templanza, se vuelve insaciable; y, por ello, una gran abundancia no va a extinguir el fuego de un apetito corrupto.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Alexander Carmichael</span>
-                        <span class="snippet">«Considera que hay más satisfacción real en mortificar la concupiscencia que en hacer prov...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Considera que hay más satisfacción real en mortificar la concupiscencia que en hacer provisión para ella o satisfacerla; hay más placer verdadero en contradecir y frustrar nuestra carne que en gratificaría; si hubiera algún placer verdadero en el pecado, el infierno no sería infierno, porque cuanto más pecado, más gozo. No podrás satisfacer un deseo camal aunque hagas todo lo que puedas y te conviertas en un esclavo del mismo; crees que si tuvieras el deseo de tu corazón tendrías descanso:. te equivocas mucho; ellos lo tuvieron.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. S.</span>
-                        <span class="snippet">«La Vulgata traduce «Nuestros años pasan como una telaraña.» Implica que nuestra vida es t...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «La Vulgata traduce «Nuestros años pasan como una telaraña.» Implica que nuestra vida es tan frágil como el hilo de una telaraña. ¿Qué hay más frágil que una telaraña? ¿En qué hay más sabiduría que en la complicada fábrica del cuerpo humano? Y ¿qué hay que pueda ser destruido más fácilmente. El cristal es como granito, comparado con la carne; el vapor es cual roca, comparado con la vida.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Anónimo</span>
-                        <span class="snippet">«Un alma que no se alimenta de la Palabra es un alma que se debilita hasta quedar indefens...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Un alma que no se alimenta de la Palabra es un alma que se debilita hasta quedar indefensa ante los ataques del pecado. Cuando hay "hambre espiritual" porque no leemos, nuestra oscuridad interna nos ofrece "comida chatarra": vicios, distracciones o ídolos que prometen llenarnos pero nos dejan vacíos.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">James Hamilton Hugh Stowell</span>
-                        <span class="snippet">«¿Hay algún hijo de Dios que pueda mirar el historial variado de su corazón o su historia ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «¿Hay algún hijo de Dios que pueda mirar el historial variado de su corazón o su historia externa, y no ver la bondad y severidad, severidad y bondad, siguiéndole en todo su camino? ¿Ha tenido que beber alguna copa tan amarga que no pueda decir: «Aquí no hay misericordia»? ¿Ha tenido un curso tan esplendoroso que pueda decir: «No hay disciplina ni corrección aquí»? ¿Ha tenido alguna vez malas noticias, y no ha habido noticias buenas que hayan contrarrestado las anteriores y le hayan aliviado? ¿Ha sido su cielo tan oscuro que no haya habido ninguna estrella visible, o una nube tan negra que no haya habido rastro de promesa de arco iris en ella?<br><br>John Newton hace notar: «La gracia de Dios es tan necesaria para crear un temperamento recto en el cristiano al romperse un plato como cuando muere un hijo suyo»; y como nadie puede decir cuando amanece el día si aquél será el que le presente la mayor prueba de su vida, ¡qué prudente es orar sin cesar: «Sostenme conforme a tu Palabra»!»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. S.</span>
-                        <span class="snippet">«Esta es mi gloria. Con mi intelecto, mi lengua, mi facultad poética, mi habilidad musical...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Esta es mi gloria. Con mi intelecto, mi lengua, mi facultad poética, mi habilidad musical, todo lo que me da renombre y me confiere honor. Es mi gloria poder hablar y no ser un animal mudo, por tanto mi voz manifestará tu alabanza; es mi gloria conocer a Dios y no ser un pagano, y por tanto mi intelecto instruido te adorará; es mi gloria ser un santo y no ser ya un rebelde, por tanto la gracia que he recibido te bendecirá; es mi gloria ser inmortal y no un mero bruto que perece, por tanto mi vida interior celebrará tu majestad.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">«The American Messenger»</span>
-                        <span class="snippet">«Después de haber andado dos millas para visitar un vecindario en que pocos podían leer, c...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Después de haber andado dos millas para visitar un vecindario en que pocos podían leer, con el objetivo de pasar la velada leyendo a una compañía que estaba reunida para escuchar, y estando ya a punto de regresar por una senda estrecha, a través de bosques, en que el camino se bifurcaba varias veces, se me proveyó de una antorcha de tea. Objeté que era demasiado pequeña, pues pesaba menos de media libra. «Le llegará hasta su casa», contestó mi huésped. Le dije: «El viento la apagará.» Me respondió: «Estará encendida hasta que llegue a su casa.» «Pero ¿si llueve?», dije. El replicó: «Le iluminará hasta su casa. »<br><br>A pesar de mis temores, tuve luz abundante en el camino hasta casa y me proporcionó una ilustración apropiada, creo, de la forma en que nuestros corazones indecisos podrían ser guiados por la «senda estrecha». Si aceptáramos la Biblia como nuestro guía, sería una lámpara para nuestros pies, que iluminaría nuestro camino al cielo. Uno me dijo que tenía cinco objeciones a la Biblia. Le contesté que si la tomara como lámpara para sus pies «le iluminaría hasta llegar a casa». Otro me dijo que hallaba dos faltas en la Biblia, y le contesté con las palabras de mi amigo que me proveyó la antorcha: «Te iluminará hasta llegar a casa.»»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Edward Reyner</span>
-                        <span class="snippet">«Una lengua sin freno es un vehiculum diaboli, el carro del diablo, en que cabalga en triu...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Una lengua sin freno es un vehiculum diaboli, el carro del diablo, en que cabalga en triunfo. Míster Greenham describe la lengua muy bien por medio de contrarios o diferencias: «Es un trozo de carne pequeño en cantidad, pero poderoso en calidad; es blando, pero resbaladizo; se mueve ligero, pero cae pesado; su toque es blando, pero hiere profundo; sale rápidamente, pero quema de modo vehemente; pincha muy adentro, y por tanto no cura con facilidad; tiene fácilmente libertad de salir, pero no halla medios fáciles para regresar; una vez inflamada por el fuelle de Satanás, es como un fuego del infierno.»»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">George Barlow</span>
-                        <span class="snippet">«El alma está rodeada de muchos peligros. 1. Es entrampada por la mundanalidad, uno de los...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «El alma está rodeada de muchos peligros. 1. Es entrampada por la mundanalidad, uno de los peligros más gigantescos contra los cuales el pueblo de Dios ha de estar especialmente en guardia -un enemigo de toda espiritualidad del pensamiento y el sentimiento. 2. Es entrampada por el egoísmo -un enemigo a toda caridad generosa y del corazón, a toda generosidad y filantropía cristianas. 3. Es entrampada por la incredulidad - el enemigo de la oración, la confianza sencilla y todo esfuerzo cristiano personal. Estos no son peligros imaginarios. Los encontramos en la vida cotidiana. Nos amenazan en todo momento y con frecuencia hemos de lamentarnos por los estragos que hacen en nuestros corazones.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Thomas Manton</span>
-                        <span class="snippet">«¿Dónde están las herramientas con que hizo el mundo? ¿Dónde está la llana con que hizo la...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «¿Dónde están las herramientas con que hizo el mundo? ¿Dónde está la llana con que hizo la bóveda del cielo? ¿Y la pala con que cavó el mar? Lo hizo todo de la nada. Así pues, encomienda tu alma al mismo fiel Creador.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Benjamin Franklin</span>
-                        <span class="snippet">«Se nos asegura, señores, en los escritos sagrados que «Si el Señor no edifica la casa, en...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Se nos asegura, señores, en los escritos sagrados que «Si el Señor no edifica la casa, en vano trabajan los que la edifican.» Yo lo creo firmemente; y también creo que sin su ayuda concurrente procederemos en esta edificación política más o menos como los que edificaron Babel; seremos divididos por nuestros pequeños intereses locales, parciales; confundiremos las perspectivas; y acabaremos siendo un reproche y ejemplo de escarnio para las edades futuras.»<br><br>«Y lo que es peor, la humanidad es posible que, más adelante, por este desgraciado ejemplo, desespere de poder establecer un gobierno basándolo en la sabiduría humana y lo deje al azar, a la guerra o a la conquista. Por tanto, propongo que, a partir de ahora, se ofrezcan en esta asamblea oraciones, implorando la asistencia del cielo y su bendición en nuestras deliberaciones, cada mañana antes de emprender las discusiones; y que uno o más de los eclesiásticos de esta ciudad sean requeridos para oficiar en este servicio.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">C. H. S.</span>
-                        <span class="snippet">«Feliz el hombre que acierta el término medio exacto obrando de modo que crea en Dios, y c...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Feliz el hombre que acierta el término medio exacto obrando de modo que crea en Dios, y creyendo en Dios de modo que obre sin temor.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Christopher Wordsworth</span>
-                        <span class="snippet">«Cuando el primer Adán dormía, el Señor le hizo un don precioso: le sacó una costilla del ...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Cuando el primer Adán dormía, el Señor le hizo un don precioso: le sacó una costilla del costado y formó con ella una mujer, Eva, su esposa, la madre de todos los vivientes. Así, cuando Cristo, el segundo Adán, el verdadero Jedidiah, el bienamado Hijo de Dios, dormía en la muerte de la cruz, Dios formó de El, en su muerte, y por su muerte, mediante la corriente de vida que fluía de su precioso costado, la iglesia, la Eva espiritual, la madre, de todos los vivientes; y se la dio por esposa. Así, El edificó para El, en su sueño, el templo espiritual de su iglesia.»
-                </blockquote>
-            </details>
-            <details class="bloque-acordeon">
-                <summary>
-                    <div class="info-cita">
-                        <span class="autor">Robert Nisbet</span>
-                        <span class="snippet">«Hay un temor de Jehová que es en sí terror y no bendición. La aprensión con que el rebeld...</span>
-                    </div>
-                </summary>
-                <blockquote style="margin: 0; border-left: 3px solid var(--oro-profundo); padding-left: 15px; text-align: justify;">
-                    «Hay un temor de Jehová que es en sí terror y no bendición. La aprensión con que el rebelde en armas mira a su soberano triunfante y ultrajado, o los entimientos con que un hombre que ha hecho una bancarrota fraudulenta mira a su acreedor severo; o un criminal convicto en su conciencia a su juez estricto, son tipos frecuentes de los sentimientos del hombre con referencia a Dios. Este, evidentemente, no puede ser el temor que es la bendición de que habla este Salmo. Ni puede ser, por otra parte, el temor que atormenta del auto reproche.<br><br>Su temor es el que, producen las revelaciones que nosotros creemos y que recibimos de El en su Palabra. Es el temor que un hijo siente por su padre amado -un temor de ofender-; es el temor que siente uno que ha sido rescatado de la destrucción por su benefactor, que, noblemente y sacrificándose, se ha interpuesto para salvarle -un temor de obrar de modo indigno a su bondad-;<br>y es el que llena el pecho de un rebelde perdonado y agradecido en presencia de un soberano venerado -un temor de que si él se olvida de la bondad del otro le puede causar pesadumbre.<br><br>Este es el temor del cristiano ahora: un temor que inspira la reverencia por la majestad, la gratitud por las misericordias; el temor de desagradarle, el deseo de su aprobación, y anhelo de la comunión del cielo; el temor de los ángeles y del Hijo bendito; el temor, no del pesar, sino del amor, que se retrae instintivamente de hacer nada que pueda contristar, u omitir nada que pudiera honrarle.<br><br>La religión es la única y gran sabiduría; y como el principio, el medio y el fin de ella es el temor del Señor, bienaventurado el hombre que es dominado por él.»
-                </blockquote>
-            </details>
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Esta figura retrata gráficamente la conducta depravada de los malos. No hay nada más abominable para los sentidos que un sepulcro abierto; cuando un cadáver empieza su putrefacción salen de allí pútridas emanaciones.»
+                    </blockquote>
+                    <span class="autor">— Robert Haldane (Exposiciones de la Epístola a los Romanos)</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Así como un sepulcro, después de haber devorado muchos cadáveres, está todavía dispuesto a consumir más, y no está nunca satisfecho, del mismo modo el malvado, habiendo derribado a muchos con sus palabras, sigue con su nefasta pesquisa, buscando aún a quién devorar.»
+                    </blockquote>
+                    <span class="autor">— Thos. Wilson</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Los obradores de iniquidad han de perecer (Lucas 13:27).»
+                    </blockquote>
+                    <span class="autor">— David Clarkson</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 6. Destruirás a los que hablan mentira. Los que hablan mentira deben ser castigados como los obradores de maldad. Todos los mentirosos tendrán su porción en el lago que arde con fuego y azufre.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Sea que mientan en broma o que mientan en serio, todos los que mienten (si no se arrepienten) irán al infierno en serio.»
+                    </blockquote>
+                    <span class="autor">— John Trapp</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «En el mismo campo en que Absalón presentó batalla contra su padre estaba el roble que fue su cadalso. La mula en que cabalgaba fue su verdugo, porque la mula le llevó al árbol, y su cabello, del cual se gloriaba, sirvió como cuerda para dejarlo colgando. Poco saben los malvados que todo lo que ahora tienen será una trampa o lazo para ellos cuando Dios empiece a castigarlos.»
+                    </blockquote>
+                    <span class="autor">— William Cowper</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Por la abundancia de tu misericordia. No entraré en ella por mis propios méritos; no, tengo una gran multitud de pecados, y, por tanto, entraré por la abundancia de tu misericordia.»
+                    </blockquote>
+                    <span class="autor">— Martín Lutero</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Puede parecer un cambio maravilloso en David, siendo un hombre de una mente tan grande, que se vea así abatido y deprimido. ¿No prevaleció contra Goliat, contra el león y el oso, con su fortaleza y magnanimidad? Pero ¡ahora está sollozando, suspirando, llorando como un niño! Cuando los hombres y las bestias están frente a él, David es más que vencedor; pero cuando tiene que entendérselas con Dios, contra el cual ha pecado, queda reducido a menos que nada.»
+                    </blockquote>
+                    <span class="autor">— Autor Desconocido (Trad. Puritanos)</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Apartaos de mí, todos los hacedores de iniquidad. El arrepentimiento es una cosa práctica. No basta lamentar la profanación del templo del corazón; hemos de azotar a los que compran y venden y derribar las mesas de los cambistas. Un pecador perdonado va a aborrecer los pecados que costaron al Salvador su sangre.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Que los miembros de la iglesia no tengan demasiada familiaridad con los pecadores impenitentes. Sé que el hombre is una criatura sociable, pero esto no excusa a los santos a ser descuidados en la elección de sus compañías.»
+                    </blockquote>
+                    <span class="autor">— Lewis Stuckley</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Los malvados son llamados «hacedores de iniquidad» porque están dispuestos a pecar. Tienen una fuerte inclinación en el espíritu para hacer lo malo, y lo hacen a conciencia, no a medias; no un poco aquí y un poco allá (como es posible que lo haga el hombre bueno), sino que lo engullen en grandes cantidades; están llenos de él y lo hacen plenamente; lo hacen en cantidad, y son «hacedores de iniquidad».»
+                    </blockquote>
+                    <span class="autor">— Jos. Caryl</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 6. El juicio que has convocado. David, para orar debidamente, reposa en la Palabra y promesa de Dios; y el resultado de su ejercicio es éste: Señor, no soy llevado por la ambición, o la pasión voluntariosa y necia, o el deseo corrompido, desconsiderado, de pedirte todo lo que agrada a mi carne; sino que es la clara luz de tu Palabra la que me dirige, y en ella me fundo con firmeza.»
+                    </blockquote>
+                    <span class="autor">— Juan Calvino</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 12. Si no se arrepiente, Él afilará su espada. La espada de Dios ha sido afilada en la piedra que gira de nuestra maldad diaria, y si no nos arrepentimos, con presteza nos hará pedazos. El pecador no tiene otra alternativa.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «¡Cuán pocos son los que creen que Dios llamará a cuentas al malvado! Si lo creyéramos, temblaríamos como el que está dentro de una casa que se derrumba; nos esforzaríamos por «salvarnos de esta generación depravada».»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 8. Un cristiano fiel, tanto si abunda en la riqueza, el honor, las riquezas (la trinidad del mundo), sino en el perdón del pecado...»
+                    </blockquote>
+                    <span class="autor">— Robert Cawdray</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Enmudezcan los labios mentirosos, que profieren insolencias contra el justo. Los pensamientos propios orgullosos con frecuencia dan por resultado estimaciones devaluadoras de los demás. Cuanto más espacio procuramos para nosotros, menos queda para nuestros vecinos. ¡Qué iniquidad es que los personajes indeseables siempre estén despotricando contra los hombres buenos! No tienen capacidad para apreciar el valor moral, del cual ellos carecen por completo, y tienen la desvergüenza de ascender al tribunal y juzgar a los hombres, a cuyo lado ellos no son más que escoria.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «La bondad de Dios es inescrutable; cuán inmensa es la excelencia de su majestad para que se digne mirar a una persona como yo; que me haya dado paz cuando estaba llena de terror y andaba continuamente en medio del fuego y el azufre.»
+                    </blockquote>
+                    <span class="autor">— Timothy Rogers</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Amado, el valor no consiste en un ojo penetrante, una mirada hosca, en palabras altisonantes; sino que consiste en los hechos, el vigor de tu brazo, de tu pecho. La raíz de donde viene el coraje es el amor a Dios; todos los santos de Dios que aman al Señor son de buen ánimo. El amor a Cristo me constriñe a estas empresas, dice el apóstol (2ª Corintios 5:14). La regla por la cual se rige es la Palabra de Dios: lo que el Señor se ha complacido en dejarnos registrado para la guía del cristiano en las páginas sagradas (1º Crónicas 22:12, 13). Y el final, al cual se refiere, es Dios. Porque para todo hombre santificado, siendo un hombre que se niega a sí mismo y mira a Dios y sus intereses, Dios es su centro, en el que reposan sus actividades y sus empresas; y su alma no se satisface, ni puede hacerlo, si no es en Dios.»
+                    </blockquote>
+                    <span class="autor">— Simeon Ash</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Bienaventurado aquel a quien es perdonada su transgresión. Un perdón de la transgresión pleno, instantáneo, irreversible, vuelve el infierno del pobre pecador en un cielo y le convierte, de heredero de ira, en participante de bendición. La palabra traducida por «perdón» en el original es «quitar», como una carga que es quitada o una barrera eliminada. ¡Qué descanso y alivio! Le costó a nuestro Salvador sudar sangre el llevar nuestra carga. Sí, le costó la vida el quitarla. Sansón se llevó las puertas de Gaza a cuestas, pero ¿qué era esto comparado con el peso que Jesús llevó en favor nuestro?»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «El santo David, al comienzo de este Salmo nos muestra en qué consiste la verdadera felicidad: no en la hermosura, el honor, las riquezas (la trinidad del mundo), sino en el perdón del pecado. Pablo exclama: «He obtenido misericordia» (1ª Timoteo 1:13). Cuando el Señor perdona a un pecador, Él no paga una deuda, sino que concede un legado. Dios, al perdonar el pecado, remite la culpa y el castigo. La culpa clama a la justicia: tan pronto como Adán hubo comido la fruta, vio la espada flameante y oyó la maldición; pero en la remisión Dios parece decir al pecador: «Aunque has caído en las manos de mi justicia y mereces la muerte, a pesar de ello te absuelvo, y todo lo que está cargado a tu cuenta queda remitido.»»
+                    </blockquote>
+                    <span class="autor">— Thomas Watson</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Cubierto su pecado. Cubierto por Dios, como el arca estaba cubierta por el propiciatorio, como Noé fue cubierto por el diluvio, como los egipcios fueron cubiertos por las profundidades del mar. ¡Qué cubierta ha de ser que esconda para siempre de la vista del Dios Omnisciente toda la inmundicia de la carne y del espíritu! El que ha visto una vez el pecado en toda su horrible deformidad, puede apreciar la felicidad de no tener que verlo más.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Hay una forma de cubrir el pecado que es una maldición (Proverbios 28:13). «El que encubre sus pecados, no prosperará.» Hay un modo de encubrirlo, que es no confesarlo, o lo que es peor, negarlo —Gehazi lo usó—, un cubrir el pecado con una mentira; y hay también un cubrir el pecado al justificarnos: «No he hecho esto», o «No era nada malo». Todas éstas son formas falsas de cubrirlo; el que cubre así su pecado no prosperará. Pero hay una forma bendita de cubrir el pecado: el perdón del pecado es esconderlo de la vista, y esto es la bienaventuranza.»
+                    </blockquote>
+                    <span class="autor">— Richard Alleine</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 1, 2. En estos versículos se mencionan cuatro males: 1) Transgresión, pesha; 2) pecado, chataah; 3) iniquidad, avon; 4) doblez, remiyah. El primero significa pasarse de la raya, hacer lo prohibido. El segundo significa errar el blanco, no hacer lo mandado; pero es con frecuencia tomado como expresión pecaminosa, o pecado en la naturaleza, que produce transgresión in la vida. El tercero significa lo que se ha desviado de su curso o situación apropiados; algo moralmente deformado o tergiversado; iniquidad, que es contrario a equidad o justicia. El cuarto significa fraude, dolo, doblez, etc. Para quitar estos males son mencionados tres actos: perdonar, cubrir, no imputar.»
+                    </blockquote>
+                    <span class="autor">— Adam Clarke</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 1-2, 6-7. ¿Quién es bienaventurado? No el que cubre, esconde o no confiesa su pecado. En tanto que David estaba en este estado, era muy desgraciado. Había doblez en su espíritu (2), miseria in su corazón, sus mismos huesos habían envejecido, su jugo se había secado como en una sequía de verano (3, 4).»
+                    </blockquote>
+                    <span class="autor">— Suplemento Exegético</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 2. Bienaventurado el hombre a quien Jehová no imputa iniquidad. Nota las tres palabras usadas con tanta frecuencia para denotar desobediencia: transgresión, pecado e iniquidad, son las tres cabezas del cancerbero del infierno, pero nuestro glorioso Señor ha hecho callar sus ladridos contra los suyos que creen para siempre. La trinidad del pecado es vencida por la Trinidad del cielo.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Y en cuyo espíritu no hay doblez. Libre de culpa, libre de doblez. Los que son justificados de culpa son santificados de falsedad. Un mentiroso no es un alma perdonada. La traición, la doblez, la disimulación, la tacañería, son rasgos de los hijos del diablo, pero el que ha sido limpiado de pecado es veraz, sincero y simple como un niño.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 3. Se consumieron mis huesos. ¡Qué clase de muerte es el pecado! ¡Es una enfermedad pestilencial! ¡Un fuego in los huesos! En tanto que intentamos cubrir nuestro pecado ruge por dentro y, como una herida infectada, se hincha horriblemente y es causa de gran dolor.»
+                    </blockquote>
+                    <span class="autor">— Comentario Exegético</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «En mi gemir todo el día. Nadie conoce los dolores de la convicción de pecado como el que ha pasado por ella. El potro, la rueda, el haz llameante son fáciles de soportar comparados con el Tófet que es una conciencia culpable inflamada dentro del pecho: es mejor sufrir todas las enfermedades que aquejan la carne que yacer bajo el sentimiento aplastante de la ira del Dios Todopoderoso. La Inquisición española, con todas sus torturas, no era nada comparada con la pesquisa de la conciencia dentro del corazón.»
+                    </blockquote>
+                    <span class="autor">— Colector Puritano</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 4, 5. Si vuestras ofensas han sido, no como mosquitos, sino como camellos, nuestra pena ha de ser, no una gota, sino un océano. Los pecados carmesí requieren lágrimas de sangre; y si Pedro pecó vergonzosamente, tuvo que llorar amargamente. Por lo tanto, si tu vida antigua ha sido una retahíla de iniquidades, una cuerda bien trenzada, un escrito repleto de borrones, un curso manchado con pecados diversos y serios, multiplica tus confesiones y amplía tu humillación; dobla tus ayunos y triplica tus oraciones; derrama tus lágrimas y acarrea profundos suspiros. En una palabra, repite e incrementa tu reconocimiento, aunque, como dice el apóstol in otro caso: «No te aflijas como los que no tienen esperanza», que ante tu arrepentimiento sincero y apropiado la bondad divina va a perdonarte los pecados.»
+                    </blockquote>
+                    <span class="autor">— Nathanael Hardy</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 5. My pecado te declaré, y no encubrí my iniquidad. Entre los hombres, una confesión franca abre el paso a la sentencia; pero con Dios, cuanto más lamenta un pecador su ofensa más se atenúa la ira de su Juez. El pecado llama la justicia, puesto que es una ofensa contra Dios; con todo, una vez es una herida para el alma, le mueve a la misericordia y la clemencia.»
+                    </blockquote>
+                    <span class="autor">— Isaac Craven</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 6. Por esto orará a Ti todo santo, dice David. ¡Por esto! ¿Qué? Sus pecados. Y ¿quién? No es el inicuo, sino el santo, in este sentido, que tiene motivos para orar. ¿Y por qué ha de orar? Sin duda, para que le sea renovado el perdón, incrementada la gracia y perfeccionada la gloria. No podemos decir que no tenemos pecado. ¡Oh!, oremos, pues, con David: «No entres in juicio con tu siervo, ¡oh Jehová!»»
+                    </blockquote>
+                    <span class="autor">— Nathanael Hardy</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 9. No seáis como el caballo, o como el mulo. Según la naturaleza de estas dos bestias, los padres y otros expositores han dado varias interpretaciones, o por lo menos alusiones. Consideran que el caballo y el mulo admiten a un jinete, una carga, sin discreción o diferencia, sin debate o consideración; no preguntan si el jinete is noble o villano, ni si la carga es de oro para el tesoro u hortalizas para el mercado. Y estos expositores hallan la misma indiferencia in el pecador habitual a toda clase de pecado; tanto si es por placer, o para beneficio, o para compañía, todos son pecados.»
+                    </blockquote>
+                    <span class="autor">— John Donne</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 10. Muchos dolores habrá para el impío. El que siembra pecados cosechará aflicción in gavillas copiosas. Las penas de la conciencia, el desengaño, el terror, son la herencia segura del pecador in el tiempo, y luego las penas de remordimiento y desesperación para siempre. Mas al que espera in Jehová, le rodeará la misericordia. El malvado tiene un enjambre de avispas que le rodean, many penas; pero nosotros tenemos un enjambre de abejas que producen miel.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Se verá rodeado de misericordia, como nos rodea el aire o la luz del sol. Hallará misericordia y favor por todas partes: in casa, fuera; de día, de noche; in sociedad, in soledad; in enfermedad, in salud; in vida, in muerte; in el tiempo, in la eternidad. Andará entre misericordia, morirá entre misericoridias; vivirá in un mundo mejor in medio de las misericoridias eternas.»
+                    </blockquote>
+                    <span class="autor">— Albert Barnes</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Título: Este canto de alabanza no tiene título o indicación de autor; «nos enseña» dice Dickson- «a ver las sagradas Escrituras como totalmente inspiradas por Dios, y no atribuirles valor según los escritores de las mismas». Alabanza de Jehová es el motivo de este cántico sagrado.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon / Dickson</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «¿Por qué permite Dios que los malvados acusen a los fieles de tales cosas cuando son inocentes? Si Dios quisiera podría impedirlo, y cerrar la boca de los malvados para que no pudieran hablar in contra de sus hijos. Como todas las cosas obran para bien de los que aman a Dios, también resulta esto para el bien del pueblo de Dios. Hay un bien cuádruple que saca de aquí para beneficio de ellos: Primero, por este medio Dios los humilla, y hace que examinen con diligencia lo que hay de malo y oculto in sus propios corazones. Segundo, por este medio Dios les pone de rodillas con más frecuencia, para que le busquen para abogar su causa. Tercero, Dios usa el reproche de los malos como una preservación contra el crimen mismo del que se les acusa. Cuarto, Dios nos enseña cómo juzgar rectamente a los demás; in el futuro, no escucharán los falsos informes sobre sus prójimos.»
+                    </blockquote>
+                    <span class="autor">— Zephaniah Smyth</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Tales son la ceguera y corrupción de nuestra naturaleza, que nuestros pensamientos de Él se hallan deformados hasta que por el ojo de la fe vemos su rostro in el cristal de la Palabra. En realidad, es natural que cada hombre desee acomodar sus deseos carnales a un concepto tal de Dios que le sea favorable y cómodo. Dios nos dice: "¿Pensabas que de cierto sería yo como tú?" (Salmo 50:21). Los pecadores hacen con Dios como los etíopes coptos con los ángeles, a quienes in sus cuadros los pintan caras negras para que se parezcan a ellos.»
+                    </blockquote>
+                    <span class="autor">— William Gurnall</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Esto hacen los hombres cuando ruegan sobre pecados pequeños, veniales, tales que Dios no va a considerar dignos de nota; y como ellos piensan que es así, por tanto Dios ha de pensar lo mismo. El hombre, con un orgullo descomunal, quisiera encaramarse al trono del Todopoderoso y establecer una contradicción con la voluntad de Dios, al poner su propia voluntad y no la de Dios como la regla y escuadra de sus acciones. Este principio comenzó in el Paraíso cuando Adán no quiso atenerse a la voluntad revelada de Dios para él.»
+                    </blockquote>
+                    <span class="autor">— Stephen Charnock</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Como enseñaba San Agustín, Dios juzgó que era mejor sacar bien del mal que simplemente no permitir el mal. Sin la entrada del pecado in el orden decretado, el glorioso atributo de la Misericordia habría permanecido desconocido por la eternidad, pues la misericordia no es otra cosa que la bondad infinita aplicada directamente a la miseria humana.»
+                    </blockquote>
+                    <span class="autor">— Teólogo del Sistema</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Cuidado, amado hermano, con pensar que la santidad es una carga pesada. El matrimonio te hace santo al obligarte a morir a ti mismo diariamente. Y cuando mueres a ti mismo, Cristo vive in ti; y donde Cristo vive, hay plenitud de gozo. El matrimonio, por tanto, no fue diseñado primariamente por el Creador para hacernos felices bajo los términos de la carne, sino para hacernos santos; y es precisamente in esa santidad donde el alma halla la más profunda, duradera y verdadera felicidad que glorifica a Dios.»
+                    </blockquote>
+                    <span class="autor">— John Owen / Gary Thomas</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Neciamente han soñado que los becerros con cuernos y pezuñas podían agradar al Señor, cuando en realidad El busca corazones y almas. Se han imaginado impíamente que Jehová necesita estas provisiones, y que si ellos proveen su altar de animales engordados, El estará contento. Lo que tenía por objeto su instrucción pasó a ser su confianza. No recuerdan que “obedecer es mejor que los sacrificios, y el atender, mejor que la grosura de los carneros”.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Concepto extraño éste el de un Dios hambriento. Con todo, si una idea absurda fuera verdad, si el Señor deseara la carne, no se la pediría a los hombres. Él podría proveérsela de sus propias posesiones; no necesitaría aprovisionamiento procedente de sus criaturas. Incluso bajo la idea más burda posible de Dios, la fe en las ceremonias externas es altamente ridícula. ¿Piensan los hombres que el Señor necesita banderas y música, incienso y lino fino? Si fuera así, las estrellas levantarían su estandarte, los vientos y las olas serían su orquesta, diez mil veces diez mil flores exhalarían perfume, la nieve sería su alba, el arco iris su cinto, las nubes de luz su manto. ¡Oh necios y tardos de corazón, adoráis lo que no sabéis!»
+                    </blockquote>
+                    <span class="autor">— Anónimo (Tradición Puritana)</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 4-6. El paño teñido en crudo conserva mejor el color. Los discípulos en la juventud resultan ángeles en la edad adulta. El uso y la experiencia refuerzan y confirman toda clase de arte y ciencia. Cuanto más tiempo ha sido criado tu hijo en la escuela de Cristo, más capaz será de resistir las estratagemas y falacias de Satanás, y evitarías. Cuanto más ha estado aprendiendo este oficio, más habilidad y deleite tendrá al adorar y gozarse del bendito Dios. El árbol, cuando es maduro, resiste bien el viento, justo en la forma en que se hizo rígido el tronco cuando era joven. Los hijos de Merindal contestaron de tal forma en cuestiones de religión ante el obispo de Cavailon que los perseguía, que uno presente dijo al obispo: “He de confesar que he estado presente en disputas de doctores de la Sorbona, pero nunca he aprendido tanto como de estos niños.” Siete niños a la vez sufrieron el martirio con Sinfrosia, una matrona piadosa: su madre. Esta es la bendición que con frecuencia acompaña la crianza religiosa; por tanto, Juliano el apóstata, para impedir el crecimiento del cristianismo, no permitía que los niños aprendieran enseñanza humana o divina. Filipo de Macedonia estaba contento de que Alejandro hubiera nacido en tanto que vivía Aristóteles, para que pudiera ser instruido por él en su filosofía. No es una misericordia pequeña el que tus hijos hayan nacido en los días del evangelio, y en un valle de visión, una tierra de luz, donde pueden ser instruidos en el cristianismo. ¡Oh, no falles, pues, en familiarizar a tus hijos con la naturaleza de Dios, las natures y oficios de Cristo, su propia pecaminosidad natural y su miseria, el camino y el medio de su recuperación, el fin y objeto por el cual fueron enviados al mundo, la necesidad de regeneración y vida santa, si es que han de escapar de la muerte eterna! ¡Ay!, ¿cómo es posible que puedan nunca llegar al cielo si no sáben el camino?»
+                    </blockquote>
+                    <span class="autor">— George Swinnock</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Contra este Dios ellos habían añadido pecado tras pecado. El pecar es simplemente humano, y les ocurre a los santos incluso después de haber recibido la gracia; pero el pecar contra Dios significa un grado singular de impiedad.»
+                    </blockquote>
+                    <span class="autor">— Musculus</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «No hay nada vivo que no requiera alimento; cuando no lo deseamos es que estamos muertos, y el que lo desearan no era un pecado. Su pecado consistía en dudar, o bien de que Dios pudiera o quisiera sostenerlos en el desierto, o que permitiera que los que seguían su dirección carecieran de algo necesario. Esto era su pecado. Era el mismo pecado de los cristianos de hoy. Estos israelitas necesitaban provisión de alimento diario para sus cuerpos, y lo mismo los cristianos hoy para su alma. El no necesitarlo es una señal de muerte, y el alma viviente pronto moriría sin este alimento. Así que, lejos de ser un pecado, nuestro Señor ha declarado que bienaventurado es el que tiene hambre y sed de justicia; añadiendo la más preciosa promesa, que los tales serán satisfechos. Pero es un pecado, y un gran pecado, en caso de que esta provisión no sea visible a los sentidos de modo inmediato, el murmurar y el temer. Fue para probar su fe que estas cosas ocurrieron a los israelitas, como las pruebas de todos los cristianos en todas las edades; y es “después de haber sufrido un tiempo” que podemos esperar ser corroborados y satisfechos.»
+                    </blockquote>
+                    <span class="autor">— Brownlow North (Nosotros mismos)</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Considera que hay más satisfacción real en mortificar la concupiscencia que en hacer provisión para ella o satisfacerla; hay más placer verdadero en contradecir y frustrar nuestra carne que en gratificaría; si hubiera algún placer verdadero in el pecado, el infierno no sería infierno, porque cuanto más pecado, más gozo. No podrás satisfacer un deseo camal aunque hagas todo lo que puedas y te conviertas en un esclavo del mismo; crees que si tuvieras el deseo de tu corazón tendrías descanso:. te equivocas mucho; ellos lo tuvieron.»
+                    </blockquote>
+                    <span class="autor">— Alexander Carmichael</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Cuantos me escucháis si queréis ver vuestros pecados en su color verdadero; si queréis estimar su número, magnitud y maldad, traedlos a un lugar santo, donde no se ve otra cosa que pureza inmaculada y esplendor de una gloria increada; donde el sol mismo aparecería como una mancha oscura; y allí, en medio de este circulo de inteligencias seráficas, con el Dios infinito derramando toda la luz de su rostro alrededor, examinad vuestras vidas, contemplad vuestras transgresiones y ved cuál es su aspecto. Recordad que Dios, en cuya presencia estáis, es el Ser que prohíbe el pecado, y que la trasgresión de su ley eterna es pecado, y que contra El es cometido todo lo que es pecado.»
+                    </blockquote>
+                    <span class="autor">— Edward Payson</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «La Vulgata traduce “Nuestros años pasan como una telaraña.” Implica que nuestra vida es tan frágil como el hilo de una telaraña. ¿Qué hay más frágil que una telaraña? ¿En qué hay más sabiduría que en la complicada fábrica del cuerpo humano? And ¿qué hay que pueda ser destruido más fácilmente. El cristal es como granito, comparado con la carne; el vapor es cual roca, comparado con la vida.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Un alma que no se alimenta de la Palabra es un alma que se debilita hasta quedar indefensa ante los ataques del pecado. Cuando hay “hambre espiritual” porque no leemos, nuestra oscuridad interna nos ofrece “comida chatarra”: vicios, distracciones o ídolos que prometen llenarnos pero nos dejan vacíos.»
+                    </blockquote>
+                    <span class="autor">— Anónimo (Reflexión Pastoral)</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «¿Hay algún hijo de Dios que pueda mirar el historial variado de su corazón o su historia externa, and no ver la bondad y severidad, severidad y bondad, siguiéndole en todo su camino? ¿Ha tenido que beber alguna copa tan amarga que no pueda decir: “Aquí no hay misericordia”? ¿Ha tenido un curso tan esplendoroso que pueda decir: “No hay disciplina ni corrección aquí”? ¿Ha tenido alguna vez malas noticias, y no ha habido noticias buenas que hayan contrarrestado las anteriores y le hayan aliviado? ¿Ha sido su cielo tan oscuro que no haya habido ninguna estrella visible, o una nube tan negra que no haya habido rastro de promesa de arco iris en ella? John Newton hace notar: “La gracia de Dios es tan necesaria para crear un temperamento recto en el cristiano al romperse un plato como cuando muere un hijo suyo”; y como nadie puede decir cuando amanece el día si aquél será el que le presente la mayor prueba de su vida, ¡qué prudente es orar sin cesar: “Sostenme conforme a tu Palabra”!»
+                    </blockquote>
+                    <span class="autor">— James Hamilton / Hugh Stowell</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 40, 41. Se encendió, por tanto, el furor de Jehová sobre su pecado, y abominó su heredad. El sentimiento descrito es como el de un marido que todavía ama a su esposa culpable y, con todo, cuando piensa en su lujuria, siente que toda su naturaleza se levanta en justa ira contra ella, de modo que el contemplarlo aflige su alma.»
+                    </blockquote>
+                    <span class="autor">— Anónimo (Tradición Exegética)</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 24. Y sus maravillas en las profundidades. No todos los creyentes tienen la misma experiencia, profunda; pero con buen fin, para que puedan hacer negocios por El, el Señor envía a algunos de sus santos al mar de las tribulaciones del alma, y allí ven las maravillas de la gracia divina, que los demás no conocen. El navegar por los abismos de la depravación interna, las inmensas aguas de la pobreza, las olas de la persecución y las marejadas de la tentación necesita a Dios por encima de los demás, y le encuentran.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Una lengua sin freno es un vehiculum diaboli, el carro del diablo, en que cabalga en triunfo. Míster Greenham describe la lengua muy bien por medio de contrarios o diferencias: «Es un trozo de carne pequeño en cantidad, pero poderoso en calidad; es blando, pero resbaladizo; se mueve ligero, pero cae pesado; su toque es blando, pero hiere profundo; sale rápidamente, pero quema de modo vehemente; pincha muy adentro, y por tanto no cura con facilidad; tiene fácilmente libertad de salir, pero no halla medios fáciles para regresar; una vez inflamada por el fuelle de Satanás, es como un fuego del infierno.»
+                    </blockquote>
+                    <span class="autor">— Edward Reyner</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Cuando el primer Adán dormía, el Señor le hizo un don precioso: le sacó una costilla del costado y formó con ella una mujer, Eva, su esposa, la madre de todos los vivientes. Así, cuando Cristo, el segundo Adán, el verdadero Jedidiah, el bienamado Hijo de Dios, dormía en la muerte de la cruz, Dios formó de El, en su muerte, y por su muerte, mediante la corriente de vida que fluía de su precioso costado, la iglesia, la Eva espiritual, la madre, de todos los vivientes; y se la dio por esposa. Así, El edificó para El, en su sueño, el templo espiritual de su iglesia.»
+                    </blockquote>
+                    <span class="autor">— Christopher Wordsworth</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Hay un temor de Jehová que es en sí terror y no bendición. La aprensión con que el rebelde en armas mira a su soberano triunfante y ultrajado, o los entimientos con que un hombre que ha hecho una bancarrota fraudulenta mira a su acreedor severo; o un criminal convicto en su conciencia a su juez estricto, son tipos frecuentes de los sentimientos del hombre con referencia a Dios. Este, evidentemente, no puede ser el temor que es la bendición de que habla este Salmo. Ni puede ser, por otra parte, el temor que atormenta del auto reproche.<br><br>Su temor es el que, producen las revelaciones que nosotros creemos y que recibimos de El en su Palabra. Es el temor que un hijo siente por su padre amado -un temor de ofender-; es el temor que siente uno que ha sido rescatado de la destrucción por su benefactor, que, noblemente y sacrificándose, se ha interpuesto para salvarle -un temor de obrar de modo indigno a su bondad-;<br>y es el que llena el pecho de un rebelde perdonado y agradecido en presencia de un soberano venerado -un temor de que si él se olvida de la bondad del otro le puede causar pesadumbre.<br><br>Este es el temor del cristiano ahora: un temor que inspira la reverencia por la majestad, la gratitud por las misericordias; el temor de desagradarle, el deseo de su aprobación, y anhelo de la comunión del cielo; el temor de los ángeles y del Hijo bendito; el temor, no del pesar, sino del amor, que se retrae instintivamente de hacer nada que pueda contristar, u omitir nada que pudiera honrarle.<br><br>La religión es la única y gran sabiduría; y como el principio, el medio y el fin de ella es el temor del Señor, bienaventurado el hombre que es dominado por él.»
+                    </blockquote>
+                    <span class="autor">— Robert Nisbet</span>
+                </div>
+            </section>
+
+            <!-- CATEGORY -->
+            <section id="cat-gracia" class="categoria-teologica">
+                <h2>3. Gracia y Justificación</h2>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Con su lengua hablan lisonjas. Cuando el lobo lame al cordero, se está preparando para mojar sus dientes con la sangre del inocente animal.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Mas yo por la abundancia de tu misericordia entraré en tu casa. ¡Qué versículo tan hermoso es éste! Las palabras y el sentido de las mismas llevan consigo un poderoso contraste. Porque hay dos cosas a las cuales estamos sometidos en esta vida: la esperanza y el temor, que son, como si dijéramos, las dos fuentes de Jueces 1:15, la de arriba, y la de abajo. El temor viene al considerar las amenazas y juicios terribles de Dios; pero la esperanza viene de considerar las promesas y dulces misericordias de Dios.»
+                    </blockquote>
+                    <span class="autor">— Martín Lutero</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Al presentarte delante de Dios, el argumento más poderoso que puedes usar es tu necesidad, tu pobreza, lágrimas, miseria, impotencia y confesarlas delante de Él, lo cual te abrirá la puerta y te proveerá de todas las cosas que Él tiene. El mendigo echado muestra sus llagas a la vista del mundo para moverles a compasión. Así deploremos nuestras desgracias ante Dios, para que Él, como el compasivo samaritano, a la vista de nuestras heridas, pueda ayudarnos a su tiempo debido.»
+                    </blockquote>
+                    <span class="autor">— Archibald Symson</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «La obra que se hace en amor pasa a ser la mitad de difícil y tediosa. Es como con una piedra grande, que si intentamos moverla en el aire o sobre el suelo no lo conseguimos. Pero si inundamos el campo donde se halla y la piedra queda enterrada en el agua, ahora, una vez sumergida, hallamos que aplicando nuestra fuerza la podemos mover de su lugar con nuestro brazo. Del mismo modo, bajo las influencias celestiales de la gracia, la marea del amor se levanta, envuelve nuestros deberes y dificultades, y un niño puede hacer la labor de un hombre, y un hombre la de un gigante.»
+                    </blockquote>
+                    <span class="autor">— Thos. Guthrie</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «¡Oh, qué amor le debemos a Cristo, que ha abodado por nosotros cuando nosotros no teníamos nada que decir! ¡Esto nos ha sacado del foso de los leones y de las fauces del león rugiente!»
+                    </blockquote>
+                    <span class="autor">— Anónimo Puritano</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «El cuartear los deseos carnales, para un hombre, es como cuartear su propio cuerpo; es un trabajo doloroso y penoso, como si un hombre se cortara sus propios pies, se cortara las manos o se pinchara sus propios ojos, como expresan Cristo y el apóstol Pablo.»
+                    </blockquote>
+                    <span class="autor">— Simeon Ash</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Cuando ha sido perdonado, el creyente tiene el valor de ser veraz ante Dios; puede permitirirse el abandonar la doblez in el espíritu. ¿Quién no declara todos sus débitos cuando otro está dispuesto a pagarlos? ¿Quién no declararía su enfermedad si estuviera seguro de ser curado con ello?»
+                    </blockquote>
+                    <span class="autor">— J. W. Reeve</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 7. Tú eres my refugio. Observa que el mismo hombre que in el versículo cuatro estaba oprimido por la presencia de Dios aquí halla refugio in Él. Ve lo que pueden hacer la sincera confesión y el pleno perdón. El evangelio in la doctrina de la sustitución hace de Él nuestro refugio, cuando de otro modo sería nuestro Juez.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        ««Nota bien este texto» dijo Richard Adkins a su nieto Abel, que estaba leyéndole el Salmo treinta y dos-. «Nota este texto: "Al que espera in Jehová, le rodea la misericordia." Lo leí in my juventud y lo creí; y ahora lo leo in my ancianidad, y, gracias a Dios, sé que es verdad. Oh, es una gran bendición in medio de los goces y sufrimientos del mundo, Abel, el confiar in el Señor».»
+                    </blockquote>
+                    <span class="autor">— El Tesoro Cristiano</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 11. Alegraos. La felicidad no es sólo un privilegio, sino que es nuestro deber. Verdaderamente servimos a un Dios generoso, puesto que hace que una parte de nuestra obediencia sea el estar gozosos. ¡Qué pecaminosas son nuestras murmuraciones rebeldes! Leemos de uno que murió al pie del patíbulo, de la inmensa alegría que tuvo al recibir el perdón de su monarca; y ¿vamos a recibir el perdón gratuito del Rey de reyes y, con todo, nos entregamos a una pena inexcusable?»
+                    </blockquote>
+                    <span class="autor">— Exégeta Anónimo</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 14. Y toda la noche con resplandor de fuego. Tan constante era el cuidado del Gran Pastor, que noche y día había la prueba de su presencia ante el pueblo. La nube que era sombra de día, era luz de noche. Lo mismo es la gracia que calma nuestros goces, alivia y es solaz para nuestras penas. ¡Que misericordia tener una luz de fuego con nosotros, entre los horrores desoladores del desierto de la aflicción! Nuestro Dios ha sido todo esto para nosotros, y ¿vamos nosotros a mostramos infieles a El? Hemos sentido la sombra y la light según nuestras circunstancias cambiantes han requerido.»
+                    </blockquote>
+                    <span class="autor">— George Swinnock</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Esta es mi gloria. Con mi intelecto, mi lengua, mi facultad poética, mi habilidad musical, todo lo que me da renombre y me confiere honor. Es mi gloria poder hablar y no ser un animal mudo, por tanto mi voz manifestará tu alabanza; es mi gloria conocer a Dios y no ser un pagano, y por tanto mi intelecto instruido te adorará; es mi gloria ser un saint y no ser ya un rebelde, por tanto la gracia que he recibido te bendecirá; es mi gloria ser inmortal y no un mero bruto que perece, por tanto mi vida interior celebrará tu majestad.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Se nos asegura, señores, en los escritos sagrados que «Si el Señor no edifica la casa, en vano trabajan los que la edifican.» Yo lo creo firmemente; y también creo que sin su ayuda concurrente procederemos en esta edificación política más o menos como los que edificaron Babel; seremos divididos por nuestros pequeños intereses locales, parciales; confundiremos las perspectivas; y acabaremos siendo un reproche y ejemplo de escarnio para las edades futuras.»<br><br>«Y lo que es peor, la humanidad es posible que, más adelante, por este desgraciado ejemplo, desespere de poder establecer un gobierno basándolo en la sabiduría humana y lo deje al azar, a la guerra o a la conquista. Por tanto, propongo que, a partir de ahora, se ofrezcan en esta asamblea oraciones, implorando la asistencia del cielo y su bendición en nuestras deliberaciones, cada mañana antes de emprender las discusiones; y que uno o más de los eclesiásticos de esta ciudad sean requeridos para oficiar en este servicio.»
+                    </blockquote>
+                    <span class="autor">— Benjamin Franklin</span>
+                </div>
+            </section>
+
+            <!-- CATEGORY -->
+            <section id="cat-vida" class="categoria-teologica">
+                <h2>4. Disciplina y Vida Cristiana</h2>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «La nube cargada pronto deja caer lluvia; el mortero cargado pronto se dispara cuando se le aplica el fuego. Un alma que medita está en potencia próxima a la oración.»
+                    </blockquote>
+                    <span class="autor">— William Gurnall</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 22. Decía yo en mi inquietud: Cortado soy de delante de tus ojos, etc. Generalmente, cuando tenemos prisa farfullamos lo que no debemos. Las palabras precipitadas las dice la lengua en un momento, pero pueden permanecer durante muchos años en la conciencia.»
+                    </blockquote>
+                    <span class="autor">— C. H. Spurgeon</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Feliz, tres veces feliz, el hombre que puede edificar tanto como ha derribado.»
+                    </blockquote>
+                    <span class="autor">— Archibald Symson</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Que han de ser sujetados con cabestro y con freno, porque si no, no se pueden dominar. El freno de la aflicción muestra lo duros que somos de dominar; las bridas de la enfermedad y dolencias manifiestan lo obstinado de nuestra voluntad. No deberíamos ser tratados como mulas si no hubiera mucho del asno in nosotros.»
+                    </blockquote>
+                    <span class="autor">— Colector Puritano</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Vers. 30. Aún no habían quitado de sí su anhelo. Esto implica que todavía ardían en su deseo carnal. Si se objeta que esto no está de acuerdo con la frase anterior, en que dice: “Comieron, y se saciaron; y se cumplió, pues, su deseo”, contestaremos que si, como sabemos muy bien, la mente de los hombres no es mantenida dentro de los limites de la razón y la templanza, se vuelve insaciable; y, por ello, una gran abundancia no va a extinguir el fuego de un apetito corrupto.»
+                    </blockquote>
+                    <span class="autor">— Juan Calvino</span>
+                </div>
+
+                <div class="tarjeta-cita">
+                    <blockquote>
+                        «Un hombre piadoso no sólo hace lo que es bueno, sino que se deleita en hacerlo, su alma se apega a ello; está en su elemento cuando está haciéndolo; no hay nada que más le cuadre y agrade que hacer su deber; lo ama, sí, le gusta hacerlo, y lo ama aunque no pueda hacerlo.»
+                    </blockquote>
+                    <span class="autor">— Joseph Caryl</span>
+                </div>
+            </section>
+
+
         </div>
-    </section>
+    </div>
+
 </main>
 
-<div id="footer-global"></div>
-<script src="componentes.js"></script>
 </body>
 </html>
