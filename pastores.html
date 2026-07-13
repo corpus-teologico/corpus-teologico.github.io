@@ -9,7 +9,109 @@
 <body>
 <main class="pagina-libro">
     <div id="header-global"></div>
+<!-- ESTILOS DEL MENÚ -->
+<style>
+    #indice-tesoro {
+        position: sticky;
+        top: 20px;
+        background-color: #fdfbf7;
+        border: 1px solid var(--oro-profundo);
+        border-radius: 4px;
+        padding: 20px;
+        margin-bottom: 40px;
+        max-height: 75vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        z-index: 100;
+    }
+    #indice-tesoro h3 {
+        color: var(--oro-profundo);
+        margin-top: 0;
+        font-size: 1.1rem;
+        border-bottom: 1px solid rgba(212,175,55,0.3);
+        padding-bottom: 10px;
+        letter-spacing: 1px;
+    }
+    #indice-tesoro ul {
+        list-style: none;
+        padding-left: 0;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    #indice-tesoro ul li {
+        margin-bottom: 10px;
+        border-bottom: 1px dashed rgba(212,175,55,0.2);
+        padding-bottom: 5px;
+    }
+    #indice-tesoro ul li a {
+        text-decoration: none;
+        color: #444;
+        transition: color 0.2s ease;
+        display: block;
+    }
+    #indice-tesoro ul li a:hover {
+        color: var(--oro-profundo);
+        font-weight: bold;
+    }
+    .indice-autor {
+        display: block;
+        font-size: 0.8rem;
+        color: #666;
+        margin-top: 3px;
+        font-style: italic;
+    }
+</style>
 
+<!-- CONTENEDOR DEL MENÚ -->
+<nav id="indice-tesoro">
+    <h3>ÍNDICE DE CATEGORÍAS Y AUTORES</h3>
+    <div id="indice-categorias"></div>
+</nav>
+
+<!-- SCRIPT GENERADOR -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        /* Select the container where the dynamic menu will be injected */
+        const menuContainer = document.getElementById('indice-categorias');
+        if (!menuContainer) return;
+
+        /* Create the main list element */
+        const ul = document.createElement('ul');
+        
+        /* Select all quote blocks across the entire document */
+        const fieldsets = document.querySelectorAll('.bloque-citas');
+        
+        fieldsets.forEach((fieldset, index) => {
+            /* Generate and assign a unique ID to each fieldset for anchor routing */
+            const uniqueId = 'referencia-cita-' + index;
+            fieldset.id = uniqueId;
+            
+            /* Extract the category title from the legend node */
+            const legend = fieldset.querySelector('legend');
+            if (legend) {
+                let title = legend.textContent.trim();
+                
+                /* Extract the author from the specific span, removing the dash */
+                const authorSpan = fieldset.querySelector('.autor-cita');
+                let author = authorSpan ? authorSpan.textContent.replace('—', '').trim() : 'Autor Desconocido';
+                
+                /* Create list item and anchor tags */
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#' + uniqueId;
+                
+                /* Construct the inner HTML for the link: Title + Subtitle (Author) */
+                a.innerHTML = `<strong>${title}</strong> <span class="indice-autor">${author}</span>`;
+                
+                li.appendChild(a);
+                ul.appendChild(li);
+            }
+        });
+        
+        /* Append the fully constructed list to the DOM */
+        menuContainer.appendChild(ul);
+    });
+</script>
    <section class="seccion-tratado">
     <div class="separador-seccion"><span>TESORO HOMILÉTICO Y DOCTRINAL</span></div>
     <p class="introduccion-seccion" style="text-align: center; font-style: italic; color: var(--texto-mutado); margin-bottom: 30px;">
